@@ -1,5 +1,5 @@
-import { DollWrapper } from "./DollWrapper";
+import { redirect } from "next/navigation";
 
 export default function Home() {
-  return <DollWrapper />;
+  return redirect("/calc");
 }
