@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { useSetAtom } from "jotai";
 import { calcListSplitAtom } from "../../store";
+import { Plus } from "lucide-react";
 
 export function AddCalcObjectButton() {
   const dispatch = useSetAtom(calcListSplitAtom);
@@ -19,8 +20,8 @@ export function AddCalcObjectButton() {
     });
 
   return (
-    <Button onClick={onNew} variant="outline">
-      New
+    <Button onClick={onNew} variant="outline" size="sm">
+      <Plus /> New
     </Button>
   );
 }

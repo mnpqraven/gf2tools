@@ -2,19 +2,15 @@
 
 import { PrimitiveAtom, useAtom } from "jotai";
 import { Input } from "@/components/ui/input";
-import { CalcObject } from "./store";
+import { CalcObject } from "../../store";
 import { HTMLAttributes, Ref, useMemo } from "react";
 import { focusAtom } from "jotai-optics";
 import { Label } from "@/components/ui/label";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { cn } from "@/lib/utils";
-import { LevelInput } from "./_components/calcbox/LevelInput";
+import { LevelInput } from "./LevelInput";
+import { RemoveButton } from "./RemoveButton";
 
 export interface CalcAtom {
   atom: PrimitiveAtom<CalcObject>;
@@ -35,14 +31,14 @@ export function SingularCalcBox({
   return (
     <div className={cn("flex flex-col", className)} ref={ref} {...props}>
       <Card>
-        <CardHeader className="p-2">
+        <CardHeader className="flex flex-row items-center gap-1 space-y-0 p-2">
           <CalcTypeSelector atom={atom} />
-          <CardDescription aria-describedby={undefined} />
+          <RemoveButton atom={atom} />
         </CardHeader>
-        <CardContent className="p-2 flex flex-col gap-2 pt-0">
+        <CardContent className="flex flex-col gap-2 p-2 pt-0">
           <NameInput atom={atom} />
 
-          <div className="flex gap-1 flex-1">
+          <div className="flex flex-1 gap-1">
             <LevelInput className="flex-1" mode="from" atom={atom} />
             <LevelInput className="flex-1" mode="to" atom={atom} />
           </div>
@@ -55,7 +51,7 @@ export function SingularCalcBox({
 function CalcTypeSelector({ atom }: CalcAtom) {
   const typeAtom = useMemo(
     () => focusAtom(atom, (optic) => optic.prop("calcType")),
-    [atom]
+    [atom],
   );
   typeAtom.debugLabel = `${atom.debugLabel}_calcType`;
   const [calcType, setCalcType] = useAtom(typeAtom);
@@ -65,13 +61,9 @@ function CalcTypeSelector({ atom }: CalcAtom) {
       value={calcType}
       onValueChange={(e) => setCalcType(e as unknown as "CHAR" | "WEP")}
     >
-      <TabsList className="w-full">
-        <TabsTrigger className="flex-1" value="CHAR">
-          Character
-        </TabsTrigger>
-        <TabsTrigger className="flex-1" value="WEP">
-          Weapon
-        </TabsTrigger>
+      <TabsList>
+        <TabsTrigger value="CHAR">Character</TabsTrigger>
+        <TabsTrigger value="WEP">Weapon</TabsTrigger>
       </TabsList>
     </Tabs>
   );
@@ -80,7 +72,7 @@ function CalcTypeSelector({ atom }: CalcAtom) {
 function NameInput({ atom }: CalcAtom) {
   const inputAtom = useMemo(
     () => focusAtom(atom, (optic) => optic.prop("name")),
-    [atom]
+    [atom],
   );
   inputAtom.debugLabel = `${atom.debugLabel}_name`;
   const [value, setValue] = useAtom(inputAtom);

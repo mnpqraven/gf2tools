@@ -37,10 +37,12 @@ const rows: {
   {
     asset: "STOCK_BAR_5",
     accessor: (item) => item.stockBar.tier5,
+    enabled: false,
   },
   {
     asset: "STOCK_BAR_6",
     accessor: (item) => item.stockBar.tier6,
+    enabled: false,
   },
 ];
 
@@ -49,12 +51,14 @@ export function CalcSummaryContainer() {
 
   return (
     <div className="flex flex-col gap-1">
-      {rows.map(({ accessor, asset, enabled = true }) => (
-        <div className="flex items-center" key={asset}>
-          <AssetIcon asset={asset} />
-          <span>{accessor(summary)}</span>
-        </div>
-      ))}
+      {rows.map(({ accessor, asset, enabled = true }) =>
+        enabled ? (
+          <div className="flex items-center" key={asset}>
+            <AssetIcon asset={asset} />
+            <span>{accessor(summary)}</span>
+          </div>
+        ) : null,
+      )}
     </div>
   );
 }
