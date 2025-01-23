@@ -28,7 +28,7 @@ export const DOLL_META: DollMeta[] = [
   { name: "Sabrina", rarity: "ELITE", img: {} },
   { name: "Qiongjiu", rarity: "ELITE", img: {} },
   { name: "Mosin", rarity: "ELITE", img: {} },
-  { name: "Nagant", rarity: "ELITE", img: {} },
+  { name: "Mosin Nagant", rarity: "ELITE", img: {} },
   { name: "Daiyan", rarity: "ELITE", img: {} },
   { name: "Centaureissi", rarity: "ELITE", img: {} },
   { name: "Lenna", rarity: "ELITE", img: {} },

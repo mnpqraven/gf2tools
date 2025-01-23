@@ -1,16 +1,15 @@
 "use client";
 
 import { PrimitiveAtom, useAtom } from "jotai";
-import { Input } from "@/components/ui/input";
 import { CalcObject } from "../../store";
 import { HTMLAttributes, Ref, useMemo } from "react";
 import { focusAtom } from "jotai-optics";
-import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { cn } from "@/lib/utils";
 import { LevelInput } from "./LevelInput";
 import { RemoveButton } from "./RemoveButton";
+import { NameInput } from "./NameInput";
 
 export interface CalcAtom {
   atom: PrimitiveAtom<CalcObject>;
@@ -66,27 +65,5 @@ function CalcTypeSelector({ atom }: CalcAtom) {
         <TabsTrigger value="WEP">Weapon</TabsTrigger>
       </TabsList>
     </Tabs>
-  );
-}
-
-function NameInput({ atom }: CalcAtom) {
-  const inputAtom = useMemo(
-    () => focusAtom(atom, (optic) => optic.prop("name")),
-    [atom],
-  );
-  inputAtom.debugLabel = `${atom.debugLabel}_name`;
-  const [value, setValue] = useAtom(inputAtom);
-
-  return (
-    <div className="flex flex-col gap-2">
-      <Label htmlFor={inputAtom.debugLabel}>Name</Label>
-      <Input
-        id={inputAtom.debugLabel}
-        value={value}
-        onChange={(e) => {
-          setValue(e.target.value);
-        }}
-      />
-    </div>
   );
 }
