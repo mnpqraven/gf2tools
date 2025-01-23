@@ -32,7 +32,7 @@ export default function RootLayout({
       >
         <AppProvider>
           <TopBar />
-          <main>{children}</main>
+          <main className="flex flex-col items-center">{children}</main>
         </AppProvider>
       </body>
     </html>
