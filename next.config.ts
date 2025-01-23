@@ -8,6 +8,15 @@ const nextConfig: NextConfig = {
       ["@swc-jotai/react-refresh", { atomNames: ["customAtom"] }],
     ],
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "gf2.mcc.wiki",
+        pathname: "/image/**",
+      },
+    ],
+  },
 };
 
 export default nextConfig;

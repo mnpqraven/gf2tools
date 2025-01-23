@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/popover";
 import { Input } from "@/components/ui/input";
 import { DOLL_META } from "@/repository/dolls";
+import Image from "next/image";
 
 const defaultDollList = DOLL_META.reverse();
 
@@ -55,10 +56,21 @@ export function NameInput({ atom }: CalcAtom) {
           {dolls.map((doll) => (
             <Button
               key={doll.name}
-              className="rounded-md border"
+              className="rounded-md border flex flex-col gap-1 items-center justify-center h-auto"
               onClick={() => onDollSelect(doll.name)}
               variant="outline"
             >
+              {
+                // TODO: placeholderimg
+                doll.img.head ? (
+                  <Image
+                    src={doll.img.head}
+                    alt={doll.name}
+                    width={64}
+                    height={64}
+                  />
+                ) : null
+              }
               {doll.name}
             </Button>
           ))}
@@ -71,7 +83,7 @@ export function NameInput({ atom }: CalcAtom) {
 function useNameAtom(atom: CalcAtom["atom"]) {
   const nameAtom = useMemo(
     () => focusAtom(atom, (optic) => optic.prop("name")),
-    [atom],
+    [atom]
   );
 
   nameAtom.debugLabel = `${atom.debugLabel}_name`;
