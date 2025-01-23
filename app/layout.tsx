@@ -32,7 +32,9 @@ export default function RootLayout({
       >
         <AppProvider>
           <TopBar />
-          <main className="flex flex-col items-center">{children}</main>
+          <main className="flex flex-col items-center py-8">
+            <div className="container flex-1">{children}</div>
+          </main>
         </AppProvider>
       </body>
     </html>
