@@ -44,11 +44,11 @@ export type CalcSummary = {
 };
 
 const charCalcObjects = atom((get) =>
-  get(calcListAtom).filter((e) => e.calcType === "CHAR"),
+  get(calcListAtom).filter((e) => e.calcType === "CHAR")
 );
 
 const wepCalcObjects = atom((get) =>
-  get(calcListAtom).filter((e) => e.calcType === "WEP"),
+  get(calcListAtom).filter((e) => e.calcType === "WEP")
 );
 
 export const calcSummaryAtom = atom<CalcSummary>((get) => {
@@ -58,7 +58,7 @@ export const calcSummaryAtom = atom<CalcSummary>((get) => {
   const totalUncapMoney = uncaps.map((e) => e.money).reduce(add, 0);
   const totalUncapStock = sumColumn2DArray(
     uncaps.map((e) => e.totalStock),
-    6,
+    6
   );
 
   return {

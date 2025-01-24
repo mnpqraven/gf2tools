@@ -20,7 +20,7 @@ interface Prop extends CalcAtom, HTMLAttributes<HTMLDivElement>, DragHandle {
 export function CalcBox({ atom, index, dragHandle, ref, ...props }: Prop) {
   atom.debugLabel = `calcObject_${index}`;
   const name = useAtomValue(
-    useMemo(() => focusAtom(atom, (t) => t.prop("name")), [atom]),
+    useMemo(() => focusAtom(atom, (t) => t.prop("name")), [atom])
   );
   const find = DOLL_META.find((e) => e.name === name);
 
@@ -38,15 +38,15 @@ export function CalcBox({ atom, index, dragHandle, ref, ...props }: Prop) {
           <LevelInput className="flex-1" mode="to" atom={atom} />
         </div>
 
-        {find?.img.chibi ? (
-          <div
-            {...dragHandle}
-            className="flex flex-1 select-none items-center gap-1"
-          >
+        <div
+          {...dragHandle}
+          className="flex flex-1 select-none items-center gap-1 min-h-16"
+        >
+          {find?.img.chibi ? (
             <Image height={64} width={64} alt="pic" src={find.img.chibi} />
-            <span className="flex-1 text-center">ID: {index}</span>
-          </div>
-        ) : null}
+          ) : null}
+          <span className="flex-1 text-center text-xs">Drag me!</span>
+        </div>
       </CardContent>
     </Card>
   );
@@ -55,7 +55,7 @@ export function CalcBox({ atom, index, dragHandle, ref, ...props }: Prop) {
 function CalcTypeSelector({ atom }: CalcAtom) {
   const typeAtom = useMemo(
     () => focusAtom(atom, (optic) => optic.prop("calcType")),
-    [atom],
+    [atom]
   );
   typeAtom.debugLabel = `${atom.debugLabel}_calcType`;
   const [calcType, setCalcType] = useAtom(typeAtom);

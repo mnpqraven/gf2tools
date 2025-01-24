@@ -1,7 +1,7 @@
 "use client";
 
-import { useAtom } from "jotai";
-import { calcListSplitAtom } from "../../store";
+import { PrimitiveAtom, useAtomValue } from "jotai";
+import { calcListAtom, calcListSplitAtom } from "../../store";
 import { SortableCalcBox } from "./SortableCalcBox";
 import {
   closestCenter,
@@ -17,6 +17,7 @@ import {
 import { SortableContext, rectSortingStrategy } from "@dnd-kit/sortable";
 import { useState } from "react";
 import { CalcBox } from "./CalcBox";
+import { useMoveAtom } from "@/lib/atoms/useMoveAtoms";
 
 export function CalcBoxList() {
   const sensors = useSensors(
@@ -32,35 +33,26 @@ export function CalcBoxList() {
         delay: 250,
         tolerance: 5,
       },
-    }),
+    })
   );
-  const [_atoms, dispatch] = useAtom(calcListSplitAtom);
-  // BUG: this doesnt work because id is updated when the list changes
-  // we need to persist id, probably another id strip as atom
-  const atoms = _atoms.map((atom) => ({ id: `${atom}`, atom }));
-  const [activeId, setActiveId] = useState(-1);
+  const atoms = useAtomValue(calcListSplitAtom);
+  const move = useMoveAtom(calcListAtom);
+  const [activeId, setActiveId] = useState<string | undefined>(undefined);
 
   function handleDragStart(event: DragStartEvent) {
-    setActiveId(event.active.id as number);
+    setActiveId(event.active.id as string);
   }
 
   function handleDragEnd(e: DragEndEvent) {
     const { active, over } = e;
     if (over?.id !== undefined && active.id !== over.id) {
-      const firstI = atoms.findIndex((atom) => `${atom}` === over.id);
-      const secondI = atoms.findIndex((atom) => `${atom}` === active.id);
-      // TODO: undefined indexing
-      const lowI = Math.min(firstI, secondI);
-      const highI = Math.max(firstI, secondI);
-      dispatch({
-        type: "move",
-        atom: atoms[highI].atom,
-        before: atoms[lowI].atom,
-      });
+      move(getAtomIndex(atoms, active.id), getAtomIndex(atoms, over.id));
     }
 
-    setActiveId(-1);
+    setActiveId(undefined);
   }
+
+  const activeAtomIndex = atoms.findIndex((e) => e.toString() === activeId);
 
   return (
     <DndContext
@@ -69,18 +61,25 @@ export function CalcBoxList() {
       sensors={sensors}
       collisionDetection={closestCenter}
     >
-      <SortableContext items={atoms} strategy={rectSortingStrategy}>
+      <SortableContext
+        items={atoms.map((e) => e.toString())}
+        strategy={rectSortingStrategy}
+      >
         <div className="flex flex-wrap gap-2">
-          {atoms.map(({ atom, id }) => (
-            <SortableCalcBox key={`${atom}`} atom={atom} index={id} />
+          {atoms.map((atom, index) => (
+            <SortableCalcBox key={atom.toString()} atom={atom} index={index} />
           ))}
         </div>
       </SortableContext>
       <DragOverlay>
-        {activeId !== -1 && atoms[activeId] !== undefined ? (
-          <CalcBox atom={atoms[activeId].atom} index={activeId} />
+        {activeAtomIndex !== -1 ? (
+          <CalcBox atom={atoms[activeAtomIndex]} index={activeAtomIndex} />
         ) : null}
       </DragOverlay>
     </DndContext>
   );
+}
+
+function getAtomIndex<T, V>(atoms: PrimitiveAtom<T>[], id: V) {
+  return atoms.findIndex((atom) => atom.toString() === id);
 }

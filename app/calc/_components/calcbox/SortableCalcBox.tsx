@@ -24,7 +24,7 @@ export function SortableCalcBox({ index, style: propsStyle, ...props }: Prop) {
     transition,
     isDragging,
     setActivatorNodeRef,
-  } = useSortable({ id: index });
+  } = useSortable({ id: props.atom.toString() });
 
   const style = {
     ...propsStyle,
