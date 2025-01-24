@@ -1,6 +1,6 @@
 "use client";
 
-import { PrimitiveAtom, useAtom } from "jotai";
+import { PrimitiveAtom, useAtom, useAtomValue } from "jotai";
 import { CalcObject } from "../../store";
 import { HTMLAttributes, Ref, useMemo } from "react";
 import { focusAtom } from "jotai-optics";
@@ -10,6 +10,8 @@ import { cn } from "@/lib/utils";
 import { LevelInput } from "./LevelInput";
 import { RemoveButton } from "./RemoveButton";
 import { NameInput } from "./NameInput";
+import { DOLL_META } from "@/repository/dolls";
+import Image from "next/image";
 
 export interface CalcAtom {
   atom: PrimitiveAtom<CalcObject>;
@@ -26,6 +28,10 @@ export function SingularCalcBox({
   ...props
 }: Prop & { ref?: Ref<HTMLDivElement> }) {
   atom.debugLabel = `calcObject_${index}`;
+  const name = useAtomValue(
+    useMemo(() => focusAtom(atom, (t) => t.prop("name")), [atom]),
+  );
+  const find = DOLL_META.find((e) => e.name === name);
 
   return (
     <div className={cn("flex flex-col", className)} ref={ref} {...props}>
@@ -41,6 +47,13 @@ export function SingularCalcBox({
             <LevelInput className="flex-1" mode="from" atom={atom} />
             <LevelInput className="flex-1" mode="to" atom={atom} />
           </div>
+
+          {find?.img.chibi ? (
+            <div className="flex flex-1 select-none items-center gap-1">
+              <Image height={64} width={64} alt="pic" src={find.img.chibi} />
+              <span className="flex-1 text-center">drag anchor</span>
+            </div>
+          ) : null}
         </CardContent>
       </Card>
     </div>

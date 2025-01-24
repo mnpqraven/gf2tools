@@ -9,6 +9,6 @@ export const FEATURES: { label: string; impl?: boolean }[] = [
   {
     label: "Support forinput passive income sources (dispatch, boss, bp, etc)",
   },
-  { label: "Reorder calculating items" },
+  { label: "Reorder calculating items/DnD" },
   { label: "Graph for resources spread" },
 ];

@@ -8,8 +8,8 @@ export default function Page() {
     <div className="flex gap-3">
       <Card className="flex-[3_1_0]">
         <CardHeader>
-          <div className="flex gap-2 items-center">
-            <CardTitle>Items</CardTitle>
+          <div className="flex items-center gap-2">
+            <CardTitle>Trackers</CardTitle>
             <AddCalcObjectButton />
           </div>
         </CardHeader>
