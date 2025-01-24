@@ -35,7 +35,7 @@ export function SingularCalcBox({
           <RemoveButton atom={atom} />
         </CardHeader>
         <CardContent className="flex flex-col gap-2 p-2 pt-0">
-          <NameInput atom={atom} />
+          <NameInput atom={atom} index={index} />
 
           <div className="flex flex-1 gap-1">
             <LevelInput className="flex-1" mode="from" atom={atom} />

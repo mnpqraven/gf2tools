@@ -1,4 +1,4 @@
-interface DollMeta {
+export interface DollMeta {
   name: string;
   rarity: "ELITE" | "COMMON";
   img: {

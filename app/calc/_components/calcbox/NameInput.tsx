@@ -1,6 +1,6 @@
-import { useAtom } from "jotai";
+import { atom, useAtom, useAtomValue } from "jotai";
 import { CalcAtom } from "./SingularCalcBox";
-import { ChangeEvent, useMemo, useState } from "react";
+import { ChangeEvent, useMemo } from "react";
 import { focusAtom } from "jotai-optics";
 import { Button } from "@/components/ui/button";
 import {
@@ -9,40 +9,48 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Input } from "@/components/ui/input";
-import { DOLL_META } from "@/repository/dolls";
+import { DOLL_META, DollMeta } from "@/repository/dolls";
 import Image from "next/image";
+import { atomWithReset } from "jotai/utils";
+import { IFuseOptions } from "fuse.js";
+
+type CommandState = {
+  filteredDolls: typeof DOLL_META;
+  popoverOpen: boolean;
+  search: string;
+};
 
 const defaultDollList = DOLL_META.reverse();
 
-export function NameInput({ atom }: CalcAtom) {
-  const [open, setOpen] = useState(false);
-  const [name, setName] = useNameAtom(atom);
+const defaultCommandState: CommandState = {
+  filteredDolls: defaultDollList,
+  popoverOpen: false,
+  search: "",
+};
 
-  const [dolls, setDolls] = useState(defaultDollList);
+interface Props extends CalcAtom {
+  index?: number;
+}
+
+export function NameInput({ atom, index }: Props) {
+  const { dollsAtom, openAtom, searchTextAtom } = useAtomGenerate(index);
+  const [search, setSearch] = useAtom(searchTextAtom);
+  const [open, setOpen] = useAtom(openAtom);
+  const dolls = useAtomValue(dollsAtom);
+
+  const [name, setName] = useNameAtom(atom);
 
   async function onChange(e: ChangeEvent<HTMLInputElement>) {
     const searchValue = e.target.value;
-    // early empty
-    if (searchValue.length) {
-      const Fuse = (await import("fuse.js")).default;
-      const engine = new Fuse(defaultDollList, {
-        keys: ["name"],
-        threshold: 0.5,
-      });
-      const searchResult = engine.search(searchValue);
-
-      setDolls(searchResult.map((e) => e.item));
-    } else if (dolls.length !== defaultDollList.length)
-      setDolls(defaultDollList);
+    await setSearch(searchValue);
   }
 
-  function onDollSelect(name: string) {
+  async function onDollSelect(name: string) {
     setName(name);
-    setOpen(false);
-    setDolls(defaultDollList);
+    await setOpen(false);
   }
 
-  // TODO: states for arrow navigation
+  const allowCustomDoll = dolls.length < defaultDollList.length;
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
@@ -50,13 +58,13 @@ export function NameInput({ atom }: CalcAtom) {
         <Button variant="outline">{name.length ? name : "Open"}</Button>
       </PopoverTrigger>
       <PopoverContent side="right" className="flex w-auto flex-col gap-3">
-        <Input defaultValue="" onChange={onChange} />
+        <Input value={search} onChange={onChange} />
 
         <div className="grid grid-cols-7 gap-1">
           {dolls.map((doll) => (
             <Button
               key={doll.name}
-              className="rounded-md border flex flex-col gap-1 items-center justify-center h-auto"
+              className="flex h-auto flex-col items-center justify-center gap-1 rounded-md border"
               onClick={() => onDollSelect(doll.name)}
               variant="outline"
             >
@@ -74,19 +82,98 @@ export function NameInput({ atom }: CalcAtom) {
               {doll.name}
             </Button>
           ))}
+
+          {allowCustomDoll ? (
+            <Button
+              className="flex h-auto flex-col items-center justify-center gap-1 rounded-md border"
+              onClick={() => onDollSelect(search)}
+              variant="outline"
+            >
+              {`Custom: "${search}"`}
+            </Button>
+          ) : null}
         </div>
       </PopoverContent>
     </Popover>
   );
 }
 
+function useAtomGenerate(debugSlug?: string | number) {
+  // TODO: states for arrow navigation
+  // probably need fake indexing
+  const parentAtom = useMemo(
+    () => atomWithReset<CommandState>(defaultCommandState),
+    [],
+  );
+
+  const dollsAtom = useMemo(
+    () => focusAtom(parentAtom, (t) => t.prop("filteredDolls")),
+    [parentAtom],
+  );
+  const searchTextAtom = useMemo(
+    () =>
+      atom(
+        (get) => get(parentAtom).search,
+        async (get, set, search: string) => {
+          const filteredDolls = await searchDolls(search);
+          const parent = get(parentAtom);
+          set(parentAtom, { ...parent, search, filteredDolls });
+        },
+      ),
+    [parentAtom],
+  );
+
+  const openAtom = useMemo(() => {
+    const focus = focusAtom(parentAtom, (t) => t.prop("popoverOpen"));
+    return atom(
+      (get) => get(parentAtom).popoverOpen,
+      async (_, set, next: boolean) => {
+        set(focus, next);
+        if (!next) {
+          const resetDolls = () => set(dollsAtom, defaultDollList);
+          setTimeout(resetDolls, 200);
+        }
+      },
+    );
+  }, [dollsAtom, parentAtom]);
+
+  if (debugSlug !== undefined) {
+    parentAtom.debugLabel = `popover_parentAtom_${debugSlug}`;
+    dollsAtom.debugLabel = `popover_dollsAtom_${debugSlug}`;
+    openAtom.debugLabel = `popover_openAtom_${debugSlug}`;
+    searchTextAtom.debugLabel = `popover_searchAtom_${debugSlug}`;
+  }
+
+  return { dollsAtom, openAtom, searchTextAtom };
+}
+
 function useNameAtom(atom: CalcAtom["atom"]) {
   const nameAtom = useMemo(
-    () => focusAtom(atom, (optic) => optic.prop("name")),
-    [atom]
+    () => focusAtom(atom, (t) => t.prop("name")),
+    [atom],
   );
 
   nameAtom.debugLabel = `${atom.debugLabel}_name`;
 
   return useAtom(nameAtom);
+}
+
+async function searchDolls(
+  query: string,
+  fuseOpt?: IFuseOptions<DollMeta> & {
+    defaultPool: DollMeta[];
+  },
+): Promise<DollMeta[]> {
+  const pool = fuseOpt?.defaultPool ?? defaultDollList;
+  // early empty
+  if (!query.length) return pool;
+
+  const Fuse = (await import("fuse.js")).default;
+  const engine = new Fuse(pool, {
+    keys: ["name"],
+    threshold: 0.5,
+    ...fuseOpt,
+  });
+  const searchResult = engine.search(query);
+  return searchResult.map((e) => e.item);
 }
