@@ -6,4 +6,5 @@ export const FEATURES: { label: string; impl?: boolean }[] = [
   { label: "Keyboard navigation support" },
   { label: "Neural helix calculator" },
   { label: "Reorder calculating items" },
+  { label: "Graph for resources spread" },
 ];
