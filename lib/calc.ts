@@ -19,7 +19,7 @@ export function calcWepExp({ from, to }: FromTo): number {
   if (from > to) return 0;
   return WEP_EXP_TABLE.slice(from, to).reduce(
     (partial, next) => partial + next,
-    0
+    0,
   );
 }
 
@@ -31,7 +31,7 @@ export function calcCharExp({ from, to }: FromTo): number {
   if (from > to) return 0;
   return DOLL_EXP_TABLE.slice(from, to).reduce(
     (partial, next) => partial + next,
-    0
+    0,
   );
 }
 
@@ -41,11 +41,10 @@ export function calcCharUncap({ from, to }: FromTo) {
   const uncapToIndex = Math.ceil(Math.max(to - 20, 0) / 10);
 
   const sliced = DOLL_UNCAP_TABLE.slice(uncapFromIndex, uncapToIndex);
-  console.log("sliced", sliced, uncapFromIndex, uncapToIndex);
   const money = sliced.map((e) => e.money).reduce(add, 0);
   const totalStock = sumColumn2DArray(
     sliced.map((e) => e.stockBar),
-    6
+    6,
   ) as StockBarConf;
 
   return { money, totalStock };

@@ -1,4 +1,5 @@
 import { atom } from "jotai";
+import { v4 } from "uuid";
 import { splitAtom } from "jotai/utils";
 import { CALC_TYPE_ENUM } from "@/repository/enums";
 import {
@@ -17,7 +18,7 @@ export type CalcObject = {
 };
 
 export const calcListAtom = atom<CalcObject[]>([]);
-export const calcListSplitAtom = splitAtom(calcListAtom);
+export const calcListSplitAtom = splitAtom(calcListAtom, () => v4());
 
 type StockBarSummary = {
   tier1: number;
@@ -43,11 +44,11 @@ export type CalcSummary = {
 };
 
 const charCalcObjects = atom((get) =>
-  get(calcListAtom).filter((e) => e.calcType === "CHAR")
+  get(calcListAtom).filter((e) => e.calcType === "CHAR"),
 );
 
 const wepCalcObjects = atom((get) =>
-  get(calcListAtom).filter((e) => e.calcType === "WEP")
+  get(calcListAtom).filter((e) => e.calcType === "WEP"),
 );
 
 export const calcSummaryAtom = atom<CalcSummary>((get) => {
@@ -57,7 +58,7 @@ export const calcSummaryAtom = atom<CalcSummary>((get) => {
   const totalUncapMoney = uncaps.map((e) => e.money).reduce(add, 0);
   const totalUncapStock = sumColumn2DArray(
     uncaps.map((e) => e.totalStock),
-    6
+    6,
   );
 
   return {

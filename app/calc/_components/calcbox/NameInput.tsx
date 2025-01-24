@@ -1,5 +1,5 @@
 import { atom, useAtom, useAtomValue } from "jotai";
-import { CalcAtom } from "./SingularCalcBox";
+import { CalcAtom } from "./SortableCalcBox";
 import { ChangeEvent, useMemo } from "react";
 import { focusAtom } from "jotai-optics";
 import { Button } from "@/components/ui/button";

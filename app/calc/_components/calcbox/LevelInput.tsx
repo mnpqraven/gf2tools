@@ -1,6 +1,6 @@
 import { HTMLAttributes, RefAttributes, useMemo } from "react";
 import { z } from "zod";
-import { CalcAtom } from "./SingularCalcBox";
+import { CalcAtom } from "./SortableCalcBox";
 import { focusAtom } from "jotai-optics";
 import { useAtom } from "jotai";
 import { Label } from "@/components/ui/label";

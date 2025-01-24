@@ -1,3 +1,4 @@
+import { DraggableAttributes } from "@dnd-kit/core";
 import { clsx, type ClassValue } from "clsx";
 import { twMerge } from "tailwind-merge";
 
@@ -8,3 +9,12 @@ export function cn(...inputs: ClassValue[]) {
 export function add(left: number, right: number) {
   return left + right;
 }
+
+export interface DragHandleProps extends DraggableAttributes {
+  ref: (element: HTMLElement | null) => void;
+}
+type RequiredDragHandle = {
+  dragHandle: DragHandleProps;
+};
+
+export type DragHandle = Partial<RequiredDragHandle>;
