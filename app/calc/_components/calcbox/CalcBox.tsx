@@ -28,7 +28,7 @@ export function CalcBox({ atom, index, dragHandle, ref, ...props }: Prop) {
     <Card {...props} ref={ref}>
       <CardHeader className="flex flex-row items-center gap-1 space-y-0 p-2">
         <CalcTypeSelector atom={atom} />
-        <RemoveButton atom={atom} />
+        <RemoveButton index={index} />
       </CardHeader>
       <CardContent className="flex flex-col gap-2 p-2 pt-0">
         <NameInput atom={atom} index={index} />
