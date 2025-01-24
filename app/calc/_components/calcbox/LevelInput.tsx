@@ -53,8 +53,6 @@ export function LevelInput({
 const zLevel = z
   .number()
   .int()
-  .gte(1)
-  .lte(60)
   .or(z.nan())
   .transform((value) => {
     if (isNaN(value)) return 1;
