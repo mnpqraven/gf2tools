@@ -12,7 +12,7 @@ import { Input } from "@/components/ui/input";
 import { DOLL_META, DollMeta } from "@/repository/dolls";
 import Image from "next/image";
 import { atomWithReset } from "jotai/utils";
-import { IFuseOptions } from "fuse.js";
+import { type IFuseOptions } from "fuse.js";
 
 type CommandState = {
   filteredDolls: typeof DOLL_META;
@@ -61,25 +61,20 @@ export function NameInput({ atom, index }: Props) {
         <Input value={search} onChange={onChange} />
 
         <div className="grid grid-cols-7 gap-1">
-          {dolls.map((doll) => (
+          {dolls.map(({ name, img }) => (
             <Button
-              key={doll.name}
+              key={name}
               className="flex h-auto flex-col items-center justify-center gap-1 rounded-md border"
-              onClick={() => onDollSelect(doll.name)}
+              onClick={() => onDollSelect(name)}
               variant="outline"
             >
               {
                 // TODO: placeholderimg
-                doll.img.head ? (
-                  <Image
-                    src={doll.img.head}
-                    alt={doll.name}
-                    width={64}
-                    height={64}
-                  />
+                img.head ? (
+                  <Image src={img.head} alt={name} width={64} height={64} />
                 ) : null
               }
-              {doll.name}
+              {name}
             </Button>
           ))}
 
