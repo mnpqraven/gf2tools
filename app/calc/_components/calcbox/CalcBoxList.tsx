@@ -20,6 +20,9 @@ import { CalcBox } from "./CalcBox";
 import { useMoveAtom } from "@/lib/atoms/useMoveAtoms";
 
 export function CalcBoxList() {
+  const atoms = useAtomValue(calcListSplitAtom);
+  const move = useMoveAtom(calcListAtom);
+
   const sensors = useSensors(
     useSensor(MouseSensor, {
       // Require the mouse to move by 10 pixels before activating
@@ -33,10 +36,8 @@ export function CalcBoxList() {
         delay: 250,
         tolerance: 5,
       },
-    })
+    }),
   );
-  const atoms = useAtomValue(calcListSplitAtom);
-  const move = useMoveAtom(calcListAtom);
   const [activeId, setActiveId] = useState<string | undefined>(undefined);
 
   function handleDragStart(event: DragStartEvent) {
@@ -62,12 +63,12 @@ export function CalcBoxList() {
       collisionDetection={closestCenter}
     >
       <SortableContext
-        items={atoms.map((e) => e.toString())}
+        items={atoms.map((atom) => `${atom}`)}
         strategy={rectSortingStrategy}
       >
         <div className="flex flex-wrap gap-2">
           {atoms.map((atom, index) => (
-            <SortableCalcBox key={atom.toString()} atom={atom} index={index} />
+            <SortableCalcBox key={`${atom}`} atom={atom} index={index} />
           ))}
         </div>
       </SortableContext>

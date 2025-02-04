@@ -33,7 +33,7 @@ interface Props extends CalcAtom {
 }
 
 export function NameInput({ atom, index }: Props) {
-  const { dollsAtom, openAtom, searchTextAtom } = useAtomGenerate(index);
+  const { dollsAtom, openAtom, searchTextAtom } = useAtomGenerate();
   const [search, setSearch] = useAtom(searchTextAtom);
   const [open, setOpen] = useAtom(openAtom);
   const dolls = useAtomValue(dollsAtom);
@@ -93,7 +93,7 @@ export function NameInput({ atom, index }: Props) {
   );
 }
 
-function useAtomGenerate(debugSlug?: string | number) {
+function useAtomGenerate() {
   // TODO: states for arrow navigation
   // probably need fake indexing
   const parentAtom = useMemo(
@@ -132,13 +132,6 @@ function useAtomGenerate(debugSlug?: string | number) {
     );
   }, [dollsAtom, parentAtom]);
 
-  if (debugSlug !== undefined) {
-    parentAtom.debugLabel = `popover_parentAtom_${debugSlug}`;
-    dollsAtom.debugLabel = `popover_dollsAtom_${debugSlug}`;
-    openAtom.debugLabel = `popover_openAtom_${debugSlug}`;
-    searchTextAtom.debugLabel = `popover_searchAtom_${debugSlug}`;
-  }
-
   return { dollsAtom, openAtom, searchTextAtom };
 }
 
@@ -147,8 +140,6 @@ function useNameAtom(atom: CalcAtom["atom"]) {
     () => focusAtom(atom, (t) => t.prop("name")),
     [atom],
   );
-
-  nameAtom.debugLabel = `${atom.debugLabel}_name`;
 
   return useAtom(nameAtom);
 }

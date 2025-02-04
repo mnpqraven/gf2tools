@@ -12,15 +12,15 @@ import { DOLL_META } from "@/repository/dolls";
 import Image from "next/image";
 import { CalcAtom } from "./SortableCalcBox";
 import { DragHandle } from "@/lib/utils";
+import { GripVertical } from "lucide-react";
 
 interface Prop extends CalcAtom, HTMLAttributes<HTMLDivElement>, DragHandle {
   index: number;
   ref?: Ref<HTMLDivElement>;
 }
 export function CalcBox({ atom, index, dragHandle, ref, ...props }: Prop) {
-  atom.debugLabel = `calcObject_${index}`;
   const name = useAtomValue(
-    useMemo(() => focusAtom(atom, (t) => t.prop("name")), [atom])
+    useMemo(() => focusAtom(atom, (t) => t.prop("name")), [atom]),
   );
   const find = DOLL_META.find((e) => e.name === name);
 
@@ -40,12 +40,13 @@ export function CalcBox({ atom, index, dragHandle, ref, ...props }: Prop) {
 
         <div
           {...dragHandle}
-          className="flex flex-1 select-none items-center gap-1 min-h-16"
+          className="min-h-16 flex flex-1 cursor-move select-none items-center justify-evenly gap-1"
         >
           {find?.img.chibi ? (
             <Image height={64} width={64} alt="pic" src={find.img.chibi} />
           ) : null}
-          <span className="flex-1 text-center text-xs">Drag me!</span>
+
+          <GripVertical className="text-muted-foreground" />
         </div>
       </CardContent>
     </Card>
@@ -55,9 +56,8 @@ export function CalcBox({ atom, index, dragHandle, ref, ...props }: Prop) {
 function CalcTypeSelector({ atom }: CalcAtom) {
   const typeAtom = useMemo(
     () => focusAtom(atom, (optic) => optic.prop("calcType")),
-    [atom]
+    [atom],
   );
-  typeAtom.debugLabel = `${atom.debugLabel}_calcType`;
   const [calcType, setCalcType] = useAtom(typeAtom);
 
   return (

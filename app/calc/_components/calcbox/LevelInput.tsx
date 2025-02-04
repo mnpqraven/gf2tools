@@ -1,4 +1,4 @@
-import { HTMLAttributes, RefAttributes, useMemo } from "react";
+import { HTMLAttributes, RefAttributes, useId, useMemo } from "react";
 import { z } from "zod";
 import { CalcAtom } from "./SortableCalcBox";
 import { focusAtom } from "jotai-optics";
@@ -28,15 +28,15 @@ export function LevelInput({
     () => focusAtom(atom, (optic) => optic.prop(mode)),
     [atom, mode],
   );
-  inputAtom.debugLabel = `${atom.debugLabel}_${mode}`;
   const [value, setValue] = useAtom(inputAtom);
+  const id = useId();
   return (
     <div className={cn("flex flex-col gap-2", className)} {...props}>
-      <Label className="capitalize" htmlFor={inputAtom.debugLabel}>
+      <Label className="capitalize" htmlFor={id}>
         {mode}
       </Label>
       <Input
-        id={inputAtom.debugLabel}
+        id={id}
         min={min}
         type="number"
         max={max}

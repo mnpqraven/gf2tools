@@ -11,6 +11,7 @@ import {
 import { add } from "@/lib/utils";
 
 export type CalcObject = {
+  _id: string;
   calcType: keyof typeof CALC_TYPE_ENUM | undefined;
   name: string;
   from: number;
@@ -18,7 +19,7 @@ export type CalcObject = {
 };
 
 export const calcListAtom = atom<CalcObject[]>([]);
-export const calcListSplitAtom = splitAtom(calcListAtom, () => v4());
+export const calcListSplitAtom = splitAtom(calcListAtom, (e) => e._id);
 
 type StockBarSummary = {
   tier1: number;
@@ -44,11 +45,11 @@ export type CalcSummary = {
 };
 
 const charCalcObjects = atom((get) =>
-  get(calcListAtom).filter((e) => e.calcType === "CHAR")
+  get(calcListAtom).filter((e) => e.calcType === "CHAR"),
 );
 
 const wepCalcObjects = atom((get) =>
-  get(calcListAtom).filter((e) => e.calcType === "WEP")
+  get(calcListAtom).filter((e) => e.calcType === "WEP"),
 );
 
 export const calcSummaryAtom = atom<CalcSummary>((get) => {
@@ -58,7 +59,7 @@ export const calcSummaryAtom = atom<CalcSummary>((get) => {
   const totalUncapMoney = uncaps.map((e) => e.money).reduce(add, 0);
   const totalUncapStock = sumColumn2DArray(
     uncaps.map((e) => e.totalStock),
-    6
+    6,
   );
 
   return {
