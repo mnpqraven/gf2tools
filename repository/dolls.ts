@@ -1,5 +1,62 @@
+const DOLL_SLUGS: DollSlug[] = [
+  { name: "Krolik", slug: "CharolicSR", rarity: "COMMON" },
+  { name: "Colphne", slug: "ColphneSR", rarity: "COMMON" },
+  { name: "Groza", slug: "GrozaSR", rarity: "COMMON" },
+  { name: "Nemesis", slug: "NemesisSR", rarity: "COMMON" },
+  { name: "Sharkry", slug: "SharkrySR", rarity: "COMMON" },
+  { name: "Cheeta", slug: "CheetaSR", rarity: "COMMON" },
+  { name: "Nagant", slug: "NagantSR", rarity: "COMMON" },
+  { name: "Ksenia", slug: "KseniaSR", rarity: "COMMON" },
+  { name: "Littara", slug: "LittaraSR", rarity: "COMMON" },
+  { name: "Lotta", slug: "LottaSR", rarity: "COMMON" },
+  { name: "Vepley", slug: "VepleySSR" },
+  { name: "Tololo", slug: "TololoSSR" },
+  { name: "Peritya", slug: "PerityaSSR" },
+  { name: "Sabrina", slug: "SabrinaSSR" },
+  { name: "Qiongjiu", slug: "QiongjiuSSR" },
+  { name: "Mosin Nagant", slug: "MosinnagantSSR" },
+  { name: "Papasha", slug: "PapashaSSR" },
+  { name: "Daiyan", slug: "DaiyanSSR" },
+  { name: "Centaureissi", slug: "CentaureissiSSR" },
+  { name: "Lenna", slug: "LennaSSR" },
+  { name: "Jiangyu", slug: "JiangyuSSR" },
+  { name: "Macchiato", slug: "MacqiatoSSR" },
+  { name: "Ullrid", slug: "UllridSSR" },
+  { name: "Suomi", slug: "SuomiSSR" },
+  { name: "Dushevnaya", slug: "DusevnyjSSR" },
+  { name: "Zhaohui", slug: "ZhaohuiSSR" },
+  { name: "Klukai", slug: "ClukaySSR" },
+  { name: "Mechty", slug: "MishtySSR" },
+  { name: "Vector", slug: "VectorSSR" },
+  { name: "Belka", slug: "BiyocaSSR" },
+  { name: "Andoris", slug: "AndorisSSR" },
+  { name: "Springfield", slug: "SpringfieldSSR" },
+  { name: "Faye", slug: "FayeSSR" },
+  { name: "Peri", slug: "PeriSSR" },
+  { name: "Qiuhua", slug: "QiuhuaSSR" },
+  { name: "YooHee", slug: "YooHeeSSR" },
+];
+
+export const DOLL_EXP_TABLE = [
+  0, 2, 2, 5, 5, 5, 5, 5, 5, 60, 150, 300, 480, 525, 545, 570, 595, 625, 655,
+  685, 715, 860, 1000, 1335, 1670, 1820, 1820, 2000, 2320, 2320, 2320, 2320,
+  4220, 4670, 4670, 6490, 7570, 8655, 9735, 10815, 11900, 12980, 14060, 15045,
+  23520, 23925, 24565, 25090, 25610, 26135, 26545, 27180, 27700, 28225, 28750,
+  29245, 29795, 30315, 30840, 31360,
+];
+
+type DollSlug = {
+  name: string;
+  /**
+   * doll's slug, based on cn wiki
+   */
+  slug: string;
+  rarity?: "ELITE" | "COMMON";
+};
+
 export interface DollMeta {
   name: string;
+  id: string;
   rarity: "ELITE" | "COMMON";
   img: {
     head?: string;
@@ -12,54 +69,17 @@ export interface DollMeta {
   };
 }
 
-export const DOLL_META: DollMeta[] = [
-  { name: "Krolik", rarity: "COMMON", img: cnIopImg("CharolicSR") },
-  { name: "Colphne", rarity: "COMMON", img: cnIopImg("ColphneSR") },
-  { name: "Groza", rarity: "COMMON", img: cnIopImg("GrozaSR") },
-  { name: "Nemesis", rarity: "COMMON", img: cnIopImg("NemesisSR") },
-  { name: "Sharkry", rarity: "COMMON", img: cnIopImg("SharkrySR") },
-  { name: "Cheeta", rarity: "COMMON", img: cnIopImg("CheetaSR") },
-  { name: "Nagant", rarity: "COMMON", img: cnIopImg("NagantSR") },
-  { name: "Ksenia", rarity: "COMMON", img: cnIopImg("KseniaSR") },
-  { name: "Littara", rarity: "COMMON", img: cnIopImg("LittaraSR") },
-  { name: "Lotta", rarity: "COMMON", img: cnIopImg("LottaSR") },
-  { name: "Vepley", rarity: "ELITE", img: cnIopImg("VepleySSR") },
-  { name: "Tololo", rarity: "ELITE", img: cnIopImg("TololoSSR") },
-  { name: "Peritya", rarity: "ELITE", img: cnIopImg("PerityaSSR") },
-  { name: "Sabrina", rarity: "ELITE", img: cnIopImg("SabrinaSSR") },
-  { name: "Qiongjiu", rarity: "ELITE", img: cnIopImg("QiongjiuSSR") },
-  { name: "Mosin Nagant", rarity: "ELITE", img: cnIopImg("MosinnagantSSR") },
-  { name: "Papasha", rarity: "ELITE", img: cnIopImg("PapashaSSR") },
-  { name: "Daiyan", rarity: "ELITE", img: cnIopImg("DaiyanSSR") },
-  { name: "Centaureissi", rarity: "ELITE", img: cnIopImg("CentaureissiSSR") },
-  { name: "Lenna", rarity: "ELITE", img: cnIopImg("LennaSSR") },
-  { name: "Jiangyu", rarity: "ELITE", img: cnIopImg("JiangyuSSR") },
-  { name: "Macchiato", rarity: "ELITE", img: cnIopImg("MacqiatoSSR") },
-  { name: "Ullrid", rarity: "ELITE", img: cnIopImg("UllridSSR") },
-  { name: "Suomi", rarity: "ELITE", img: cnIopImg("SuomiSSR") },
-  { name: "Dushevnaya", rarity: "ELITE", img: cnIopImg("DusevnyjSSR") },
-  { name: "Zhaohui", rarity: "ELITE", img: cnIopImg("ZhaohuiSSR") },
-  { name: "Klukai", rarity: "ELITE", img: cnIopImg("ClukaySSR") },
-  { name: "Mechty", rarity: "ELITE", img: cnIopImg("MishtySSR") },
-  { name: "Vector", rarity: "ELITE", img: cnIopImg("VectorSSR") },
-  { name: "Belka", rarity: "ELITE", img: cnIopImg("BiyocaSSR") },
-  { name: "Andoris", rarity: "ELITE", img: cnIopImg("AndorisSSR") },
-  { name: "Springfield", rarity: "ELITE", img: cnIopImg("SpringfieldSSR") },
-  { name: "Faye", rarity: "ELITE", img: cnIopImg("FayeSSR") },
-  { name: "Peri", rarity: "ELITE", img: cnIopImg("PeriSSR") },
-  { name: "Qiuhua", rarity: "ELITE", img: cnIopImg("QiuhuaSSR") },
-];
+function dollMetaSerialize(_slug: DollSlug): DollMeta {
+  const { name, rarity = "ELITE", slug } = _slug;
+  return {
+    name,
+    id: slug,
+    rarity,
+    img: cnIopImg(slug),
+  } satisfies DollMeta;
+}
 
-// TODO:
-export const DOLL_KEYS = [];
-
-export const DOLL_EXP_TABLE = [
-  0, 2, 2, 5, 5, 5, 5, 5, 5, 60, 150, 300, 480, 525, 545, 570, 595, 625, 655,
-  685, 715, 860, 1000, 1335, 1670, 1820, 1820, 2000, 2320, 2320, 2320, 2320,
-  4220, 4670, 4670, 6490, 7570, 8655, 9735, 10815, 11900, 12980, 14060, 15045,
-  23520, 23925, 24565, 25090, 25610, 26135, 26545, 27180, 27700, 28225, 28750,
-  29245, 29795, 30315, 30840, 31360,
-];
+export const DOLL_META: DollMeta[] = DOLL_SLUGS.map(dollMetaSerialize);
 
 export type StockBarConf = [number, number, number, number, number, number];
 export const DOLL_UNCAP_TABLE: {
