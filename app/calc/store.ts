@@ -1,4 +1,4 @@
-import { atom } from "jotai";
+import { atom, PrimitiveAtom } from "jotai";
 import { v4 } from "uuid";
 import { splitAtom } from "jotai/utils";
 import { CALC_TYPE_ENUM } from "@/repository/enums";
@@ -11,6 +11,7 @@ import {
 import { add } from "@/lib/utils";
 
 export type CalcObject = {
+  /** internal id used to handle sorting */
   _id: string;
   calcType: keyof typeof CALC_TYPE_ENUM | undefined;
   name: string;
@@ -18,8 +19,36 @@ export type CalcObject = {
   to: number;
 };
 
+export type CalcAtomProps = {
+  atom: PrimitiveAtom<CalcObject>;
+};
+
 export const calcListAtom = atom<CalcObject[]>([]);
 export const calcListSplitAtom = splitAtom(calcListAtom, (e) => e._id);
+export const calcListSplitSetAtom = atom(
+  null,
+  (get, set, next: { atom: PrimitiveAtom<CalcObject>; id: string }[]) => {
+    set(
+      calcListAtom,
+      next.map(({ atom }) => get(atom)),
+    );
+  },
+);
+
+function createCalcObject(): CalcObject {
+  return {
+    _id: v4(),
+    calcType: "CHAR",
+    name: "",
+    from: 1,
+    to: 60,
+  } satisfies CalcObject;
+}
+
+export const newCalcObjectAtom = atom(null, (get, set) => {
+  const currentList = get(calcListAtom);
+  set(calcListAtom, [...currentList, createCalcObject()]);
+});
 
 type StockBarSummary = {
   tier1: number;

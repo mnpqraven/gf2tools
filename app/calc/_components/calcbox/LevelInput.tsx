@@ -1,6 +1,6 @@
 import { HTMLAttributes, RefAttributes, useId, useMemo } from "react";
 import { z } from "zod";
-import { CalcAtom } from "./SortableCalcBox";
+import { CalcAtomProps } from "../../store";
 import { focusAtom } from "jotai-optics";
 import { useAtom } from "jotai";
 import { Label } from "@/components/ui/label";
@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
 
 interface Props
-  extends CalcAtom,
+  extends CalcAtomProps,
     HTMLAttributes<HTMLDivElement>,
     RefAttributes<HTMLDivElement> {
   min?: number;

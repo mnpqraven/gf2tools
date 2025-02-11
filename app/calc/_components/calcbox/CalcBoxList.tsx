@@ -1,86 +1,35 @@
 "use client";
 
-import { PrimitiveAtom, useAtomValue } from "jotai";
-import { calcListAtom, calcListSplitAtom } from "../../store";
-import { SortableCalcBox } from "./SortableCalcBox";
-import {
-  closestCenter,
-  DndContext,
-  DragEndEvent,
-  DragOverlay,
-  DragStartEvent,
-  MouseSensor,
-  TouchSensor,
-  useSensor,
-  useSensors,
-} from "@dnd-kit/core";
-import { SortableContext, rectSortingStrategy } from "@dnd-kit/sortable";
-import { useState } from "react";
+import { useAtomValue, useSetAtom } from "jotai";
+import { calcListSplitAtom, calcListSplitSetAtom } from "../../store";
+import { closestCorners } from "@dnd-kit/core";
+import { Sortable, SortableItem } from "@/components/ui/sortable";
 import { CalcBox } from "./CalcBox";
-import { useMoveAtom } from "@/lib/atoms/useMoveAtoms";
+import { useMemo } from "react";
 
 export function CalcBoxList() {
-  const atoms = useAtomValue(calcListSplitAtom);
-  const move = useMoveAtom(calcListAtom);
-
-  const sensors = useSensors(
-    useSensor(MouseSensor, {
-      // Require the mouse to move by 10 pixels before activating
-      activationConstraint: {
-        distance: 10,
-      },
-    }),
-    useSensor(TouchSensor, {
-      // Press delay of 250ms, with tolerance of 5px of movement
-      activationConstraint: {
-        delay: 250,
-        tolerance: 5,
-      },
-    }),
+  const _atoms = useAtomValue(calcListSplitAtom);
+  const keyedAtoms = useMemo(
+    () => _atoms.map((atom) => ({ atom, id: `${atom}` })),
+    [_atoms],
   );
-  const [activeId, setActiveId] = useState<string | undefined>(undefined);
-
-  function handleDragStart(event: DragStartEvent) {
-    setActiveId(event.active.id as string);
-  }
-
-  function handleDragEnd(e: DragEndEvent) {
-    const { active, over } = e;
-    if (over?.id !== undefined && active.id !== over.id) {
-      move(getAtomIndex(atoms, active.id), getAtomIndex(atoms, over.id));
-    }
-
-    setActiveId(undefined);
-  }
-
-  const activeAtomIndex = atoms.findIndex((e) => e.toString() === activeId);
+  const setAtoms = useSetAtom(calcListSplitSetAtom);
 
   return (
-    <DndContext
-      onDragStart={handleDragStart}
-      onDragEnd={handleDragEnd}
-      sensors={sensors}
-      collisionDetection={closestCenter}
+    <Sortable
+      orientation="mixed"
+      collisionDetection={closestCorners}
+      value={keyedAtoms}
+      onValueChange={setAtoms}
+      overlay={<div className="size-full rounded-md bg-primary/10" />}
     >
-      <SortableContext
-        items={atoms.map((atom) => `${atom}`)}
-        strategy={rectSortingStrategy}
-      >
-        <div className="flex flex-wrap gap-2">
-          {atoms.map((atom, index) => (
-            <SortableCalcBox key={`${atom}`} atom={atom} index={index} />
-          ))}
-        </div>
-      </SortableContext>
-      <DragOverlay>
-        {activeAtomIndex !== -1 ? (
-          <CalcBox atom={atoms[activeAtomIndex]} index={activeAtomIndex} />
-        ) : null}
-      </DragOverlay>
-    </DndContext>
+      <div className="flex flex-wrap gap-2">
+        {keyedAtoms.map(({ atom, id }) => (
+          <SortableItem key={id} value={id} asChild>
+            <CalcBox atom={atom} />
+          </SortableItem>
+        ))}
+      </div>
+    </Sortable>
   );
-}
-
-function getAtomIndex<T, V>(atoms: PrimitiveAtom<T>[], id: V) {
-  return atoms.findIndex((atom) => atom.toString() === id);
 }

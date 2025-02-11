@@ -1,13 +1,10 @@
-import { PrimitiveAtom, useAtom } from "jotai";
+import { PrimitiveAtom, useSetAtom } from "jotai";
 import { calcListSplitAtom, CalcObject } from "../store";
 
 export function useRemoveCalcObject() {
-  const [atoms, dispatch] = useAtom(calcListSplitAtom);
+  const dispatch = useSetAtom(calcListSplitAtom);
 
-  function remove(indexOrAtom: number | PrimitiveAtom<CalcObject>) {
-    const atom =
-      typeof indexOrAtom === "number" ? atoms[indexOrAtom] : indexOrAtom;
-
+  function remove(atom: PrimitiveAtom<CalcObject>) {
     dispatch({
       type: "remove",
       atom,

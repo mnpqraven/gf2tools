@@ -1,5 +1,5 @@
 import { atom, useAtom, useAtomValue } from "jotai";
-import { CalcAtom } from "./SortableCalcBox";
+import { CalcAtomProps } from "../../store";
 import { ChangeEvent, useMemo } from "react";
 import { focusAtom } from "jotai-optics";
 import { Button } from "@/components/ui/button";
@@ -28,11 +28,9 @@ const defaultCommandState: CommandState = {
   search: "",
 };
 
-interface Props extends CalcAtom {
-  index?: number;
-}
+type Props = CalcAtomProps;
 
-export function NameInput({ atom, index }: Props) {
+export function NameInput({ atom }: Props) {
   const { dollsAtom, openAtom, searchTextAtom } = useAtomGenerate();
   const [search, setSearch] = useAtom(searchTextAtom);
   const [open, setOpen] = useAtom(openAtom);
@@ -135,7 +133,7 @@ function useAtomGenerate() {
   return { dollsAtom, openAtom, searchTextAtom };
 }
 
-function useNameAtom(atom: CalcAtom["atom"]) {
+function useNameAtom(atom: CalcAtomProps["atom"]) {
   const nameAtom = useMemo(
     () => focusAtom(atom, (t) => t.prop("name")),
     [atom],
