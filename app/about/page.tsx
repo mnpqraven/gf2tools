@@ -17,7 +17,7 @@ export default function Page() {
       </Card>
       <Card>
         <CardHeader>
-          <CardTitle>TODOs / Upcoming features</CardTitle>
+          <CardTitle>Roadmap / Upcoming features</CardTitle>
         </CardHeader>
         <CardContent className="flex flex-col gap-1">
           {FEATURES.map((data) => (
