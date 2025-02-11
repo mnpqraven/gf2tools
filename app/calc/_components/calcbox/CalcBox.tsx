@@ -1,7 +1,7 @@
 "use client";
 
 import { useAtom, useAtomValue } from "jotai";
-import { HTMLAttributes, Ref, useMemo } from "react";
+import { ComponentPropsWithRef, useMemo } from "react";
 import { focusAtom } from "jotai-optics";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -15,18 +15,18 @@ import { GripVertical } from "lucide-react";
 import { SortableDragHandle } from "@/components/ui/sortable";
 import { buttonVariants } from "@/components/ui/button";
 
-interface Prop extends CalcAtomProps, HTMLAttributes<HTMLDivElement> {
-  ref?: Ref<HTMLDivElement>;
-}
-export function CalcBox({ atom, ref, ...props }: Prop) {
+export function CalcBox({
+  atom,
+  ...props
+}: CalcAtomProps & ComponentPropsWithRef<"div">) {
   const name = useAtomValue(
-    useMemo(() => focusAtom(atom, (t) => t.prop("name")), [atom]),
+    useMemo(() => focusAtom(atom, (t) => t.prop("name")), [atom])
   );
   // TODO: impl doll_id lookup
   const find = DOLL_META.find((e) => e.name === name);
 
   return (
-    <Card {...props} ref={ref}>
+    <Card {...props}>
       <CardHeader className="flex flex-row items-center gap-1 space-y-0 p-2">
         <CalcTypeSelector atom={atom} />
         <RemoveButton atom={atom} />
@@ -60,7 +60,7 @@ export function CalcBox({ atom, ref, ...props }: Prop) {
 function CalcTypeSelector({ atom }: CalcAtomProps) {
   const typeAtom = useMemo(
     () => focusAtom(atom, (optic) => optic.prop("calcType")),
-    [atom],
+    [atom]
   );
   const [calcType, setCalcType] = useAtom(typeAtom);
 

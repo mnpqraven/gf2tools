@@ -1,4 +1,4 @@
-import { HTMLAttributes, RefAttributes, useId, useMemo } from "react";
+import { ComponentPropsWithRef, useId, useMemo } from "react";
 import { z } from "zod";
 import { CalcAtomProps } from "../../store";
 import { focusAtom } from "jotai-optics";
@@ -9,8 +9,7 @@ import { cn } from "@/lib/utils";
 
 interface Props
   extends CalcAtomProps,
-    HTMLAttributes<HTMLDivElement>,
-    RefAttributes<HTMLDivElement> {
+    Omit<ComponentPropsWithRef<"input">, "value" | "onChange"> {
   min?: number;
   max?: number;
   mode: "from" | "to";
@@ -26,12 +25,12 @@ export function LevelInput({
 }: Props) {
   const inputAtom = useMemo(
     () => focusAtom(atom, (optic) => optic.prop(mode)),
-    [atom, mode],
+    [atom, mode]
   );
   const [value, setValue] = useAtom(inputAtom);
   const id = useId();
   return (
-    <div className={cn("flex flex-col gap-2", className)} {...props}>
+    <div className={cn("flex flex-col gap-2", className)}>
       <Label className="capitalize" htmlFor={id}>
         {mode}
       </Label>
@@ -45,6 +44,7 @@ export function LevelInput({
           const parsed = zLevel.parse(e.target.valueAsNumber);
           setValue(parsed);
         }}
+        {...props}
       />
     </div>
   );
