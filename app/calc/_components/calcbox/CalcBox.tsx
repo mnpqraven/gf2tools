@@ -1,6 +1,6 @@
 "use client";
 
-import { useAtom, useAtomValue } from "jotai";
+import { useAtom, useAtomValue, useSetAtom } from "jotai";
 import { ComponentPropsWithRef, useMemo } from "react";
 import { focusAtom } from "jotai-optics";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
@@ -42,7 +42,7 @@ export function CalcBox({
         <SortableDragHandle
           className={buttonVariants({
             className:
-              "min-h-16 flex flex-1 cursor-move select-none items-center justify-evenly gap-1",
+              "min-h-16 flex flex-1 cursor-move select-none items-center justify-around gap-1",
             variant: "outline",
           })}
         >
@@ -62,12 +62,18 @@ function CalcTypeSelector({ atom }: CalcAtomProps) {
     () => focusAtom(atom, (optic) => optic.prop("calcType")),
     [atom]
   );
+  const setName = useSetAtom(
+    useMemo(() => focusAtom(atom, (t) => t.prop("name")), [atom])
+  );
   const [calcType, setCalcType] = useAtom(typeAtom);
 
   return (
     <Tabs
       value={calcType}
-      onValueChange={(e) => setCalcType(e as unknown as "CHAR" | "WEP")}
+      onValueChange={(e) => {
+        setCalcType(e as unknown as "CHAR" | "WEP");
+        setName("");
+      }}
     >
       <TabsList>
         <TabsTrigger value="CHAR">Character</TabsTrigger>
