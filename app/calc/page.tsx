@@ -2,6 +2,12 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { AddCalcObjectButton } from "./_components/calcbox/AddButton";
 import { CalcSummaryContainer } from "./_components/summary/CalcSummaryContainer";
 import { CalcBoxList } from "./_components/calcbox/CalcBoxList";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Level calculator",
+  description: "Level calculator",
+};
 
 export default function Page() {
   return (

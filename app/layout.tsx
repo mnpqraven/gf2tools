@@ -17,7 +17,7 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: "GF2 Tools",
-  description: "GF2 Tools",
+  description: "GF2 Tools, calculators and tracker",
 };
 
 export default function RootLayout({
