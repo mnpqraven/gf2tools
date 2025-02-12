@@ -93,7 +93,7 @@ type DollSlug = {
   rarity?: "ELITE" | "COMMON";
 };
 
-export interface DollMeta {
+export type DollMeta = {
   name: string;
   id: string;
   rarity: "ELITE" | "COMMON";
@@ -107,7 +107,7 @@ export interface DollMeta {
     artFull?: string;
     artCard?: string;
   };
-}
+};
 
 function dollMetaSerialize(_slug: DollSlug): DollMeta {
   const { name, rarity = "ELITE", slug, dollClass: dollClass } = _slug;
