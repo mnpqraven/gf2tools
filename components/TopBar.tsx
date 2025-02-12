@@ -10,6 +10,9 @@ export function TopBar() {
           <Link className="hover:underline" href="/">
             Home
           </Link>
+          <Link className="hover:underline" href="/refitting-room">
+            Refitting Room
+          </Link>
           <Link className="hover:underline" href="/calc">
             Calc
           </Link>

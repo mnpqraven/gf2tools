@@ -9,13 +9,14 @@ import {
   sumColumn2DArray,
 } from "@/lib/calc";
 import { add } from "@/lib/utils";
+import { z } from "zod";
 
 export type CalcObject = {
   /** internal id used to handle sorting */
   _id: string;
   /** public slug of either the doll or weapon is available */
   id: string | undefined;
-  calcType: keyof typeof CALC_TYPE_ENUM | undefined;
+  calcType: z.TypeOf<typeof CALC_TYPE_ENUM> | undefined;
   name: string;
   from: number;
   to: number;
@@ -32,9 +33,9 @@ export const calcListSplitSetAtom = atom(
   (get, set, next: { atom: PrimitiveAtom<CalcObject>; id: string }[]) => {
     set(
       calcListAtom,
-      next.map(({ atom }) => get(atom)),
+      next.map(({ atom }) => get(atom))
     );
-  },
+  }
 );
 
 function createCalcObject(): CalcObject {
@@ -77,11 +78,11 @@ export type CalcSummary = {
 };
 
 const charCalcObjects = atom((get) =>
-  get(calcListAtom).filter((e) => e.calcType === "CHAR"),
+  get(calcListAtom).filter((e) => e.calcType === "CHAR")
 );
 
 const wepCalcObjects = atom((get) =>
-  get(calcListAtom).filter((e) => e.calcType === "WEP"),
+  get(calcListAtom).filter((e) => e.calcType === "WEP")
 );
 
 export const calcSummaryAtom = atom<CalcSummary>((get) => {
@@ -91,7 +92,7 @@ export const calcSummaryAtom = atom<CalcSummary>((get) => {
   const totalUncapMoney = uncaps.map((e) => e.money).reduce(add, 0);
   const totalUncapStock = sumColumn2DArray(
     uncaps.map((e) => e.totalStock),
-    6,
+    6
   );
 
   return {

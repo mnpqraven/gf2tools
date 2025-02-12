@@ -1,4 +1,3 @@
-export const CALC_TYPE_ENUM = {
-  CHAR: "CHAR",
-  WEP: "WEP",
-} as const;
+import { z } from "zod";
+
+export const CALC_TYPE_ENUM = z.enum(["CHAR", "WEP"]);
