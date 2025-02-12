@@ -1,9 +1,13 @@
-import { ComponentPropsWithRef, useState } from "react";
+import { ComponentPropsWithRef, useMemo } from "react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { Input } from "@/components/ui/input";
-import { keepPreviousData, useQuery } from "@tanstack/react-query";
+import {
+  keepPreviousData,
+  useQuery,
+  UseQueryOptions,
+} from "@tanstack/react-query";
 import { IFuseOptions } from "fuse.js";
 import {
   WeaponClass,
@@ -11,12 +15,23 @@ import {
   WeaponMeta,
   WEP_META,
 } from "@/repository/wep";
+import { useAtom, useAtomValue } from "jotai";
+import { focusAtom } from "jotai-optics";
+import {
+  filterWeaponClassAtom,
+  filterWeaponRarityAtom,
+  weaponFilterAtom,
+} from "./wepSelectorStore";
+import { Toggle } from "@/components/ui/toggle";
+import { Separator } from "@/components/ui/separator";
 
 interface Props extends ComponentPropsWithRef<"div"> {
   onWeaponSelect: (dollSlog: string) => void;
 }
 export function WepGridSelect({ onWeaponSelect, className, ...props }: Props) {
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useAtom(
+    useMemo(() => focusAtom(weaponFilterAtom, (t) => t.prop("search")), []),
+  );
   const { data: filteredWeapons = WEP_META } = useFilteredWeapons(search);
 
   const allowCustomDoll = filteredWeapons.length < WEP_META.length;
@@ -29,6 +44,7 @@ export function WepGridSelect({ onWeaponSelect, className, ...props }: Props) {
           setSearch(e.target.value);
         }}
       />
+      <WeaponFilter />
 
       {weaponClassEnum.options.map((weaponClass) => (
         <DisplayClassContainer
@@ -45,9 +61,43 @@ export function WepGridSelect({ onWeaponSelect, className, ...props }: Props) {
           onClick={() => onWeaponSelect(search)}
           variant="outline"
         >
-          {`Custom: "${search}"`}
+          {`Add Custom: "${search}"`}
         </Button>
       ) : null}
+    </div>
+  );
+}
+
+function WeaponFilter() {
+  const [weaponClasses, toggleWeaponClass] = useAtom(filterWeaponClassAtom);
+  const [weaponRarities, toggleWeaponRarity] = useAtom(filterWeaponRarityAtom);
+  return (
+    <div className="flex gap-1">
+      {weaponClassEnum.options.map((weaponClass) => (
+        <Toggle
+          key={weaponClass}
+          pressed={weaponClasses.includes(weaponClass)}
+          onPressedChange={() => {
+            toggleWeaponClass(weaponClass);
+          }}
+        >
+          {weaponClass}
+        </Toggle>
+      ))}
+
+      <Separator orientation="vertical" />
+
+      {[3, 4, 5].map((weaponRarity) => (
+        <Toggle
+          key={weaponRarity}
+          pressed={weaponRarities.includes(weaponRarity)}
+          onPressedChange={() => {
+            toggleWeaponRarity(weaponRarity);
+          }}
+        >
+          {weaponRarity}
+        </Toggle>
+      ))}
     </div>
   );
 }
@@ -66,6 +116,7 @@ function DisplayClassContainer({
   const filteredWeapons = weapons.filter(
     (wep) => wep.weaponClass === weaponClass,
   );
+
   if (!filteredWeapons.length) return null;
   return (
     <div className={cn("flex flex-col gap-2", className)} {...props}>
@@ -74,13 +125,13 @@ function DisplayClassContainer({
         {filteredWeapons.map(({ name, img, rarity, id }) => (
           <Button
             key={`${id}-${rarity}`}
-            className="flex h-auto flex-col items-center justify-center gap-1 rounded-md border"
+            className="flex h-auto items-center justify-center gap-1 rounded-md border px-1"
             onClick={() => onWeaponSelect(name)}
             variant="outline"
           >
             {
               // TODO: placeholderimg
-              img ? <Image src={img} alt={name} width={64} height={64} /> : null
+              img ? <Image src={img} alt={name} width={48} height={48} /> : null
             }
             {name}
           </Button>
@@ -92,10 +143,19 @@ function DisplayClassContainer({
 
 function useFilteredWeapons(
   search: string,
+  queryOpt?: Partial<UseQueryOptions<WeaponMeta[]>>,
   fuseOpt?: IFuseOptions<WeaponMeta> & {
     defaultPool: WeaponMeta[];
   },
 ) {
+  const filter = useAtomValue(
+    useMemo(
+      () =>
+        focusAtom(weaponFilterAtom, (t) => t.pick(["weaponClass", "rarity"])),
+      [],
+    ),
+  );
+
   async function searchWeapons(query: string): Promise<WeaponMeta[]> {
     const pool = fuseOpt?.defaultPool ?? WEP_META;
     // early empty
@@ -112,8 +172,15 @@ function useFilteredWeapons(
   }
 
   return useQuery({
+    placeholderData: keepPreviousData,
+    select: (data) =>
+      data.filter(
+        ({ rarity, weaponClass }) =>
+          filter.rarity.includes(rarity) &&
+          filter.weaponClass.includes(weaponClass),
+      ),
+    ...queryOpt,
     queryKey: ["wep_filter", search, fuseOpt],
     queryFn: () => searchWeapons(search),
-    placeholderData: keepPreviousData,
   });
 }

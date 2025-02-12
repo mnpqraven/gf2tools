@@ -78,8 +78,10 @@ export const dollClassEnum = z.enum([
   "sentinel",
   "bulwark",
 ]);
-
 export type DollClass = z.TypeOf<typeof dollClassEnum>;
+
+export const dollRarityEnum = z.enum(["ELITE", "COMMON"]);
+export type DollRarity = z.TypeOf<typeof dollRarityEnum>;
 
 type DollSlug = {
   name: string;
