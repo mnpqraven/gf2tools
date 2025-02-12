@@ -73,7 +73,7 @@ function DisplayClassContainer({
       <div className="grid grid-cols-7 gap-1">
         {filteredWeapons.map(({ name, img, rarity, id }) => (
           <Button
-            className="flex h-auto items-center justify-center gap-1 rounded-md border px-1"
+            className="flex h-auto items-center justify-around gap-1 rounded-md border px-1"
             key={`${id}-${rarity}`}
             onClick={() => onWeaponSelect({ name, id })}
             variant="outline"

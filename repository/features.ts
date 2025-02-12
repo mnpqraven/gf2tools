@@ -1,7 +1,8 @@
 export const FEATURES: { label: string; impl?: boolean }[] = [
   { label: "Better doll selection", impl: true },
   { label: "Reorder calculating items/DnD", impl: true },
-  { label: "Better weapon selection" },
+  { label: "Better weapon selection", impl: true },
+  { label: "Make the site not look like shit" },
   { label: "Persistent data in the browser" },
   { label: "Armoury/teambuilder + screenshot features" },
   { label: "Phone layout" },

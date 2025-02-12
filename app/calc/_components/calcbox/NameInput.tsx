@@ -52,6 +52,10 @@ export function NameInput({ atom }: Props) {
     }, 150);
   }
 
+  const label = name.length
+    ? name
+    : `Select ${calcType === "WEP" ? "Weapon" : "Doll"} `;
+
   return (
     <Popover
       onOpenChange={(to) => {
@@ -64,7 +68,7 @@ export function NameInput({ atom }: Props) {
       open={open}
     >
       <PopoverTrigger asChild>
-        <Button variant="outline">{name.length ? name : "Open"}</Button>
+        <Button variant="outline">{label}</Button>
       </PopoverTrigger>
       <PopoverContent className="w-auto" side="right">
         {calcType === "CHAR" ? (
