@@ -1,4 +1,4 @@
-import { useAtom, useAtomValue } from "jotai";
+import { useAtom, useAtomValue, useSetAtom } from "jotai";
 import { CalcAtomProps } from "../../store";
 import { useMemo, useState } from "react";
 import { focusAtom } from "jotai-optics";
@@ -22,6 +22,9 @@ export function NameInput({ atom }: Props) {
   const [name, setName] = useAtom(
     useMemo(() => focusAtom(atom, (t) => t.prop("name")), [atom]),
   );
+  const setId = useSetAtom(
+    useMemo(() => focusAtom(atom, (t) => t.prop("id")), [atom]),
+  );
   const calcType = useAtomValue(
     useMemo(() => focusAtom(atom, (t) => t.prop("calcType")), [atom]),
   );
@@ -29,8 +32,12 @@ export function NameInput({ atom }: Props) {
   const resetWeaponFilter = useResetAtom(weaponFilterAtom);
   const resetDollFilter = useResetAtom(dollFilterAtom);
 
-  function onSelect(name: string) {
+  function onSelect(
+    { name, id }: { name: string; id?: string },
+    custom?: boolean,
+  ) {
     setName(name);
+    setId(custom ? undefined : id);
     setOpen(false);
     clearFilter();
   }

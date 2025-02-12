@@ -13,6 +13,8 @@ import { add } from "@/lib/utils";
 export type CalcObject = {
   /** internal id used to handle sorting */
   _id: string;
+  /** public slug of either the doll or weapon is available */
+  id: string | undefined;
   calcType: keyof typeof CALC_TYPE_ENUM | undefined;
   name: string;
   from: number;
@@ -38,6 +40,7 @@ export const calcListSplitSetAtom = atom(
 function createCalcObject(): CalcObject {
   return {
     _id: v4(),
+    id: undefined,
     calcType: "CHAR",
     name: "",
     from: 1,

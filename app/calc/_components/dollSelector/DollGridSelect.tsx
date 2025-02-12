@@ -15,7 +15,7 @@ import { useFilteredDolls } from "./useFilteredDolls";
 import { DollFilter } from "./DollFilter";
 
 interface Props extends ComponentPropsWithRef<"div"> {
-  onDollSelect: (dollSlog: string) => void;
+  onDollSelect: (t: { name: string; id?: string }, custom?: boolean) => void;
 }
 export function DollGridSelect({ onDollSelect, className, ...props }: Props) {
   const search = useAtomValue(
@@ -41,7 +41,7 @@ export function DollGridSelect({ onDollSelect, className, ...props }: Props) {
       {allowCustomDoll ? (
         <Button
           className="flex h-auto flex-col items-center justify-center gap-1 rounded-md border"
-          onClick={() => onDollSelect(search)}
+          onClick={() => onDollSelect({ name: search }, true)}
           variant="outline"
         >
           {`Add Custom: "${search}"`}
@@ -60,7 +60,7 @@ function DisplayClassContainer({
 }: ComponentPropsWithRef<"div"> & {
   dolls: DollMeta[];
   dollClass: DollClass;
-  onDollSelect: (name: string) => void;
+  onDollSelect: (t: { name: string; id?: string }) => void;
 }) {
   const filteredDolls = dolls.filter((doll) => doll.dollClass === dollClass);
   if (!filteredDolls.length) return null;
@@ -73,7 +73,7 @@ function DisplayClassContainer({
           <Button
             key={`${id}-${rarity}`}
             className="flex h-auto items-center justify-center gap-1 rounded-md border px-1"
-            onClick={() => onDollSelect(name)}
+            onClick={() => onDollSelect({ name, id })}
             variant="outline"
           >
             {

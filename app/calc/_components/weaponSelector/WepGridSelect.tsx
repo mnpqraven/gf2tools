@@ -15,7 +15,7 @@ import { useFilteredWeapons } from "./useFilteredWeapons";
 import { WeaponFilter } from "./WeaponFilter";
 
 interface Props extends ComponentPropsWithRef<"div"> {
-  onWeaponSelect: (dollSlog: string) => void;
+  onWeaponSelect: (t: { name: string; id?: string }, custom?: boolean) => void;
 }
 export function WepGridSelect({ onWeaponSelect, className, ...props }: Props) {
   const search = useAtomValue(
@@ -41,7 +41,7 @@ export function WepGridSelect({ onWeaponSelect, className, ...props }: Props) {
       {allowCustomDoll ? (
         <Button
           className="flex h-auto flex-col items-center justify-center gap-1 rounded-md border"
-          onClick={() => onWeaponSelect(search)}
+          onClick={() => onWeaponSelect({ name: search }, true)}
           variant="outline"
         >
           {`Add Custom: "${search}"`}
@@ -60,7 +60,7 @@ function DisplayClassContainer({
 }: ComponentPropsWithRef<"div"> & {
   weapons: WeaponMeta[];
   weaponClass: WeaponClass;
-  onWeaponSelect: (name: string) => void;
+  onWeaponSelect: (t: { name: string; id?: string }, custom?: boolean) => void;
 }) {
   const filteredWeapons = weapons.filter(
     (wep) => wep.weaponClass === weaponClass,
@@ -75,7 +75,7 @@ function DisplayClassContainer({
           <Button
             key={`${id}-${rarity}`}
             className="flex h-auto items-center justify-center gap-1 rounded-md border px-1"
-            onClick={() => onWeaponSelect(name)}
+            onClick={() => onWeaponSelect({ name, id })}
             variant="outline"
           >
             {
