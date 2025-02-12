@@ -1,6 +1,11 @@
 import { ComponentPropsWithRef, useState } from "react";
 import { cn } from "@/lib/utils";
-import { DOLL_META, DollMeta } from "@/repository/dolls";
+import {
+  DOLL_META,
+  DollClass,
+  dollClassEnum,
+  DollMeta,
+} from "@/repository/dolls";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { Input } from "@/components/ui/input";
@@ -24,24 +29,16 @@ export function DollGridSelect({ onDollSelect, className, ...props }: Props) {
           setSearch(e.target.value);
         }}
       />
-      <div className="grid grid-cols-7 gap-1">
-        {filteredDolls.map(({ name, img }) => (
-          <Button
-            key={name}
-            className="flex h-auto flex-col items-center justify-center gap-1 rounded-md border"
-            onClick={() => onDollSelect(name)}
-            variant="outline"
-          >
-            {
-              // TODO: placeholderimg
-              img.head ? (
-                <Image src={img.head} alt={name} width={64} height={64} />
-              ) : null
-            }
-            {name}
-          </Button>
-        ))}
+      {dollClassEnum.options.map((dollClass) => (
+        <DisplayClassContainer
+          key={dollClass}
+          dolls={filteredDolls}
+          dollClass={dollClass}
+          onDollSelect={onDollSelect}
+        />
+      ))}
 
+      <div className="grid grid-cols-7 gap-1">
         {allowCustomDoll ? (
           <Button
             className="flex h-auto flex-col items-center justify-center gap-1 rounded-md border"
@@ -56,11 +53,50 @@ export function DollGridSelect({ onDollSelect, className, ...props }: Props) {
   );
 }
 
+function DisplayClassContainer({
+  dolls,
+  dollClass,
+  onDollSelect,
+  className,
+  ...props
+}: ComponentPropsWithRef<"div"> & {
+  dolls: DollMeta[];
+  dollClass: DollClass;
+  onDollSelect: (name: string) => void;
+}) {
+  const filteredDolls = dolls.filter((doll) => doll.dollClass === dollClass);
+  if (!filteredDolls.length) return null;
+  return (
+    <div className={cn("flex flex-col gap-2", className)} {...props}>
+      <p className="text-xl font-semibold">{dollClass}</p>
+
+      <div className="grid grid-cols-7 gap-1">
+        {filteredDolls.map(({ name, img, rarity, id }) => (
+          <Button
+            key={`${id}-${rarity}`}
+            className="flex h-auto flex-col items-center justify-center gap-1 rounded-md border"
+            onClick={() => onDollSelect(name)}
+            variant="outline"
+          >
+            {
+              // TODO: placeholderimg
+              img.head ? (
+                <Image src={img.head} alt={name} width={64} height={64} />
+              ) : null
+            }
+            {name}
+          </Button>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 function useFilteredDolls(
   search: string,
   fuseOpt?: IFuseOptions<DollMeta> & {
     defaultPool: DollMeta[];
-  }
+  },
 ) {
   async function searchDolls(query: string): Promise<DollMeta[]> {
     const pool = fuseOpt?.defaultPool ?? DOLL_META;

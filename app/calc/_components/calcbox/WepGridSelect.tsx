@@ -5,7 +5,12 @@ import Image from "next/image";
 import { Input } from "@/components/ui/input";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import { IFuseOptions } from "fuse.js";
-import { WeaponMeta, WEP_META } from "@/repository/wep";
+import {
+  WeaponClass,
+  weaponClassEnum,
+  WeaponMeta,
+  WEP_META,
+} from "@/repository/wep";
 
 interface Props extends ComponentPropsWithRef<"div"> {
   onWeaponSelect: (dollSlog: string) => void;
@@ -24,6 +29,47 @@ export function WepGridSelect({ onWeaponSelect, className, ...props }: Props) {
           setSearch(e.target.value);
         }}
       />
+
+      {weaponClassEnum.options.map((weaponClass) => (
+        <DisplayClassContainer
+          key={weaponClass}
+          weapons={filteredWeapons}
+          weaponClass={weaponClass}
+          onWeaponSelect={onWeaponSelect}
+        />
+      ))}
+
+      {allowCustomDoll ? (
+        <Button
+          className="flex h-auto flex-col items-center justify-center gap-1 rounded-md border"
+          onClick={() => onWeaponSelect(search)}
+          variant="outline"
+        >
+          {`Custom: "${search}"`}
+        </Button>
+      ) : null}
+    </div>
+  );
+}
+
+function DisplayClassContainer({
+  weapons,
+  weaponClass,
+  onWeaponSelect,
+  className,
+  ...props
+}: ComponentPropsWithRef<"div"> & {
+  weapons: WeaponMeta[];
+  weaponClass: WeaponClass;
+  onWeaponSelect: (name: string) => void;
+}) {
+  const filteredWeapons = weapons.filter(
+    (wep) => wep.weaponClass === weaponClass,
+  );
+  if (!filteredWeapons.length) return null;
+  return (
+    <div className={cn("flex flex-col gap-2", className)} {...props}>
+      <p className="text-xl font-semibold">{weaponClass}</p>
       <div className="grid grid-cols-7 gap-1">
         {filteredWeapons.map(({ name, img, rarity, id }) => (
           <Button
@@ -39,16 +85,6 @@ export function WepGridSelect({ onWeaponSelect, className, ...props }: Props) {
             {name}
           </Button>
         ))}
-
-        {allowCustomDoll ? (
-          <Button
-            className="flex h-auto flex-col items-center justify-center gap-1 rounded-md border"
-            onClick={() => onWeaponSelect(search)}
-            variant="outline"
-          >
-            {`Custom: "${search}"`}
-          </Button>
-        ) : null}
       </div>
     </div>
   );
@@ -58,7 +94,7 @@ function useFilteredWeapons(
   search: string,
   fuseOpt?: IFuseOptions<WeaponMeta> & {
     defaultPool: WeaponMeta[];
-  }
+  },
 ) {
   async function searchWeapons(query: string): Promise<WeaponMeta[]> {
     const pool = fuseOpt?.defaultPool ?? WEP_META;

@@ -1,40 +1,67 @@
+import { z } from "zod";
+
 const DOLL_SLUGS: DollSlug[] = [
-  { name: "Krolik", slug: "CharolicSR", rarity: "COMMON" },
-  { name: "Colphne", slug: "ColphneSR", rarity: "COMMON" },
-  { name: "Groza", slug: "GrozaSR", rarity: "COMMON" },
-  { name: "Nemesis", slug: "NemesisSR", rarity: "COMMON" },
-  { name: "Sharkry", slug: "SharkrySR", rarity: "COMMON" },
-  { name: "Cheeta", slug: "CheetaSR", rarity: "COMMON" },
-  { name: "Nagant", slug: "NagantSR", rarity: "COMMON" },
-  { name: "Ksenia", slug: "KseniaSR", rarity: "COMMON" },
-  { name: "Littara", slug: "LittaraSR", rarity: "COMMON" },
-  { name: "Lotta", slug: "LottaSR", rarity: "COMMON" },
-  { name: "Vepley", slug: "VepleySSR" },
-  { name: "Tololo", slug: "TololoSSR" },
-  { name: "Peritya", slug: "PerityaSSR" },
-  { name: "Sabrina", slug: "SabrinaSSR" },
-  { name: "Qiongjiu", slug: "QiongjiuSSR" },
-  { name: "Mosin Nagant", slug: "MosinnagantSSR" },
-  { name: "Papasha", slug: "PapashaSSR" },
-  { name: "Daiyan", slug: "DaiyanSSR" },
-  { name: "Centaureissi", slug: "CentaureissiSSR" },
-  { name: "Lenna", slug: "LennaSSR" },
-  { name: "Jiangyu", slug: "JiangyuSSR" },
-  { name: "Macchiato", slug: "MacqiatoSSR" },
-  { name: "Ullrid", slug: "UllridSSR" },
-  { name: "Suomi", slug: "SuomiSSR" },
-  { name: "Dushevnaya", slug: "DusevnyjSSR" },
-  { name: "Zhaohui", slug: "ZhaohuiSSR" },
-  { name: "Klukai", slug: "ClukaySSR" },
-  { name: "Mechty", slug: "MishtySSR" },
-  { name: "Vector", slug: "VectorSSR" },
-  { name: "Belka", slug: "BiyocaSSR" },
-  { name: "Andoris", slug: "AndorisSSR" },
-  { name: "Springfield", slug: "SpringfieldSSR" },
-  { name: "Faye", slug: "FayeSSR" },
-  { name: "Peri", slug: "PeriSSR" },
-  { name: "Qiuhua", slug: "QiuhuaSSR" },
-  { name: "YooHee", slug: "YooHeeSSR" },
+  {
+    name: "Krolik",
+    dollClass: "vanguard",
+    slug: "CharolicSR",
+    rarity: "COMMON",
+  },
+  {
+    name: "Colphne",
+    dollClass: "support",
+    slug: "ColphneSR",
+    rarity: "COMMON",
+  },
+  { name: "Groza", dollClass: "bulwark", slug: "GrozaSR", rarity: "COMMON" },
+  {
+    name: "Nemesis",
+    dollClass: "sentinel",
+    slug: "NemesisSR",
+    rarity: "COMMON",
+  },
+  {
+    name: "Sharkry",
+    dollClass: "sentinel",
+    slug: "SharkrySR",
+    rarity: "COMMON",
+  },
+  { name: "Cheeta", dollClass: "support", slug: "CheetaSR", rarity: "COMMON" },
+  { name: "Nagant", dollClass: "support", slug: "NagantSR", rarity: "COMMON" },
+  { name: "Ksenia", dollClass: "support", slug: "KseniaSR", rarity: "COMMON" },
+  {
+    name: "Littara",
+    dollClass: "sentinel",
+    slug: "LittaraSR",
+    rarity: "COMMON",
+  },
+  { name: "Lotta", dollClass: "sentinel", slug: "LottaSR", rarity: "COMMON" },
+  { name: "Vepley", dollClass: "vanguard", slug: "VepleySSR" },
+  { name: "Tololo", dollClass: "sentinel", slug: "TololoSSR" },
+  { name: "Peritya", dollClass: "sentinel", slug: "PerityaSSR" },
+  { name: "Sabrina", dollClass: "bulwark", slug: "SabrinaSSR" },
+  { name: "Qiongjiu", dollClass: "sentinel", slug: "QiongjiuSSR" },
+  { name: "Mosin Nagant", dollClass: "sentinel", slug: "MosinnagantSSR" },
+  { name: "Papasha", dollClass: "sentinel", slug: "PapashaSSR" },
+  { name: "Daiyan", dollClass: "vanguard", slug: "DaiyanSSR" },
+  { name: "Centaureissi", dollClass: "support", slug: "CentaureissiSSR" },
+  { name: "Lenna", dollClass: "support", slug: "LennaSSR" },
+  { name: "Jiangyu", dollClass: "sentinel", slug: "JiangyuSSR" },
+  { name: "Macchiato", dollClass: "sentinel", slug: "MacqiatoSSR" },
+  { name: "Ullrid", dollClass: "vanguard", slug: "UllridSSR" },
+  { name: "Suomi", dollClass: "support", slug: "SuomiSSR" },
+  { name: "Dushevnaya", dollClass: "support", slug: "DusevnyjSSR" },
+  { name: "Zhaohui", dollClass: "vanguard", slug: "ZhaohuiSSR" },
+  { name: "Klukai", dollClass: "sentinel", slug: "ClukaySSR" },
+  { name: "Mechty", dollClass: "support", slug: "MishtySSR" },
+  { name: "Vector", dollClass: "support", slug: "VectorSSR" },
+  { name: "Belka", dollClass: "vanguard", slug: "BiyocaSSR" },
+  { name: "Andoris", dollClass: "bulwark", slug: "AndorisSSR" },
+  { name: "Springfield", dollClass: "support", slug: "SpringfieldSSR" },
+  { name: "Faye", dollClass: "vanguard", slug: "FayeSSR" },
+  { name: "Peri", dollClass: "bulwark", slug: "PeriSSR" },
+  { name: "Qiuhua", dollClass: "vanguard", slug: "QiuhuaSSR" },
+  { name: "YooHee", dollClass: "support", slug: "YooHeeSSR" },
 ];
 
 export const DOLL_EXP_TABLE = [
@@ -45,12 +72,22 @@ export const DOLL_EXP_TABLE = [
   29245, 29795, 30315, 30840, 31360,
 ];
 
+export const dollClassEnum = z.enum([
+  "vanguard",
+  "support",
+  "sentinel",
+  "bulwark",
+]);
+
+export type DollClass = z.TypeOf<typeof dollClassEnum>;
+
 type DollSlug = {
   name: string;
   /**
    * doll's slug, based on cn wiki
    */
   slug: string;
+  dollClass: DollClass;
   rarity?: "ELITE" | "COMMON";
 };
 
@@ -58,6 +95,7 @@ export interface DollMeta {
   name: string;
   id: string;
   rarity: "ELITE" | "COMMON";
+  dollClass: DollClass;
   img: {
     head?: string;
     bust?: string;
@@ -70,11 +108,12 @@ export interface DollMeta {
 }
 
 function dollMetaSerialize(_slug: DollSlug): DollMeta {
-  const { name, rarity = "ELITE", slug } = _slug;
+  const { name, rarity = "ELITE", slug, dollClass: dollClass } = _slug;
   return {
     name,
     id: slug,
     rarity,
+    dollClass,
     img: cnIopImg(slug),
   } satisfies DollMeta;
 }
