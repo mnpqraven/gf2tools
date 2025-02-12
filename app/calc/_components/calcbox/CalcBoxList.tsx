@@ -17,15 +17,15 @@ export function CalcBoxList() {
 
   return (
     <Sortable
-      orientation="mixed"
       collisionDetection={closestCorners}
-      value={keyedAtoms}
       onValueChange={setAtoms}
+      orientation="mixed"
       overlay={<div className="size-full rounded-md bg-primary/10" />}
+      value={keyedAtoms}
     >
       <div className="flex flex-wrap gap-2">
         {keyedAtoms.map(({ atom, id }) => (
-          <SortableItem key={id} value={id} asChild>
+          <SortableItem asChild key={id} value={id}>
             <CalcBox atom={atom} />
           </SortableItem>
         ))}

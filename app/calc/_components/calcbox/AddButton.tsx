@@ -11,7 +11,7 @@ export function AddCalcObjectButton({
   const onNew = useSetAtom(newCalcObjectAtom);
 
   return (
-    <Button variant="outline" size="sm" {...props} onClick={onNew}>
+    <Button size="sm" variant="outline" {...props} onClick={onNew}>
       <Plus /> New
     </Button>
   );

@@ -32,9 +32,9 @@ export function WepGridSelect({ onWeaponSelect, className, ...props }: Props) {
       {weaponClassEnum.options.map((weaponClass) => (
         <DisplayClassContainer
           key={weaponClass}
-          weapons={filteredWeapons}
-          weaponClass={weaponClass}
           onWeaponSelect={onWeaponSelect}
+          weaponClass={weaponClass}
+          weapons={filteredWeapons}
         />
       ))}
 
@@ -73,14 +73,14 @@ function DisplayClassContainer({
       <div className="grid grid-cols-7 gap-1">
         {filteredWeapons.map(({ name, img, rarity, id }) => (
           <Button
-            key={`${id}-${rarity}`}
             className="flex h-auto items-center justify-center gap-1 rounded-md border px-1"
+            key={`${id}-${rarity}`}
             onClick={() => onWeaponSelect({ name, id })}
             variant="outline"
           >
             {
               // TODO: placeholderimg
-              img ? <Image src={img} alt={name} width={48} height={48} /> : null
+              img ? <Image alt={name} height={48} src={img} width={48} /> : null
             }
             {name}
           </Button>

@@ -13,10 +13,10 @@ export function RemoveButton({ atom, ...props }: Props) {
   return (
     <Button
       {...props}
-      variant="destructive"
       onClick={() => {
         remove(atom);
       }}
+      variant="destructive"
     >
       <Trash />
     </Button>

@@ -25,7 +25,7 @@ export function LevelInput({
 }: Props) {
   const inputAtom = useMemo(
     () => focusAtom(atom, (optic) => optic.prop(mode)),
-    [atom, mode]
+    [atom, mode],
   );
   const [value, setValue] = useAtom(inputAtom);
   const id = useId();
@@ -36,14 +36,14 @@ export function LevelInput({
       </Label>
       <Input
         id={id}
-        min={min}
-        type="number"
         max={max}
-        value={value}
+        min={min}
         onChange={(e) => {
           const parsed = zLevel.parse(e.target.valueAsNumber);
           setValue(parsed);
         }}
+        type="number"
+        value={value}
         {...props}
       />
     </div>

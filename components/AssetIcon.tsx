@@ -35,10 +35,10 @@ export function AssetIcon({
   return (
     <Image
       {...props}
-      src={ASSET_DICT[key]}
       alt={key}
-      width={width}
       height={height}
+      src={ASSET_DICT[key]}
+      width={width}
     />
   );
 }

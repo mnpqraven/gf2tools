@@ -30,14 +30,14 @@ export function CalcBox({
         <NameInput atom={atom} />
 
         <div className="flex flex-1 gap-1">
-          <LevelInput className="flex-1" mode="from" atom={atom} />
-          <LevelInput className="flex-1" mode="to" atom={atom} />
+          <LevelInput atom={atom} className="flex-1" mode="from" />
+          <LevelInput atom={atom} className="flex-1" mode="to" />
         </div>
 
         <SortableDragHandle
           asChild
-          variant="outline"
           className="min-h-16 flex flex-1 cursor-move select-none items-center justify-around gap-1"
+          variant="outline"
         >
           <DragHandle atom={atom} />
         </SortableDragHandle>
@@ -64,7 +64,7 @@ function DragHandle({ atom, ...props }: CalcAtomProps & ButtonProps) {
 
   return (
     <Button {...props}>
-      {imgsrc ? <Image height={64} width={64} alt="pic" src={imgsrc} /> : null}
+      {imgsrc ? <Image alt="pic" height={64} src={imgsrc} width={64} /> : null}
       <GripVertical className="text-muted-foreground" />
     </Button>
   );
@@ -85,12 +85,12 @@ function CalcTypeSelector({ atom }: CalcAtomProps) {
 
   return (
     <Tabs
-      value={calcType}
       onValueChange={(e) => {
         setCalcType(e as unknown as "CHAR" | "WEP");
         setName("");
         setId(undefined);
       }}
+      value={calcType}
     >
       <TabsList>
         <TabsTrigger value="CHAR">Character</TabsTrigger>

@@ -28,19 +28,19 @@ export function DollFilter({
   return (
     <div className={cn("flex flex-col gap-1", className)} {...props}>
       <Input
-        value={search}
         onChange={(e) => {
           setSearch(e.target.value);
         }}
+        value={search}
       />
       <div className="flex gap-2">
         {dollClassEnum.options.map((dollClass) => (
           <Toggle
             key={dollClass}
-            pressed={dollClasses.includes(dollClass)}
             onPressedChange={() => {
               toggleDollClass(dollClass);
             }}
+            pressed={dollClasses.includes(dollClass)}
           >
             {dollClass}
           </Toggle>
@@ -51,10 +51,10 @@ export function DollFilter({
         {dollRarityEnum.options.map((dollRarity) => (
           <Toggle
             key={dollRarity}
-            pressed={dollRarities.includes(dollRarity)}
             onPressedChange={() => {
               toggleDollRarity(dollRarity);
             }}
+            pressed={dollRarities.includes(dollRarity)}
           >
             {dollRarity}
           </Toggle>

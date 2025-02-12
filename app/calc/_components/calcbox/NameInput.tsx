@@ -54,7 +54,6 @@ export function NameInput({ atom }: Props) {
 
   return (
     <Popover
-      open={open}
       onOpenChange={(to) => {
         if (to) setOpen(true);
         else {
@@ -62,11 +61,12 @@ export function NameInput({ atom }: Props) {
           clearFilter();
         }
       }}
+      open={open}
     >
       <PopoverTrigger asChild>
         <Button variant="outline">{name.length ? name : "Open"}</Button>
       </PopoverTrigger>
-      <PopoverContent side="right" className="w-auto">
+      <PopoverContent className="w-auto" side="right">
         {calcType === "CHAR" ? (
           <DollGridSelect onDollSelect={onSelect} />
         ) : null}

@@ -27,20 +27,20 @@ export function WeaponFilter({
   return (
     <div className={cn("flex flex-col gap-1", className)} {...props}>
       <Input
-        value={search}
         onChange={(e) => {
           setSearch(e.target.value);
         }}
+        value={search}
       />
 
       <div className="flex gap-2">
         {weaponClassEnum.options.map((weaponClass) => (
           <Toggle
             key={weaponClass}
-            pressed={weaponClasses.includes(weaponClass)}
             onPressedChange={() => {
               toggleWeaponClass(weaponClass);
             }}
+            pressed={weaponClasses.includes(weaponClass)}
           >
             {weaponClass}
           </Toggle>
@@ -51,10 +51,10 @@ export function WeaponFilter({
         {[3, 4, 5].map((weaponRarity) => (
           <Toggle
             key={weaponRarity}
-            pressed={weaponRarities.includes(weaponRarity)}
             onPressedChange={() => {
               toggleWeaponRarity(weaponRarity);
             }}
+            pressed={weaponRarities.includes(weaponRarity)}
           >
             {weaponRarity}
           </Toggle>

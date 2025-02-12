@@ -31,9 +31,9 @@ export function DollGridSelect({ onDollSelect, className, ...props }: Props) {
 
       {dollClassEnum.options.map((dollClass) => (
         <DisplayClassContainer
-          key={dollClass}
-          dolls={filteredDolls}
           dollClass={dollClass}
+          dolls={filteredDolls}
+          key={dollClass}
           onDollSelect={onDollSelect}
         />
       ))}
@@ -71,15 +71,15 @@ function DisplayClassContainer({
       <div className="grid grid-cols-7 gap-1">
         {filteredDolls.map(({ name, img, rarity, id }) => (
           <Button
-            key={`${id}-${rarity}`}
             className="flex h-auto items-center justify-center gap-1 rounded-md border px-1"
+            key={`${id}-${rarity}`}
             onClick={() => onDollSelect({ name, id })}
             variant="outline"
           >
             {
               // TODO: placeholderimg
               img.head ? (
-                <Image src={img.head} alt={name} width={48} height={48} />
+                <Image alt={name} height={48} src={img.head} width={48} />
               ) : null
             }
             {name}

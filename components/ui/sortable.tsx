@@ -149,16 +149,16 @@ function Sortable<TData extends { id: UniqueIdentifier }>({
   const sensors = useSensors(
     useSensor(MouseSensor, { activationConstraint: { distance } }),
     useSensor(TouchSensor, { activationConstraint: { distance } }),
-    useSensor(KeyboardSensor)
+    useSensor(KeyboardSensor),
   );
 
   const config = orientationConfig[orientation];
 
   return (
     <DndContext
+      collisionDetection={collisionDetection}
       modifiers={modifiers ?? config.modifiers}
-      sensors={sensors}
-      onDragStart={({ active }) => setActiveId(active.id)}
+      onDragCancel={() => setActiveId(null)}
       onDragEnd={({ active, over }) => {
         if (over && active.id !== over?.id) {
           const activeIndex = value.findIndex((item) => item.id === active.id);
@@ -172,8 +172,8 @@ function Sortable<TData extends { id: UniqueIdentifier }>({
         }
         setActiveId(null);
       }}
-      onDragCancel={() => setActiveId(null)}
-      collisionDetection={collisionDetection}
+      onDragStart={({ active }) => setActiveId(active.id)}
+      sensors={sensors}
       {...props}
     >
       <SortableContext items={value} strategy={strategy ?? config.strategy}>
@@ -204,23 +204,21 @@ interface SortableOverlayProps
 const SortableOverlay = React.forwardRef<HTMLDivElement, SortableOverlayProps>(
   (
     { activeId, dropAnimation = dropAnimationOpts, children, ...props },
-    ref
-  ) => {
-    return (
-      <DragOverlay dropAnimation={dropAnimation} {...props}>
-        {activeId ? (
-          <SortableItem
-            ref={ref}
-            value={activeId}
-            className="cursor-grabbing"
-            asChild
-          >
-            {children}
-          </SortableItem>
-        ) : null}
-      </DragOverlay>
-    );
-  }
+    ref,
+  ) => (
+    <DragOverlay dropAnimation={dropAnimation} {...props}>
+      {activeId ? (
+        <SortableItem
+          asChild
+          className="cursor-grabbing"
+          ref={ref}
+          value={activeId}
+        >
+          {children}
+        </SortableItem>
+      ) : null}
+    </DragOverlay>
+  ),
 );
 SortableOverlay.displayName = "SortableOverlay";
 
@@ -286,7 +284,7 @@ const SortableItem = React.forwardRef<HTMLDivElement, SortableItemProps>(
         listeners,
         isDragging,
       }),
-      [attributes, listeners, isDragging]
+      [attributes, listeners, isDragging],
     );
     const style: React.CSSProperties = {
       opacity: isDragging ? 0.5 : 1,
@@ -299,12 +297,12 @@ const SortableItem = React.forwardRef<HTMLDivElement, SortableItemProps>(
     return (
       <SortableItemContext.Provider value={context}>
         <Comp
-          data-state={isDragging ? "dragging" : undefined}
           className={cn(
             "data-[state=dragging]:cursor-grabbing",
             { "cursor-grab": !isDragging && asTrigger },
-            className
+            className,
           )}
+          data-state={isDragging ? "dragging" : undefined}
           ref={composeRefs(ref, setNodeRef as React.Ref<HTMLDivElement>)}
           style={style}
           {...(asTrigger ? attributes : {})}
@@ -313,7 +311,7 @@ const SortableItem = React.forwardRef<HTMLDivElement, SortableItemProps>(
         />
       </SortableItemContext.Provider>
     );
-  }
+  },
 );
 SortableItem.displayName = "SortableItem";
 
@@ -329,12 +327,12 @@ const SortableDragHandle = React.forwardRef<
 
   return (
     <Button
-      ref={composeRefs(ref)}
-      data-state={isDragging ? "dragging" : undefined}
       className={cn(
         "cursor-grab data-[state=dragging]:cursor-grabbing",
-        className
+        className,
       )}
+      data-state={isDragging ? "dragging" : undefined}
+      ref={composeRefs(ref)}
       {...attributes}
       {...listeners}
       {...props}
