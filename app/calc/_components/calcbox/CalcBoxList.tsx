@@ -26,7 +26,10 @@ export function CalcBoxList() {
       <div className="flex flex-wrap gap-2">
         {keyedAtoms.map(({ atom, id }) => (
           <SortableItem asChild key={id} value={id}>
-            <CalcBox atom={atom} />
+            <CalcBox
+              atom={atom}
+              // className="max-w-40"
+            />
           </SortableItem>
         ))}
       </div>

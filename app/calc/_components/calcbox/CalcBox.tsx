@@ -1,11 +1,11 @@
+// TODO:
 "use client";
 
 import { useAtom, useAtomValue, useSetAtom } from "jotai";
 import { ComponentPropsWithRef, useMemo } from "react";
 import { focusAtom } from "jotai-optics";
-import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { LevelInput } from "./LevelInput";
 import { RemoveButton } from "./RemoveButton";
 import { NameInput } from "./NameInput";
 import { DOLL_META, DollMeta } from "@/repository/dolls";
@@ -15,24 +15,25 @@ import { GripVertical } from "lucide-react";
 import { SortableDragHandle } from "@/components/ui/sortable";
 import { Button, ButtonProps } from "@/components/ui/button";
 import { WeaponMeta, WEP_META } from "@/repository/wep";
+import { LevelInputRow } from "./LevelInputRow";
+import { cn } from "@/lib/utils";
 
 export function CalcBox({
   atom,
+  className,
   ...props
 }: CalcAtomProps & ComponentPropsWithRef<"div">) {
   return (
-    <Card {...props}>
-      <CardHeader className="flex flex-row items-center gap-1 space-y-0 p-2">
-        <CalcTypeSelector atom={atom} />
-        <RemoveButton atom={atom} />
-      </CardHeader>
-      <CardContent className="flex flex-col gap-2 p-2 pt-0">
+    <Card {...props} className={cn("flex flex-col", className)}>
+      <CardContent className="flex flex-1 flex-col gap-2 p-2">
+        <div className="flex gap-1">
+          <CalcTypeSelector atom={atom} />
+          <RemoveButton atom={atom} />
+        </div>
+
         <NameInput atom={atom} />
 
-        <div className="flex flex-1 gap-1">
-          <LevelInput atom={atom} className="flex-1" mode="from" />
-          <LevelInput atom={atom} className="flex-1" mode="to" />
-        </div>
+        <LevelInputRow atom={atom} />
 
         <SortableDragHandle
           asChild
