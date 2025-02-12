@@ -1,6 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { AddCalcObjectButton } from "./_components/calcbox/AddButton";
-import { CalcSummaryContainer } from "./_components/calcbox/CalcSummaryContainer";
+import { CalcSummaryContainer } from "./_components/summary/CalcSummaryContainer";
 import { CalcBoxList } from "./_components/calcbox/CalcBoxList";
 
 export default function Page() {

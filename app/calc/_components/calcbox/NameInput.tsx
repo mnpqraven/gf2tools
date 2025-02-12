@@ -8,11 +8,11 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { DollGridSelect } from "./DollGridSelect";
-import { WepGridSelect } from "./WepGridSelect";
+import { DollGridSelect } from "../dollSelector/DollGridSelect";
+import { WepGridSelect } from "../weaponSelector/WepGridSelect";
 import { useResetAtom } from "jotai/utils";
-import { weaponFilterAtom } from "./wepSelectorStore";
-import { dollFilterAtom } from "./dollSelectorStore";
+import { weaponFilterAtom } from "../weaponSelector/wepSelectorStore";
+import { dollFilterAtom } from "../dollSelector/dollSelectorStore";
 
 type Props = CalcAtomProps;
 
