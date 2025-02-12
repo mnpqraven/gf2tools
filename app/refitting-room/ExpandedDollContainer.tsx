@@ -19,24 +19,28 @@ export function ExpandedDollContainer({
   const htmlId = useId();
 
   return (
-    <div className="flex flex-col">
-      <Label htmlFor={`${htmlId}-level`}>Level</Label>
-      <NumberInput
-        id={`${htmlId}-level`}
-        max={60}
-        min={1}
-        onValueChange={setLevel}
-        value={level}
-      />
+    <>
+      <div className="flex flex-col">
+        <Label htmlFor={`${htmlId}-level`}>Level</Label>
+        <NumberInput
+          id={`${htmlId}-level`}
+          max={60}
+          min={1}
+          onValueChange={setLevel}
+          value={level}
+        />
+      </div>
 
-      <Label htmlFor={`${htmlId}-vert`}>Fortification</Label>
-      <NumberInput
-        id={`${htmlId}-vert`}
-        max={6}
-        min={0}
-        onValueChange={setVert}
-        value={vert}
-      />
-    </div>
+      <div className="flex flex-col">
+        <Label htmlFor={`${htmlId}-vert`}>Fortification</Label>
+        <NumberInput
+          id={`${htmlId}-vert`}
+          max={6}
+          min={0}
+          onValueChange={setVert}
+          value={vert}
+        />
+      </div>
+    </>
   );
 }
