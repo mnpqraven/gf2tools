@@ -1,11 +1,6 @@
 import { ComponentPropsWithRef, useMemo } from "react";
 import { cn } from "@/lib/utils";
-import {
-  DOLL_META,
-  DollClass,
-  dollClassEnum,
-  DollMeta,
-} from "@/repository/dolls";
+import { DOLL_META, DollMeta } from "@/repository/dolls";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { useAtomValue } from "jotai";
@@ -13,6 +8,7 @@ import { dollFilterAtom } from "./dollSelectorStore";
 import { focusAtom } from "jotai-optics";
 import { useFilteredDolls } from "./useFilteredDolls";
 import { DollFilter } from "./DollFilter";
+import { DOLL_CLASS_ENUM, DollClassEnum } from "@/repository/enums";
 
 interface Props extends ComponentPropsWithRef<"div"> {
   onDollSelect: (t: { name: string; id?: string }, custom?: boolean) => void;
@@ -29,7 +25,7 @@ export function DollGridSelect({ onDollSelect, className, ...props }: Props) {
     <div {...props} className={cn("flex flex-col gap-3", className)}>
       <DollFilter />
 
-      {dollClassEnum.options.map((dollClass) => (
+      {DOLL_CLASS_ENUM.options.map((dollClass) => (
         <DisplayClassContainer
           dollClass={dollClass}
           dolls={filteredDolls}
@@ -59,7 +55,7 @@ function DisplayClassContainer({
   ...props
 }: ComponentPropsWithRef<"div"> & {
   dolls: DollMeta[];
-  dollClass: DollClass;
+  dollClass: DollClassEnum;
   onDollSelect: (t: { name: string; id?: string }) => void;
 }) {
   const filteredDolls = dolls.filter((doll) => doll.dollClass === dollClass);
