@@ -4,18 +4,12 @@ import { useId, useMemo } from "react";
 import { focusAtom } from "jotai-optics";
 import { Label } from "@/components/ui/label";
 import { NumberInput } from "@/components/shared/NumberInput";
+import { DollSlugEnum } from "@/repository/enums";
+import { dollAtomLookup } from "./store";
 
-export function ExpandedDollContainer({
-  atom,
-}: {
-  atom: PrimitiveAtom<OwnedArmoryDoll>;
-}) {
-  const [level, setLevel] = useAtom(
-    useMemo(() => focusAtom(atom, (t) => t.prop("data").prop("level")), [atom])
-  );
-  const [vert, setVert] = useAtom(
-    useMemo(() => focusAtom(atom, (t) => t.prop("data").prop("vert")), [atom])
-  );
+export function ExpandedDollContainer({ slug }: { slug: DollSlugEnum }) {
+  const [level, setLevel] = useInput(slug, "level");
+  const [vert, setVert] = useInput(slug, "vert");
   const htmlId = useId();
 
   return (
@@ -43,4 +37,15 @@ export function ExpandedDollContainer({
       </div>
     </>
   );
+}
+
+function useInput(slug: DollSlugEnum, type: "level" | "vert") {
+  const atom = useMemo(
+    () =>
+      focusAtom(dollAtomLookup(slug) as PrimitiveAtom<OwnedArmoryDoll>, (t) =>
+        t.prop("data").prop(type),
+      ),
+    [slug, type],
+  );
+  return useAtom(atom);
 }

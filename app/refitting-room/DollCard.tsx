@@ -1,29 +1,24 @@
+"use client";
+
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { DOLL_META } from "@/repository/dolls";
-import { PrimitiveAtom, useAtom } from "jotai";
+import { useAtomValue, useSetAtom } from "jotai";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { ChevronsUpDown } from "lucide-react";
 import { useState } from "react";
-import { OwnedArmoryDoll } from "./types";
-import { ExpandedDollContainer } from "./ExpandedDollContainer";
 import { motion } from "motion/react";
 import { cn } from "@/lib/utils";
-import { useDollCard } from "./DollCardProvider";
+import { DollSlugEnum } from "@/repository/enums";
+import { dollAtomLookup, toggleDollOwnershipAtom } from "./store";
+import { ExpandedDollContainer } from "./ExpandedDollContainer";
 
-export function DollCard() {
+export function DollCard({ slug }: { slug: DollSlugEnum }) {
   const [detailOpen, setDetailOpen] = useState(false);
-  const { atom } = useDollCard();
-  const [settings, setSettings] = useAtom(atom);
-  const doll = DOLL_META.find((e) => e.id === settings.slug);
-
-  if (!doll) {
-    console.error(
-      "undefined doll in find fn, this should not happen, debug dollcard.tsx",
-    );
-    return null;
-  }
+  const settings = useAtomValue(dollAtomLookup(slug));
+  const doll = DOLL_META.find((e) => e.id === slug)!; // safe assertion
+  const toggleOwnership = useSetAtom(toggleDollOwnershipAtom(slug));
 
   return (
     <motion.div
@@ -52,18 +47,7 @@ export function DollCard() {
             <Switch
               checked={settings.owned}
               id={`owned-${doll.id}`}
-              onCheckedChange={(owned) => {
-                if (owned)
-                  setSettings((prev) => ({
-                    ...prev,
-                    owned,
-                    data: { level: 1, vert: 0 },
-                  }));
-                else {
-                  setSettings((prev) => ({ ...prev, owned }));
-                  setDetailOpen(false);
-                }
-              }}
+              onCheckedChange={toggleOwnership}
             />
           </div>
 
@@ -87,10 +71,7 @@ export function DollCard() {
           initial={{ opacity: 0 }}
           layout="preserve-aspect"
         >
-          <ExpandedDollContainer
-            // safe cast
-            atom={atom as PrimitiveAtom<OwnedArmoryDoll>}
-          />
+          <ExpandedDollContainer slug={slug} />
         </motion.div>
       ) : null}
     </motion.div>
