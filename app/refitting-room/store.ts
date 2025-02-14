@@ -1,5 +1,5 @@
 import { atom } from "jotai";
-import { MaybeOwnedArmoryDoll } from "./types";
+import { NotOwned, OwnedArmoryDoll } from "./types";
 import { DOLL_META } from "@/repository/dolls";
 import { atomFamily } from "jotai/utils";
 import {
@@ -22,7 +22,7 @@ export const dollFilterAtom = atom<ArmoryDollFilter>({
   classes: DOLL_CLASS_ENUM.options,
 });
 
-type ArmoryMapDoll = Record<DollSlugEnum, MaybeOwnedArmoryDoll>;
+type ArmoryMapDoll = Record<DollSlugEnum, OwnedArmoryDoll | NotOwned>;
 
 export const ownMapDollAtom = atom<ArmoryMapDoll>(
   Object.fromEntries(
@@ -32,7 +32,7 @@ export const ownMapDollAtom = atom<ArmoryMapDoll>(
         owned: false,
         armoryType: "CHAR",
         slug: doll.id,
-      } satisfies MaybeOwnedArmoryDoll,
+      } satisfies NotOwned,
     ]),
   ) as ArmoryMapDoll,
 );

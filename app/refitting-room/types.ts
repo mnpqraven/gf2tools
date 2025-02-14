@@ -1,13 +1,13 @@
-import { CALC_TYPE_ENUM } from "@/repository/enums";
+import { CALC_TYPE_ENUM, CalcTypeEnum } from "@/repository/enums";
 
-export type ArmoryDoll = {
+export type ArmoryDollShape = {
   /** 1-based, max 60 */
   level: number;
   /** 0-based, max 6 */
   vert: number;
 };
 
-export type ArmoryWeapon = {
+export type ArmoryWeaponShape = {
   /** 1-based, max 60 */
   level: number;
   /** 1-based, max 6 */
@@ -18,29 +18,17 @@ export type OwnedArmoryDoll = {
   slug: string;
   armoryType: typeof CALC_TYPE_ENUM.enum.CHAR;
   owned: true;
-  data: ArmoryDoll;
+  data: ArmoryDollShape;
 };
 export type OwnedArmoryWep = {
   slug: string;
   armoryType: typeof CALC_TYPE_ENUM.enum.WEP;
   owned: true;
-  data: ArmoryWeapon;
+  data: ArmoryWeaponShape;
 };
 
-export type MaybeOwnedArmoryDoll =
-  | OwnedArmoryDoll
-  | {
-      slug: string;
-      armoryType: typeof CALC_TYPE_ENUM.enum.CHAR;
-      owned: false;
-    };
-
-export type MaybeOwnedArmoryWep =
-  | OwnedArmoryWep
-  | {
-      slug: string;
-      armoryType: typeof CALC_TYPE_ENUM.enum.WEP;
-      owned: false;
-    };
-
-export type ArmoryOwn = MaybeOwnedArmoryDoll | MaybeOwnedArmoryWep;
+export type NotOwned = {
+  slug: string;
+  armoryType: CalcTypeEnum;
+  owned: false;
+};
