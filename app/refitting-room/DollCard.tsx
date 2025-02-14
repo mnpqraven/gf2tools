@@ -6,23 +6,21 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { ChevronsUpDown } from "lucide-react";
 import { useState } from "react";
-import { MaybeOwnedArmoryDoll, OwnedArmoryDoll } from "./types";
+import { OwnedArmoryDoll } from "./types";
 import { ExpandedDollContainer } from "./ExpandedDollContainer";
 import { motion } from "motion/react";
 import { cn } from "@/lib/utils";
+import { useDollCard } from "./DollCardProvider";
 
-export function DollCard({
-  atom,
-}: {
-  atom: PrimitiveAtom<MaybeOwnedArmoryDoll>;
-}) {
+export function DollCard() {
   const [detailOpen, setDetailOpen] = useState(false);
+  const { atom } = useDollCard();
   const [settings, setSettings] = useAtom(atom);
   const doll = DOLL_META.find((e) => e.id === settings.slug);
 
   if (!doll) {
     console.error(
-      "undefined doll in find fn, this should not happen, debug dollcard.tsx"
+      "undefined doll in find fn, this should not happen, debug dollcard.tsx",
     );
     return null;
   }
@@ -31,14 +29,14 @@ export function DollCard({
     <motion.div
       // no layout disables animations but works with moving child
       className={cn(
-        "flex flex-col border rounded-md gap-1 p-2",
-        detailOpen ? "row-span-2" : ""
+        "flex flex-col gap-1 rounded-md border p-2",
+        detailOpen ? "row-span-2" : "",
       )}
       key={doll.id}
       style={{ borderRadius: 6 }}
     >
-      <motion.div className="flex gap-1 items-center" layout="position">
-        <div className="w-16 h-16">
+      <motion.div className="flex items-center gap-1" layout="position">
+        <div className="h-16 w-16">
           <Image
             alt="head"
             height={128}
@@ -46,10 +44,10 @@ export function DollCard({
             width={128}
           />
         </div>
-        <div className="flex flex-col gap-1 flex-1">
+        <div className="flex flex-1 flex-col gap-1">
           <span>{doll.name}</span>
 
-          <div className="flex flex-1 justify-between items-center">
+          <div className="flex flex-1 items-center justify-between">
             <Label htmlFor={`owned-${doll.id}`}>Owned</Label>
             <Switch
               checked={settings.owned}
@@ -70,7 +68,7 @@ export function DollCard({
           </div>
 
           <Button
-            className="py-2 h-auto"
+            className="h-auto py-2"
             disabled={!settings.owned}
             onClick={() => setDetailOpen((e) => !e)}
             variant="outline"

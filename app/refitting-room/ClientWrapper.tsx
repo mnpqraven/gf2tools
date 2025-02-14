@@ -5,6 +5,7 @@ import { useAtomValue } from "jotai";
 import { armoryDollOwnSplittedAtom } from "./store";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { LayoutGroup } from "motion/react";
+import { DollCardProvider } from "./DollCardProvider";
 
 export function ClientWrapper() {
   const atoms = useAtomValue(armoryDollOwnSplittedAtom);
@@ -19,7 +20,9 @@ export function ClientWrapper() {
         <LayoutGroup>
           <div className="grid grid-cols-6 gap-2">
             {atoms.map((atom) => (
-              <DollCard atom={atom} key={`${atom}`} />
+              <DollCardProvider atom={atom} key={`${atom}`}>
+                <DollCard />
+              </DollCardProvider>
             ))}
           </div>
         </LayoutGroup>
