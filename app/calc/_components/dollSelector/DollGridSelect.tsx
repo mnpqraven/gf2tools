@@ -22,8 +22,8 @@ export function DollGridSelect({ onDollSelect, className, ...props }: Props) {
   const allowCustomDoll = filteredDolls.length < DOLL_META.length;
 
   return (
-    <div {...props} className={cn("flex flex-col gap-3", className)}>
-      <DollFilter />
+    <div {...props} className={cn("flex flex-col gap-3 max-h-[80vh] relative overflow-y-scroll", className)}>
+      <DollFilter className="sticky top-0" />
 
       {DOLL_CLASS_ENUM.options.map((dollClass) => (
         <DisplayClassContainer
@@ -64,7 +64,7 @@ function DisplayClassContainer({
     <div className={cn("flex flex-col gap-2", className)} {...props}>
       <p className="text-xl font-semibold">{dollClass}</p>
 
-      <div className="grid grid-cols-7 gap-1">
+      <div className="grid grid-cols-6 gap-1">
         {filteredDolls.map(({ name, img, rarity, id }) => (
           <Button
             className="flex h-auto items-center justify-around gap-1 rounded-md border px-1"

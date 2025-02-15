@@ -33,7 +33,7 @@ export function DollFilter({
         }}
         value={search}
       />
-      <div className="flex gap-2">
+      <div className="flex items-center gap-2 rounded-md border bg-background/70 p-1 backdrop-blur-md">
         {DOLL_CLASS_ENUM.options.map((dollClass) => (
           <Toggle
             key={dollClass}
@@ -45,9 +45,8 @@ export function DollFilter({
             {dollClass}
           </Toggle>
         ))}
-
         <Separator orientation="vertical" />
-
+        Rarity
         {DOLL_RARITY_ENUM.options.map((dollRarity) => (
           <Toggle
             key={dollRarity}

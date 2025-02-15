@@ -33,7 +33,7 @@ export function WeaponFilter({
         value={search}
       />
 
-      <div className="flex gap-2">
+      <div className="flex items-center gap-2 rounded-md border bg-background/70 p-1 backdrop-blur-md">
         {weaponClassEnum.options.map((weaponClass) => (
           <Toggle
             key={weaponClass}
@@ -45,9 +45,8 @@ export function WeaponFilter({
             {weaponClass}
           </Toggle>
         ))}
-
         <Separator orientation="vertical" />
-
+        Rarity
         {[3, 4, 5].map((weaponRarity) => (
           <Toggle
             key={weaponRarity}
