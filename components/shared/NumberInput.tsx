@@ -77,6 +77,11 @@ export function NumberInput({
       if (flag) onRightFocus?.();
       setFlag((prev) => !prev);
 
+      // in case max is single digit
+      if (max !== undefined && max < 10) {
+        onValueChange(Math.min(max, step));
+        return;
+      }
       if (max !== undefined && newValue > max) {
         // autos to max value, math.min is there to help with modulo
         onValueChange(Math.min(newValue % 100, max));
@@ -89,7 +94,7 @@ export function NumberInput({
     <Input
       className={cn(
         "h-12 w-12 text-center font-mono text-base tabular-nums caret-transparent focus:bg-accent focus:text-accent-foreground [&::-webkit-inner-spin-button]:appearance-none",
-        className,
+        className
       )}
       id={id}
       inputMode="decimal"

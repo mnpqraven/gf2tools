@@ -1,21 +1,36 @@
 import Link from "next/link";
 import { ThemeToggle } from "./ThemeToggle";
 import { Button } from "./ui/button";
+import { env } from "@/env";
+
+type Route = {
+  path: string;
+  label: string;
+  enabled?: boolean;
+};
+const routes: Route[] = [
+  { path: "/", label: "Home" },
+  {
+    path: "/refitting-room",
+    label: "Refitting Room",
+    enabled: env.BUILD_KIND === "DEV",
+  },
+  { path: "/calc", label: "Calc" },
+  { path: "/about", label: "About" },
+];
 
 export function TopBar() {
   return (
     <div className="sticky top-0 flex h-10 w-full justify-center border border-b">
       <div className="container flex items-center justify-between">
         <div className="flex gap-2">
-          <Link className="hover:underline" href="/">
-            Home
-          </Link>
-          <Link className="hover:underline" href="/calc">
-            Calc
-          </Link>
-          <Link className="hover:underline" href="/about">
-            About
-          </Link>
+          {routes.map(({ label, path, enabled = true }) =>
+            enabled ? (
+              <Link className="hover:underline" href={path} key={path}>
+                {label}
+              </Link>
+            ) : null
+          )}
         </div>
 
         <div className="flex gap-1">

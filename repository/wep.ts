@@ -1,176 +1,91 @@
 import { z } from "zod";
+import { WEAPON_SLUG_ENUM, WeaponSlugEnum } from "./enums";
 
-const WEP_SLUGS: WeaponSlug[] = [
-  {
+const WEP_SLUGS: Record<WeaponSlugEnum, WeaponShortMeta> = {
+  Blade: {
     name: "Hare",
-    slug: "Blade",
-    weaponClass: "BLD",
+    wClass: "BLD",
     dollSlug: "CharolicSR",
-    singularRarity: [3, 4],
+    rarities: [3, 4],
   },
-  {
+  TaurusCurve: {
     name: "Colphne",
-    slug: "TaurusCurve",
-    weaponClass: "HG",
+    wClass: "HG",
     dollSlug: "ColphneSR",
-    singularRarity: [3, 4],
+    rarities: [3, 4],
   },
-  {
-    name: "Groza",
-    slug: "OTS14",
-    weaponClass: "AR",
-    dollSlug: "GrozaSR",
-    singularRarity: [3, 4],
-  },
-  {
+  OTS14: { name: "Groza", wClass: "AR", dollSlug: "GrozaSR", rarities: [3, 4] },
+  OM50: {
     name: "Nemesis",
-    slug: "OM50",
-    weaponClass: "RF",
+    wClass: "RF",
     dollSlug: "NemesisSR",
-    singularRarity: [3, 4],
+    rarities: [3, 4],
   },
-  {
+  ROBINSONXCR: {
     name: "Sharkry",
-    slug: "ROBINSONXCR",
-    weaponClass: "AR",
+    wClass: "AR",
     dollSlug: "SharkrySR",
-    singularRarity: [3, 4],
+    rarities: [3, 4],
   },
-  {
+  MP7: {
     name: "Cheeta",
-    slug: "MP7",
-    weaponClass: "SMG",
+    wClass: "SMG",
     dollSlug: "CheetaSR",
-    singularRarity: [3, 4],
+    rarities: [3, 4],
   },
-  {
+  M1895: {
     name: "Nagant",
-    slug: "M1895",
-    weaponClass: "HG",
+    wClass: "HG",
     dollSlug: "NagantSR",
-    singularRarity: [3, 4],
+    rarities: [3, 4],
   },
-  {
-    name: "Ksenia",
-    slug: "APS",
-    weaponClass: "HG",
-    dollSlug: "KseniaSR",
-    singularRarity: [3, 4],
-  },
-  {
+  APS: { name: "Ksenia", wClass: "HG", dollSlug: "KseniaSR", rarities: [3, 4] },
+  Galil: {
     name: "Littara",
-    slug: "Galil",
-    weaponClass: "MG",
+    wClass: "MG",
     dollSlug: "LittaraSR",
-    singularRarity: [3, 4],
+    rarities: [3, 4],
   },
-  {
-    name: "Lotta",
-    slug: "M1",
-    weaponClass: "SG",
-    dollSlug: "LottaSR",
-    singularRarity: [3, 4],
-  },
-  { name: "BP HG", slug: "BpHRssr001", weaponClass: "HG", singularRarity: [5] },
-  {
-    name: "BP SMG",
-    slug: "BpSMGssr001",
-    weaponClass: "SMG",
-    singularRarity: [5],
-  },
-  { name: "BP RF", slug: "BpRFssr001", weaponClass: "RF", singularRarity: [5] },
-  { name: "BP AR", slug: "BpARssr001", weaponClass: "AR", singularRarity: [5] },
-  {
-    name: "BP BLD",
-    slug: "BpKnifessr001",
-    weaponClass: "BLD",
-    singularRarity: [5],
-  },
-  { name: "BP MG", slug: "BpMGssr001", weaponClass: "MG", singularRarity: [5] },
-  { name: "BP SG", slug: "BpSGssr001", weaponClass: "SG", singularRarity: [5] },
-  { name: "Vepley", slug: "Vepr12", weaponClass: "SG", dollSlug: "VepleySSR" },
-  { name: "Tololo", slug: "AK-Alfa", weaponClass: "AR", dollSlug: "TololoSSR" },
-  {
-    name: "Peritya",
-    slug: "Pecheng",
-    weaponClass: "MG",
-    dollSlug: "PerityaSSR",
-  },
-  {
-    name: "Sabrina",
-    slug: "SPAS-12",
-    weaponClass: "SG",
-    dollSlug: "SabrinaSSR",
-  },
-  {
-    name: "Qiongjiu",
-    slug: "QBZ-191",
-    weaponClass: "AR",
-    dollSlug: "QiongjiuSSR",
-  },
-  {
-    name: "Mosin Nagant",
-    slug: "M1891",
-    weaponClass: "RF",
-    dollSlug: "MosinnagantSSR",
-  },
-  {
+  M1: { name: "Lotta", wClass: "SG", dollSlug: "LottaSR", rarities: [3, 4] },
+  BpHRssr001: { name: "BP HG", wClass: "HG", rarities: [5] },
+  BpSMGssr001: { name: "BP SMG", wClass: "SMG", rarities: [5] },
+  BpRFssr001: { name: "BP RF", wClass: "RF", rarities: [5] },
+  BpARssr001: { name: "BP AR", wClass: "AR", rarities: [5] },
+  BpKnifessr001: { name: "BP BLD", wClass: "BLD", rarities: [5] },
+  BpMGssr001: { name: "BP MG", wClass: "MG", rarities: [5] },
+  BpSGssr001: { name: "BP SG", wClass: "SG", rarities: [5] },
+  Vepr12: { name: "Vepley", wClass: "SG", dollSlug: "VepleySSR" },
+  "AK-Alfa": { name: "Tololo", wClass: "AR", dollSlug: "TololoSSR" },
+  Pecheng: { name: "Peritya", wClass: "MG", dollSlug: "PerityaSSR" },
+  "SPAS-12": { name: "Sabrina", wClass: "SG", dollSlug: "SabrinaSSR" },
+  "QBZ-191": { name: "Qiongjiu", wClass: "AR", dollSlug: "QiongjiuSSR" },
+  M1891: { name: "Mosin Nagant", wClass: "RF", dollSlug: "MosinnagantSSR" },
+  PPSh41: {
     name: "Svarog",
-    slug: "PPSh41",
-    weaponClass: "SMG",
+    wClass: "SMG",
     dollSlug: "PapashaSSR",
-    singularRarity: [4, 5],
+    rarities: [4, 5],
   },
-  { name: "Daiyan", slug: "QBZ-95", weaponClass: "AR", dollSlug: "DaiyanSSR" },
-  {
-    name: "Centaureissi",
-    slug: "G36",
-    weaponClass: "AR",
-    dollSlug: "CentaureissiSSR",
-  },
-  { name: "UMP9", slug: "UMP9", weaponClass: "SMG", dollSlug: "LennaSSR" },
-  { name: "QBZ97", slug: "QBZ97", weaponClass: "AR", dollSlug: "JiangyuSSR" },
-  {
-    name: "Macchiato",
-    slug: "WA2000",
-    weaponClass: "RF",
-    dollSlug: "MacqiatoSSR",
-  },
-  { name: "Ullrid", slug: "Ullr", weaponClass: "BLD", dollSlug: "UllridSSR" },
-  { name: "Suomi", slug: "M1931", weaponClass: "SMG", dollSlug: "SuomiSSR" },
-  {
-    name: "Dushevnaya",
-    slug: "KSVK",
-    weaponClass: "RF",
-    dollSlug: "DusevnyjSSR",
-  },
-  {
-    name: "Zhaohui",
-    slug: "CSLS06",
-    weaponClass: "SMG",
-    dollSlug: "ZhaohuiSSR",
-  },
-  { name: "Klukai", slug: "HK416", weaponClass: "AR", dollSlug: "ClukaySSR" },
-  { name: "Mechty", slug: "G11", weaponClass: "AR", dollSlug: "MishtySSR" },
-  { name: "Vector", slug: "Vector", weaponClass: "SMG", dollSlug: "VectorSSR" },
-  { name: "Belka", slug: "G28", weaponClass: "AR", dollSlug: "BiyocaSSR" },
-  {
-    name: "Andoris",
-    slug: "G36KKSK",
-    weaponClass: "AR",
-    dollSlug: "AndorisSSR",
-  },
-  {
-    name: "Springfield",
-    slug: "M1903",
-    weaponClass: "RF",
-    dollSlug: "SpringfieldSSR",
-  },
-  { name: "Faye", slug: "CZ75", weaponClass: "HG", dollSlug: "FayeSSR" },
-  { name: "Peri", slug: "MP5", weaponClass: "SMG", dollSlug: "PeriSSR" },
-  { name: "Qiuhua", slug: "HAWK12", weaponClass: "SG", dollSlug: "QiuhuaSSR" },
-  { name: "K2", slug: "K2", weaponClass: "AR", dollSlug: "YooHeeSSR" },
-];
+  "QBZ-95": { name: "Daiyan", wClass: "AR", dollSlug: "DaiyanSSR" },
+  G36: { name: "Centaureissi", wClass: "AR", dollSlug: "CentaureissiSSR" },
+  UMP9: { name: "UMP9", wClass: "SMG", dollSlug: "LennaSSR" },
+  QBZ97: { name: "QBZ97", wClass: "AR", dollSlug: "JiangyuSSR" },
+  WA2000: { name: "Macchiato", wClass: "RF", dollSlug: "MacqiatoSSR" },
+  Ullr: { name: "Ullrid", wClass: "BLD", dollSlug: "UllridSSR" },
+  M1931: { name: "Suomi", wClass: "SMG", dollSlug: "SuomiSSR" },
+  KSVK: { name: "Dushevnaya", wClass: "RF", dollSlug: "DusevnyjSSR" },
+  CSLS06: { name: "Zhaohui", wClass: "SMG", dollSlug: "ZhaohuiSSR" },
+  HK416: { name: "Klukai", wClass: "AR", dollSlug: "ClukaySSR" },
+  G11: { name: "Mechty", wClass: "AR", dollSlug: "MishtySSR" },
+  Vector: { name: "Vector", wClass: "SMG", dollSlug: "VectorSSR" },
+  G28: { name: "Belka", wClass: "AR", dollSlug: "BiyocaSSR" },
+  G36KKSK: { name: "Andoris", wClass: "AR", dollSlug: "AndorisSSR" },
+  M1903: { name: "Springfield", wClass: "RF", dollSlug: "SpringfieldSSR" },
+  CZ75: { name: "Faye", wClass: "HG", dollSlug: "FayeSSR" },
+  MP5: { name: "Peri", wClass: "SMG", dollSlug: "PeriSSR" },
+  HAWK12: { name: "Qiuhua", wClass: "SG", dollSlug: "QiuhuaSSR" },
+  K2: { name: "K2", wClass: "AR", dollSlug: "YooHeeSSR" },
+};
 
 export const WEP_EXP_TABLE = [
   0, 5, 10, 20, 25, 30, 55, 105, 160, 210, 265, 315, 340, 370, 395, 395, 410,
@@ -191,48 +106,49 @@ export const weaponClassEnum = z.enum([
 ]);
 export type WeaponClass = z.TypeOf<typeof weaponClassEnum>;
 
-type WeaponSlug = {
+type WeaponShortMeta = {
   name: string;
+  wClass: WeaponClass;
   /**
-   * weapon's slug, based on cn wiki
+   * @default [3,4,5]
    */
-  slug: string;
-  weaponClass: WeaponClass;
-  /**
-   * @default false
-   */
-  singularRarity?: number[];
-  /**
-   * slug of the respective doll if this weapon belongs to a doll
-   */
+  rarities?: number[];
   dollSlug?: string;
 };
 
 export interface WeaponMeta {
   name: string;
-  id: string;
+  /**
+   * weapon's slug, based on cn wiki
+   */
+  id: WeaponSlugEnum;
   weaponClass: WeaponClass;
   rarity: number;
   img: string;
+  /**
+   * slug of the respective doll if this weapon belongs to a doll
+   */
   dollSlug?: string;
 }
 
-function weaponMetaSerialize(_slug: WeaponSlug): WeaponMeta[] {
-  const {
-    name,
-    slug,
-    weaponClass: weaponClass,
-    dollSlug,
-    singularRarity,
-  } = _slug;
-  return (singularRarity ?? [3, 4, 5]).map((rarity) => ({
-    name,
-    id: slug,
-    weaponClass,
-    dollSlug,
-    img: `https://gf2.mcc.wiki/image/item/Weapon_${slug}_${rarity}_256.png`,
-    rarity,
-  })) satisfies WeaponMeta[];
+function weaponMetaPropagate(): WeaponMeta[] {
+  const t: WeaponMeta[] = Object.entries(WEP_SLUGS)
+    .map(
+      ([
+        key,
+        { name, dollSlug, rarities: singularRarity = [3, 4, 5], wClass },
+      ]) =>
+        singularRarity.map((rarity) => ({
+          name,
+          id: WEAPON_SLUG_ENUM.parse(key),
+          weaponClass: wClass,
+          dollSlug,
+          img: `https://gf2.mcc.wiki/image/item/Weapon_${key}_${rarity}_256.png`,
+          rarity,
+        })) satisfies WeaponMeta[],
+    )
+    .flat();
+  return t;
 }
 
-export const WEP_META: WeaponMeta[] = WEP_SLUGS.map(weaponMetaSerialize).flat();
+export const WEP_META: WeaponMeta[] = weaponMetaPropagate();
