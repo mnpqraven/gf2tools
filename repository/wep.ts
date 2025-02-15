@@ -119,9 +119,9 @@ type WeaponShortMeta = {
 export interface WeaponMeta {
   name: string;
   /**
-   * weapon's slug, based on cn wiki
+   * weapon's slug with rarity suffix, based on cn wiki
    */
-  id: WeaponSlugEnum;
+  id: `${WeaponSlugEnum}_${number}`;
   weaponClass: WeaponClass;
   rarity: number;
   img: string;
@@ -140,7 +140,7 @@ function weaponMetaPropagate(): WeaponMeta[] {
       ]) =>
         singularRarity.map((rarity) => ({
           name,
-          id: WEAPON_SLUG_ENUM.parse(key),
+          id: `${WEAPON_SLUG_ENUM.parse(key)}_${rarity}`,
           weaponClass: wClass,
           dollSlug,
           img: `https://gf2.mcc.wiki/image/item/Weapon_${key}_${rarity}_256.png`,

@@ -1,5 +1,5 @@
 import { atom } from "jotai";
-import { NotOwned, OwnedArmoryDoll } from "./types";
+import { ArmoryDollShape, NotOwned, OwnedArmoryDoll } from "./types";
 import { DOLL_META } from "@/repository/dolls";
 import { atomFamily } from "jotai/utils";
 import {
@@ -34,14 +34,21 @@ export const ownMapDollAtom = atom<ArmoryMapDoll>(
         slug: doll.id,
         data: undefined,
       } satisfies NotOwned,
-    ])
-  ) as ArmoryMapDoll
+    ]),
+  ) as ArmoryMapDoll,
 );
 
 export const dollAtomLookup = atomFamily(
   (slug: DollSlugEnum) => focusAtom(ownMapDollAtom, (t) => t.prop(slug)),
-  (a, b) => a === b
+  (a, b) => a === b,
 );
+
+const defaultDollOwnership: ArmoryDollShape = {
+  level: 1,
+  vert: 0,
+  helix: 0,
+  key: [],
+};
 
 export const toggleDollOwnershipAtom = atomFamily(
   (slug: DollSlugEnum) =>
@@ -54,9 +61,9 @@ export const toggleDollOwnershipAtom = atomFamily(
           slug,
           ...(prev.owned
             ? { owned: false, data: undefined }
-            : { owned: true, data: { level: 1, vert: 0, helix: 0, key: [] } }),
+            : { owned: true, data: defaultDollOwnership }),
         });
-      }
+      },
     ),
-  (a, b) => a === b
+  (a, b) => a === b,
 );
