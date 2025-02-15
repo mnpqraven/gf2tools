@@ -32,14 +32,15 @@ export const ownMapDollAtom = atom<ArmoryMapDoll>(
         owned: false,
         armoryType: "CHAR",
         slug: doll.id,
+        data: undefined,
       } satisfies NotOwned,
-    ]),
-  ) as ArmoryMapDoll,
+    ])
+  ) as ArmoryMapDoll
 );
 
 export const dollAtomLookup = atomFamily(
   (slug: DollSlugEnum) => focusAtom(ownMapDollAtom, (t) => t.prop(slug)),
-  (a, b) => a === b,
+  (a, b) => a === b
 );
 
 export const toggleDollOwnershipAtom = atomFamily(
@@ -48,20 +49,14 @@ export const toggleDollOwnershipAtom = atomFamily(
       (get) => get(dollAtomLookup(slug)).owned,
       (get, set) => {
         const prev = get(dollAtomLookup(slug));
-        if (prev.owned)
-          set(dollAtomLookup(slug), {
-            owned: false,
-            armoryType: CALC_TYPE_ENUM.enum.CHAR,
-            slug,
-          });
-        else
-          set(dollAtomLookup(slug), {
-            owned: true,
-            armoryType: CALC_TYPE_ENUM.enum.CHAR,
-            slug,
-            data: { level: 1, vert: 0 },
-          });
-      },
+        set(dollAtomLookup(slug), {
+          armoryType: CALC_TYPE_ENUM.enum.CHAR,
+          slug,
+          ...(prev.owned
+            ? { owned: false, data: undefined }
+            : { owned: true, data: { level: 1, vert: 0, helix: 0, key: [] } }),
+        });
+      }
     ),
-  (a, b) => a === b,
+  (a, b) => a === b
 );

@@ -1,18 +1,16 @@
 "use client";
 
-import { Label } from "@/components/ui/label";
-import { Switch } from "@/components/ui/switch";
 import { DOLL_META } from "@/repository/dolls";
 import { useAtomValue, useSetAtom } from "jotai";
 import Image from "next/image";
-import { Button } from "@/components/ui/button";
 import { ChevronsUpDown } from "lucide-react";
 import { useState } from "react";
 import { motion } from "motion/react";
 import { cn } from "@/lib/utils";
 import { DollSlugEnum } from "@/repository/enums";
 import { dollAtomLookup, toggleDollOwnershipAtom } from "./store";
-import { ExpandedDollContainer } from "./ExpandedDollContainer";
+import { DollInfoForm } from "./DollInfoForm";
+import { Toggle } from "@/components/ui/toggle";
 
 export function DollCard({ slug }: { slug: DollSlugEnum }) {
   const [detailOpen, setDetailOpen] = useState(false);
@@ -20,60 +18,57 @@ export function DollCard({ slug }: { slug: DollSlugEnum }) {
   const doll = DOLL_META.find((e) => e.id === slug)!; // safe assertion
   const toggleOwnership = useSetAtom(toggleDollOwnershipAtom(slug));
 
+  function onOwnedToggle(to: boolean) {
+    setDetailOpen(to);
+    toggleOwnership();
+  }
+
   return (
     <motion.div
       // no layout disables animations but works with moving child
       className={cn(
         "flex flex-col gap-1 rounded-md border p-2",
-        detailOpen ? "row-span-2" : "",
+        detailOpen ? "row-span-2" : ""
       )}
       key={doll.id}
       style={{ borderRadius: 6 }}
     >
-      <motion.div className="flex items-center gap-1" layout="position">
-        <div className="h-16 w-16">
+      <motion.div className="flex flex-col gap-1" layout="position">
+        <div className="flex gap-1 items-center">
           <Image
-            alt="head"
+            alt={doll.name}
+            // TODO: rarity border
+            className="h-16 w-16 rounded-md border"
             height={128}
             src={doll.img.artFace ?? ""}
             width={128}
           />
-        </div>
-        <div className="flex flex-1 flex-col gap-1">
+
+          {/* TODO: role icon */}
           <span>{doll.name}</span>
+        </div>
 
-          <div className="flex flex-1 items-center justify-between">
-            <Label htmlFor={`owned-${doll.id}`}>Owned</Label>
-            <Switch
-              checked={settings.owned}
-              id={`owned-${doll.id}`}
-              onCheckedChange={toggleOwnership}
-            />
-          </div>
+        <div className="grid grld-cols-2 grid-flow-col gap-1">
+          <Toggle
+            onPressedChange={onOwnedToggle}
+            pressed={settings.owned}
+            variant="outline"
+          >
+            Owned
+          </Toggle>
 
-          <Button
-            className="h-auto py-2"
+          <Toggle
             disabled={!settings.owned}
-            onClick={() => setDetailOpen((e) => !e)}
+            onPressedChange={setDetailOpen}
+            pressed={detailOpen}
             variant="outline"
           >
             <ChevronsUpDown />
-          </Button>
+          </Toggle>
         </div>
       </motion.div>
 
-      {detailOpen ? (
-        <motion.div
-          // better off to not deal with AnimatePresence's hassle here
-          // using layout here fucks up the grid shifts
-          animate={{ opacity: 1 }}
-          className="flex"
-          initial={{ opacity: 0 }}
-          layout="preserve-aspect"
-        >
-          <ExpandedDollContainer slug={slug} />
-        </motion.div>
-      ) : null}
+      {detailOpen ? <DollInfoForm slug={slug} /> : null}
     </motion.div>
   );
 }

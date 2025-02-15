@@ -5,6 +5,12 @@ export type ArmoryDollShape = {
   level: number;
   /** 0-based, max 6 */
   vert: number;
+  /** 0-based, amount of helix node acquired, max 8 */
+  helix: number;
+  /** array of key node acquired, max 6
+   * [tier1, tier1, tier2, tier2, tier3, tier3]
+   */
+  key: number[];
 };
 
 export type ArmoryWeaponShape = {
@@ -31,4 +37,5 @@ export type NotOwned = {
   slug: string;
   armoryType: CalcTypeEnum;
   owned: false;
+  data: undefined;
 };
