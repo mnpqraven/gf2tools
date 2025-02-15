@@ -19,15 +19,21 @@ interface Props extends ComponentPropsWithRef<"div"> {
 }
 export function WepGridSelect({ onWeaponSelect, className, ...props }: Props) {
   const search = useAtomValue(
-    useMemo(() => focusAtom(weaponFilterAtom, (t) => t.prop("search")), []),
+    useMemo(() => focusAtom(weaponFilterAtom, (t) => t.prop("search")), [])
   );
   const { data: filteredWeapons = WEP_META } = useFilteredWeapons();
 
   const allowCustomDoll = filteredWeapons.length < WEP_META.length;
 
   return (
-    <div {...props} className={cn("flex flex-col gap-3", className)}>
-      <WeaponFilter />
+    <div
+      {...props}
+      className={cn(
+        "flex flex-col gap-3 max-h-[80vh] relative overflow-y-scroll",
+        className
+      )}
+    >
+      <WeaponFilter className="sticky top-0" />
 
       {weaponClassEnum.options.map((weaponClass) => (
         <DisplayClassContainer
@@ -63,14 +69,14 @@ function DisplayClassContainer({
   onWeaponSelect: (t: { name: string; id?: string }, custom?: boolean) => void;
 }) {
   const filteredWeapons = weapons.filter(
-    (wep) => wep.weaponClass === weaponClass,
+    (wep) => wep.weaponClass === weaponClass
   );
 
   if (!filteredWeapons.length) return null;
   return (
     <div className={cn("flex flex-col gap-2", className)} {...props}>
       <p className="text-xl font-semibold">{weaponClass}</p>
-      <div className="grid grid-cols-7 gap-1">
+      <div className="grid grid-cols-6 gap-1">
         {filteredWeapons.map(({ name, img, rarity, id }) => (
           <Button
             className="flex h-auto items-center justify-around gap-1 rounded-md border px-1"

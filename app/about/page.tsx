@@ -2,6 +2,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { FEATURES } from "@/repository/features";
+import Link from "next/link";
 
 export default function Page() {
   return (
@@ -12,7 +13,15 @@ export default function Page() {
         </CardHeader>
         <CardContent>
           Bunch of calculators. For suggestions/bugs encounters please contact
-          Othi#6661 on Discord.
+          Othi#6661 on Discord. <br />
+          Checkout the{" "}
+          <Link
+            href="https://github.com/mnpqraven/gf2tools/issues"
+            target="_blank"
+          >
+            github page
+          </Link>{" "}
+          to see up-to-date roapmap and bugs
         </CardContent>
       </Card>
       <Card>

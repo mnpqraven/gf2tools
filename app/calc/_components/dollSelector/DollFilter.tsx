@@ -7,10 +7,10 @@ import {
 import { focusAtom } from "jotai-optics";
 import { ComponentPropsWithRef, useMemo } from "react";
 import { Input } from "@/components/ui/input";
-import { dollClassEnum, dollRarityEnum } from "@/repository/dolls";
 import { Toggle } from "@/components/ui/toggle";
 import { Separator } from "@/components/ui/separator";
 import { cn } from "@/lib/utils";
+import { DOLL_CLASS_ENUM, DOLL_RARITY_ENUM } from "@/repository/enums";
 
 /**
  * TODO: pretty print
@@ -33,8 +33,8 @@ export function DollFilter({
         }}
         value={search}
       />
-      <div className="flex gap-2">
-        {dollClassEnum.options.map((dollClass) => (
+      <div className="flex items-center gap-2 rounded-md border bg-background/70 p-1 backdrop-blur-md">
+        {DOLL_CLASS_ENUM.options.map((dollClass) => (
           <Toggle
             key={dollClass}
             onPressedChange={() => {
@@ -45,10 +45,9 @@ export function DollFilter({
             {dollClass}
           </Toggle>
         ))}
-
         <Separator orientation="vertical" />
-
-        {dollRarityEnum.options.map((dollRarity) => (
+        Rarity
+        {DOLL_RARITY_ENUM.options.map((dollRarity) => (
           <Toggle
             key={dollRarity}
             onPressedChange={() => {
