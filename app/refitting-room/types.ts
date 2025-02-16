@@ -5,12 +5,14 @@ export type ArmoryDollShape = {
   level: number;
   /** 0-based, max 6 */
   vert: number;
-  /** 0-based, amount of helix node acquired, max 8 */
+  /** 0-based, amount of helix node acquired, max 6 */
   helix: number;
-  /** array of key node acquired, max 6
+  /** 0-|ased array of key node acquired, max 6
    * [tier1, tier1, tier2, tier2, tier3, tier3]
+   * 0 2 4
+   * 1 3 5
    */
-  key: number[];
+  key: boolean[];
 };
 
 export type ArmoryWeaponShape = {

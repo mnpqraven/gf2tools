@@ -119,3 +119,36 @@ function cnIopImg(slug: string): DollMeta["img"] {
     head: toUrl(`Avatar_Head_${slug}`),
   };
 }
+
+/**
+ * @returns highest tier of helix available
+ */
+export function byLevelCapHelix(level: number): number {
+  if (level < 20) return 1;
+  if (level < 25) return 2;
+  if (level < 30) return 3;
+  if (level < 35) return 4;
+  if (level < 40) return 5;
+  return 6;
+}
+
+/**
+ * @returns highest index of key tier
+ */
+export function byLevelCapKey(level: number): number {
+  if (level < 20) return 1;
+  if (level < 30) return 3;
+  // TODO: double check
+  return 5;
+}
+
+// NOTE: for key calc
+// tier1: 3k gold 1/3 cores
+// tier2: 8k gold 1/3 cores
+// tier2: 12k gold 1/3 cores
+
+// NOTE: for helix calc
+// conductor count, money (lvl req) | conductor count, money (lvl req)
+// 1st block: 20x T1 1k (none) | 20x T2 2k (20)
+// 2nd block: 40x T3 4k (25) | 80x T4 8k (30)
+// 3rd block: 120x T5 10k (35) | 160 T6 12k (40)

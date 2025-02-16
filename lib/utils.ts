@@ -6,6 +6,13 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
+export function* range(start: number, end: number, step = 1) {
+  while (start <= end) {
+    yield start;
+    start += step;
+  }
+}
+
 export function add(left: number, right: number) {
   return left + right;
 }
