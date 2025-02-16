@@ -7,6 +7,7 @@ import {
   weaponClassEnum,
   WeaponMeta,
   WEP_META,
+  wepClassAssetEnum,
 } from "@/repository/wep";
 import { useAtomValue } from "jotai";
 import { focusAtom } from "jotai-optics";
@@ -17,6 +18,7 @@ import { cva } from "class-variance-authority";
 import { DOLL_SLUGS_MAP } from "@/repository/dolls";
 import { Braces, CircleUserRound } from "lucide-react";
 import { DollSlugEnum } from "@/repository/enums";
+import { AssetIcon } from "@/components/AssetIcon";
 
 interface Props extends ComponentPropsWithRef<"div"> {
   onWeaponSelect: (t: { name: string; id?: string }, custom?: boolean) => void;
@@ -80,7 +82,13 @@ function DisplayClassContainer({
   if (!filteredWeapons.length) return null;
   return (
     <div className={cn("flex flex-col gap-2", className)} {...props}>
-      <p className="text-xl font-semibold">{weaponClass}</p>
+      <div className="flex items-center gap-2 text-xl font-semibold">
+        <AssetIcon
+          asset={wepClassAssetEnum(weaponClass)}
+          className="h-6 w-6 rounded-full bg-primary dark:bg-transparent"
+        />
+        {weaponClass}
+      </div>
       <div className="grid grid-cols-5 gap-1">
         {filteredWeapons
           .sort((a, b) => b.rarity - a.rarity)

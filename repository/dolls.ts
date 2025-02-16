@@ -1,3 +1,4 @@
+import { ASSET_DICT } from "@/components/AssetIcon";
 import {
   DOLL_RARITY_ENUM,
   DOLL_SLUG_ENUM,
@@ -140,6 +141,21 @@ export function byLevelCapKey(level: number): number {
   if (level < 30) return 3;
   // TODO: double check
   return 5;
+}
+
+export function dollClassAssetEnum(
+  dollClass: DollClassEnum,
+): keyof typeof ASSET_DICT {
+  switch (dollClass) {
+    case "vanguard":
+      return "DOLL_CLASS_VANGUARD";
+    case "support":
+      return "DOLL_CLASS_SUPPORT";
+    case "sentinel":
+      return "DOLL_CLASS_SENTINEL";
+    case "bulwark":
+      return "DOLL_CLASS_BULWARK";
+  }
 }
 
 // NOTE: for key calc

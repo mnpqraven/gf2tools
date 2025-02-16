@@ -1,6 +1,6 @@
 import { ComponentPropsWithRef, useMemo } from "react";
 import { cn } from "@/lib/utils";
-import { DOLL_META, DollMeta } from "@/repository/dolls";
+import { DOLL_META, dollClassAssetEnum, DollMeta } from "@/repository/dolls";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { useAtomValue } from "jotai";
@@ -9,6 +9,7 @@ import { focusAtom } from "jotai-optics";
 import { useFilteredDolls } from "./useFilteredDolls";
 import { DollFilter } from "./DollFilter";
 import { DOLL_CLASS_ENUM, DollClassEnum } from "@/repository/enums";
+import { AssetIcon } from "@/components/AssetIcon";
 
 interface Props extends ComponentPropsWithRef<"div"> {
   onDollSelect: (t: { name: string; id?: string }, custom?: boolean) => void;
@@ -19,7 +20,8 @@ export function DollGridSelect({ onDollSelect, className, ...props }: Props) {
   );
   const { data: filteredDolls = DOLL_META } = useFilteredDolls(search);
 
-  const allowCustomDoll = filteredDolls.length < DOLL_META.length && Boolean(search.length);
+  const allowCustomDoll =
+    filteredDolls.length < DOLL_META.length && Boolean(search.length);
 
   return (
     <div
@@ -68,7 +70,13 @@ function DisplayClassContainer({
   if (!filteredDolls.length) return null;
   return (
     <div className={cn("flex flex-col gap-2", className)} {...props}>
-      <p className="text-xl font-semibold">{dollClass}</p>
+      <div className="flex items-center gap-2 text-xl font-semibold capitalize">
+        <AssetIcon
+          asset={dollClassAssetEnum(dollClass)}
+          className="h-6 w-6 rounded-full bg-primary dark:bg-transparent"
+        />
+        {dollClass}
+      </div>
 
       <div className="grid grid-cols-5 gap-1">
         {filteredDolls.map(({ name, img, rarity, id }) => (

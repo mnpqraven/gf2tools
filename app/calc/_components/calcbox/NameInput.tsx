@@ -23,13 +23,13 @@ export function NameInput({ atom }: Props) {
   const [open, setOpen] = useState(false);
 
   const [name, setName] = useAtom(
-    useMemo(() => focusAtom(atom, (t) => t.prop("name")), [atom])
+    useMemo(() => focusAtom(atom, (t) => t.prop("name")), [atom]),
   );
   const setId = useSetAtom(
-    useMemo(() => focusAtom(atom, (t) => t.prop("id")), [atom])
+    useMemo(() => focusAtom(atom, (t) => t.prop("id")), [atom]),
   );
   const calcType = useAtomValue(
-    useMemo(() => focusAtom(atom, (t) => t.prop("calcType")), [atom])
+    useMemo(() => focusAtom(atom, (t) => t.prop("calcType")), [atom]),
   );
 
   const resetWeaponFilter = useResetAtom(weaponFilterAtom);
@@ -37,7 +37,7 @@ export function NameInput({ atom }: Props) {
 
   function onSelect(
     { name, id }: { name: string; id?: string },
-    custom?: boolean
+    custom?: boolean,
   ) {
     setName(name);
     setId(custom ? undefined : id);
@@ -78,7 +78,9 @@ export function NameInput({ atom }: Props) {
       </DialogTrigger>
       <DialogContent className="max-w-4xl">
         <DialogHeader>
-          <DialogTitle>Select {calcType}</DialogTitle>
+          <DialogTitle>
+            Select {calcType === "WEP" ? "Weapon" : "Doll"}
+          </DialogTitle>
           <DialogDescription />
         </DialogHeader>
         {calcType === "CHAR" ? (

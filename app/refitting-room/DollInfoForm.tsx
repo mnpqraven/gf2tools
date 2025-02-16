@@ -37,9 +37,8 @@ export function DollInfoForm({ slug }: { slug: DollSlugEnum }) {
       layout="preserve-aspect"
     >
       <div
-        className="absolute top-0 -z-10 -mx-2 h-full w-full opacity-20"
+        className="absolute top-0 -z-10 h-full w-full opacity-20 shadow-[inset_0_0_16px_16px_hsl(var(--background))]"
         style={{
-          boxShadow: "inset 0 0 16px 16px black",
           backgroundPosition: "center 20%",
           backgroundRepeat: "no-repeat",
           backgroundImage: `url(${doll.img.artHalf})`,

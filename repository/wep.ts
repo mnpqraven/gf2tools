@@ -1,5 +1,11 @@
 import { z } from "zod";
-import { DollSlugEnum, WEAPON_SLUG_ENUM, WeaponSlugEnum } from "./enums";
+import {
+  DollSlugEnum,
+  WEAPON_SLUG_ENUM,
+  WeaponClassEnum,
+  WeaponSlugEnum,
+} from "./enums";
+import { ASSET_DICT } from "@/components/AssetIcon";
 
 const WEP_SLUGS: Record<WeaponSlugEnum, WeaponShortMeta> = {
   Blade: {
@@ -175,3 +181,24 @@ function weaponMetaPropagate(): WeaponMeta[] {
 }
 
 export const WEP_META: WeaponMeta[] = weaponMetaPropagate();
+
+export function wepClassAssetEnum(
+  wepClass: WeaponClassEnum,
+): keyof typeof ASSET_DICT {
+  switch (wepClass) {
+    case "AR":
+      return "WEP_CLASS_AR";
+    case "MG":
+      return "WEP_CLASS_MG";
+    case "SMG":
+      return "WEP_CLASS_SMG";
+    case "HG":
+      return "WEP_CLASS_HG";
+    case "SG":
+      return "WEP_CLASS_SG";
+    case "BLD":
+      return "WEP_CLASS_BLD";
+    case "RF":
+      return "WEP_CLASS_RF";
+  }
+}

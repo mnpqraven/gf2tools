@@ -21,7 +21,7 @@ const routes: Route[] = [
 
 export function TopBar() {
   return (
-    <div className="sticky top-0 flex h-10 w-full justify-center border border-b">
+    <div className="sticky top-0 z-50 flex h-10 w-full justify-center border-b bg-background/40 backdrop-blur-md">
       <div className="container flex items-center justify-between">
         <div className="flex gap-2">
           {routes.map(({ label, path, enabled = true }) =>
@@ -29,7 +29,7 @@ export function TopBar() {
               <Link className="hover:underline" href={path} key={path}>
                 {label}
               </Link>
-            ) : null
+            ) : null,
           )}
         </div>
 

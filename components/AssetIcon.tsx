@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { ComponentPropsWithRef } from "react";
 
-const ASSET_DICT = {
+export const ASSET_DICT = {
   CHAR_REPORT: "/items/char_report.png",
   WEP_REPORT: "/items/wep_report.png",
   CONDUCTOR_1: "/items/conductor_1.png",
@@ -18,6 +18,17 @@ const ASSET_DICT = {
   STOCK_BAR_6: "/items/stock_bar_6.png",
   KEY: "/items/key.png",
   MONEY: "/items/money.png",
+  WEP_CLASS_HG: "/wepclass/hg.png",
+  WEP_CLASS_SMG: "/wepclass/smg.png",
+  WEP_CLASS_AR: "/wepclass/ar.png",
+  WEP_CLASS_RF: "/wepclass/rf.png",
+  WEP_CLASS_MG: "/wepclass/mg.png",
+  WEP_CLASS_SG: "/wepclass/sg.png",
+  WEP_CLASS_BLD: "/wepclass/bld.png",
+  DOLL_CLASS_VANGUARD: "/dollclass/vanguard.png",
+  DOLL_CLASS_BULWARK: "/dollclass/bulwark.png",
+  DOLL_CLASS_SENTINEL: "/dollclass/sentinel.png",
+  DOLL_CLASS_SUPPORT: "/dollclass/support.png",
 };
 
 export type AssetKey = keyof typeof ASSET_DICT;
