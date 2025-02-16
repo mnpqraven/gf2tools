@@ -31,6 +31,7 @@ export function DollFilter({
         onChange={(e) => {
           setSearch(e.target.value);
         }}
+        placeholder="Search by name or role"
         value={search}
       />
       <div className="flex items-center gap-2 rounded-md border bg-background/70 p-1 backdrop-blur-md">

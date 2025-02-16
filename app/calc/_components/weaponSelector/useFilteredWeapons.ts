@@ -38,7 +38,6 @@ export function useFilteredWeapons(
       keys: [
         "name",
         "id",
-        "dollSlug",
         {
           name: "dollName",
           getFn: ({ dollSlug }) =>

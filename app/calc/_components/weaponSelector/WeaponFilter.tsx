@@ -30,6 +30,7 @@ export function WeaponFilter({
         onChange={(e) => {
           setSearch(e.target.value);
         }}
+        placeholder="Search by name, signature doll or model"
         value={search}
       />
 

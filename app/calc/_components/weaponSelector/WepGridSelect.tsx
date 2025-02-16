@@ -15,7 +15,8 @@ import { useFilteredWeapons } from "./useFilteredWeapons";
 import { WeaponFilter } from "./WeaponFilter";
 import { cva } from "class-variance-authority";
 import { DOLL_SLUGS_MAP } from "@/repository/dolls";
-import { CircleUserRound } from "lucide-react";
+import { Braces, CircleUserRound } from "lucide-react";
+import { DollSlugEnum } from "@/repository/enums";
 
 interface Props extends ComponentPropsWithRef<"div"> {
   onWeaponSelect: (t: { name: string; id?: string }, custom?: boolean) => void;
@@ -84,38 +85,49 @@ function DisplayClassContainer({
         {filteredWeapons
           .sort((a, b) => b.rarity - a.rarity)
           .map(({ name, img, rarity, id, dollSlug }) => (
-            <div className="flex flex-col" key={`${id}-${rarity}`}>
-              <Button
-                className="flex h-auto flex-col items-stretch gap-1 p-2"
-                onClick={() => onWeaponSelect({ name, id })}
-                variant="ghost"
-              >
-                <div className="flex flex-1 items-center justify-between gap-1">
-                  {
-                    // TODO: placeholderimg
-                    img ? (
-                      <Image
-                        alt={name}
-                        className={weaponVariants({
-                          rarity: rarity as 3 | 4 | 5,
-                        })}
-                        height={64}
-                        src={img}
-                        width={64}
-                      />
-                    ) : null
-                  }
-                  <span className="flex-1 whitespace-pre-wrap">{name}</span>
-                </div>
-                {dollSlug ? (
-                  <div className="flex items-center gap-2 text-muted-foreground">
-                    <CircleUserRound className="h-4 w-4" />
-                    {DOLL_SLUGS_MAP[dollSlug].name}
-                  </div>
+            <Button
+              className="flex h-auto flex-1 flex-col items-stretch justify-start p-2"
+              key={`${id}-${rarity}`}
+              onClick={() => onWeaponSelect({ name, id })}
+              variant="ghost"
+            >
+              <div className="flex flex-1 items-center gap-1">
+                {/* TODO: placeholderimg */}
+                {img ? (
+                  <Image
+                    alt={name}
+                    className={weaponVariants({
+                      rarity: rarity as 3 | 4 | 5,
+                    })}
+                    height={64}
+                    src={img}
+                    width={64}
+                  />
                 ) : null}
-              </Button>
-            </div>
+                <Meta dollSlug={dollSlug} id={id} />
+              </div>
+              <span className="flex-1 whitespace-pre-wrap">{name}</span>
+            </Button>
           ))}
+      </div>
+    </div>
+  );
+}
+
+function Meta({ id, dollSlug }: { id: string; dollSlug?: DollSlugEnum }) {
+  if (!dollSlug) return <div className="flex-1" />;
+  return (
+    <div className="flex flex-col gap-1 overflow-hidden text-xs">
+      <div className="mt-1 flex items-center gap-1 text-muted-foreground">
+        <CircleUserRound className="h-4 w-4" />
+        {DOLL_SLUGS_MAP[dollSlug].name}
+      </div>
+      <div className="flex items-center gap-1 text-muted-foreground">
+        <Braces className="h-4 w-4" />
+        {/* omit rarity */}
+        <code className="overflow-hidden overflow-ellipsis">
+          {id.slice(0, id.length - 2)}
+        </code>
       </div>
     </div>
   );
