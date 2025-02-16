@@ -41,7 +41,12 @@ export function DollCard({ slug }: { slug: DollSlugEnum }) {
           <Image
             alt={doll.name}
             // TODO: rarity border
-            className="h-16 w-16 rounded-md border"
+            className={cn(
+              "h-16 w-16 rounded-md border-2",
+              doll.rarity === "ELITE"
+                ? "border-rarity-orange"
+                : "border-rarity-purple",
+            )}
             height={128}
             src={doll.img.artFace ?? ""}
             width={128}

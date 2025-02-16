@@ -6,7 +6,7 @@ import {
   DollSlugEnum,
 } from "./enums";
 
-const DOLL_SLUGS_MAP: Record<DollSlugEnum, DollShortMeta> = {
+export const DOLL_SLUGS_MAP: Record<DollSlugEnum, DollShortMeta> = {
   CharolicSR: { name: "Krolik", dClass: "vanguard", rarity: "COMMON" },
   ColphneSR: { name: "Colphne", dClass: "support", rarity: "COMMON" },
   GrozaSR: { name: "Groza", dClass: "bulwark", rarity: "COMMON" },

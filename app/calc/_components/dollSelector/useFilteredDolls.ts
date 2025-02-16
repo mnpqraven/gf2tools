@@ -27,7 +27,7 @@ export function useFilteredDolls(
     const Fuse = (await import("fuse.js")).default;
     const engine = new Fuse(pool, {
       keys: ["name"],
-      threshold: 0.5,
+      threshold: 0.3,
       ...fuseOpt,
     });
     const searchResult = engine.search(query);

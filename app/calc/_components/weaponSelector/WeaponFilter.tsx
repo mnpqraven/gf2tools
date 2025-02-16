@@ -47,7 +47,7 @@ export function WeaponFilter({
         ))}
         <Separator orientation="vertical" />
         Rarity
-        {[3, 4, 5].map((weaponRarity) => (
+        {[5, 4, 3].map((weaponRarity) => (
           <Toggle
             key={weaponRarity}
             onPressedChange={() => {

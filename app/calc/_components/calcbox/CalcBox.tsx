@@ -17,6 +17,7 @@ import { Button, ButtonProps } from "@/components/ui/button";
 import { WeaponMeta, WEP_META } from "@/repository/wep";
 import { LevelInputRow } from "./LevelInputRow";
 import { cn } from "@/lib/utils";
+import { cva } from "class-variance-authority";
 
 export function CalcBox({
   atom,
@@ -37,7 +38,7 @@ export function CalcBox({
 
         <SortableDragHandle
           asChild
-          className="min-h-16 flex flex-1 cursor-move select-none items-center justify-around gap-1"
+          className="flex min-h-16 flex-1 cursor-move select-none items-center justify-around gap-1"
           variant="outline"
         >
           <DragHandle atom={atom} />
@@ -54,18 +55,57 @@ function DragHandle({ atom, ...props }: CalcAtomProps & ButtonProps) {
   const calcType = useAtomValue(
     useMemo(() => focusAtom(atom, (t) => t.prop("calcType")), [atom]),
   );
-  const _find =
-    calcType === "CHAR"
-      ? DOLL_META.find((e) => e.id === dollOrWepSlug)
-      : WEP_META.find((e) => e.id === dollOrWepSlug);
-  const imgsrc =
-    calcType === "CHAR"
-      ? (_find as DollMeta | undefined)?.img.chibi
-      : (_find as WeaponMeta | undefined)?.img;
+  const _find = (calcType === "CHAR" ? DOLL_META : WEP_META).find(
+    (e) => e.id === dollOrWepSlug,
+  );
+
+  if (calcType === "CHAR") {
+    const find = _find as DollMeta | undefined;
+    const src = find?.img.chibi;
+    return (
+      <Button {...props}>
+        {src ? (
+          <Image
+            alt="pic"
+            className={cn(
+              "rounded-md border",
+              find.rarity === "ELITE"
+                ? "border-rarity-orange"
+                : "border-rarity-purple",
+            )}
+            height={64}
+            src={src}
+            width={64}
+          />
+        ) : null}
+        <GripVertical className="text-muted-foreground" />
+      </Button>
+    );
+  }
+
+  const find = _find as WeaponMeta | undefined;
+  const src = find?.img;
+  const variants = cva("rounded-md border", {
+    variants: {
+      rarity: {
+        3: "border-rarity-blue",
+        4: "border-rarity-purple",
+        5: "border-rarity-orange",
+      },
+    },
+  });
 
   return (
     <Button {...props}>
-      {imgsrc ? <Image alt="pic" height={64} src={imgsrc} width={64} /> : null}
+      {src ? (
+        <Image
+          alt="pic"
+          className={variants({ rarity: find.rarity as 3 | 4 | 5 })}
+          height={64}
+          src={src}
+          width={64}
+        />
+      ) : null}
       <GripVertical className="text-muted-foreground" />
     </Button>
   );

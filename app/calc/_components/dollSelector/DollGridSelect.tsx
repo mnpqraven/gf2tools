@@ -19,10 +19,16 @@ export function DollGridSelect({ onDollSelect, className, ...props }: Props) {
   );
   const { data: filteredDolls = DOLL_META } = useFilteredDolls(search);
 
-  const allowCustomDoll = filteredDolls.length < DOLL_META.length;
+  const allowCustomDoll = filteredDolls.length < DOLL_META.length && Boolean(search.length);
 
   return (
-    <div {...props} className={cn("flex flex-col gap-3 max-h-[80vh] relative overflow-y-scroll", className)}>
+    <div
+      {...props}
+      className={cn(
+        "relative flex max-h-[80vh] flex-col gap-3 overflow-y-scroll",
+        className,
+      )}
+    >
       <DollFilter className="sticky top-0" />
 
       {DOLL_CLASS_ENUM.options.map((dollClass) => (
@@ -64,21 +70,32 @@ function DisplayClassContainer({
     <div className={cn("flex flex-col gap-2", className)} {...props}>
       <p className="text-xl font-semibold">{dollClass}</p>
 
-      <div className="grid grid-cols-6 gap-1">
+      <div className="grid grid-cols-5 gap-1">
         {filteredDolls.map(({ name, img, rarity, id }) => (
           <Button
-            className="flex h-auto items-center justify-around gap-1 rounded-md border px-1"
+            className="flex h-auto items-center justify-between gap-1"
             key={`${id}-${rarity}`}
             onClick={() => onDollSelect({ name, id })}
-            variant="outline"
+            variant="ghost"
           >
             {
               // TODO: placeholderimg
               img.head ? (
-                <Image alt={name} height={48} src={img.head} width={48} />
+                <Image
+                  alt={name}
+                  className={cn(
+                    "shrink-0 rounded-md border",
+                    rarity === "ELITE"
+                      ? "border-rarity-orange"
+                      : "border-rarity-purple",
+                  )}
+                  height={64}
+                  src={img.head}
+                  width={64}
+                />
               ) : null
             }
-            {name}
+            <span className="flex-1 whitespace-pre-wrap">{name}</span>
           </Button>
         ))}
       </div>

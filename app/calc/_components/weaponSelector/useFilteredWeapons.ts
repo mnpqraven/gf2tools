@@ -9,6 +9,7 @@ import { WeaponMeta, WEP_META } from "@/repository/wep";
 import { useAtomValue } from "jotai";
 import { focusAtom } from "jotai-optics";
 import { weaponFilterAtom } from "./wepSelectorStore";
+import { DOLL_SLUGS_MAP } from "@/repository/dolls";
 
 export function useFilteredWeapons(
   queryOpt?: Partial<UseQueryOptions<WeaponMeta[]>>,
@@ -34,8 +35,17 @@ export function useFilteredWeapons(
 
     const Fuse = (await import("fuse.js")).default;
     const engine = new Fuse(pool, {
-      keys: ["name", "id", "slug"],
-      threshold: 0.5,
+      keys: [
+        "name",
+        "id",
+        "dollSlug",
+        {
+          name: "dollName",
+          getFn: ({ dollSlug }) =>
+            dollSlug ? DOLL_SLUGS_MAP[dollSlug].name : "",
+        },
+      ],
+      threshold: 0.3,
       ...fuseOpt,
     });
     const searchResult = engine.search(query);
