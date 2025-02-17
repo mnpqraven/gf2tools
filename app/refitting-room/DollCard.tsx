@@ -36,44 +36,42 @@ export function DollCard({ slug }: { slug: DollSlugEnum }) {
       key={doll.id}
       style={{ borderRadius: 6 }}
     >
-      <motion.div className="flex flex-col gap-1" layout="position">
-        <div className="flex items-center gap-1">
-          <Image
-            alt={doll.name}
-            // TODO: rarity border
-            className={cn(
-              "h-16 w-16 rounded-md border-2",
-              doll.rarity === "ELITE"
-                ? "border-rarity-orange"
-                : "border-rarity-purple",
-            )}
-            height={128}
-            src={doll.img.artFace ?? ""}
-            width={128}
-          />
+      <motion.div className="flex items-center gap-1" layout="position">
+        <Image
+          alt={doll.name}
+          // TODO: rarity border
+          className={cn(
+            "h-16 w-16 rounded-md border-2",
+            doll.rarity === "ELITE"
+              ? "border-rarity-orange"
+              : "border-rarity-purple",
+          )}
+          height={128}
+          src={doll.img.artFace ?? ""}
+          width={128}
+        />
 
-          {/* TODO: role icon */}
-          <span>{doll.name}</span>
-        </div>
+        {/* TODO: role icon */}
+        <span>{doll.name}</span>
+      </motion.div>
 
-        <div className="grld-cols-2 grid grid-flow-col gap-1">
-          <Toggle
-            onPressedChange={onOwnedToggle}
-            pressed={settings.owned}
-            variant="outline"
-          >
-            Owned
-          </Toggle>
+      <motion.div className="grid-cols-2 grid gap-1" layout="position">
+        <Toggle
+          onPressedChange={onOwnedToggle}
+          pressed={settings.owned}
+          variant="outline"
+        >
+          Owned
+        </Toggle>
 
-          <Toggle
-            disabled={!settings.owned}
-            onPressedChange={setDetailOpen}
-            pressed={detailOpen}
-            variant="outline"
-          >
-            <ChevronsUpDown />
-          </Toggle>
-        </div>
+        <Toggle
+          disabled={!settings.owned}
+          onPressedChange={setDetailOpen}
+          pressed={detailOpen}
+          variant="outline"
+        >
+          <ChevronsUpDown />
+        </Toggle>
       </motion.div>
 
       {detailOpen ? <DollInfoForm slug={slug} /> : null}

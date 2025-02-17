@@ -1,13 +1,8 @@
 import { z } from "zod";
-import {
-  DollSlugEnum,
-  WEAPON_SLUG_ENUM,
-  WeaponClassEnum,
-  WeaponSlugEnum,
-} from "./enums";
+import { DollSlugEnum, WeaponClassEnum, WeaponSlugEnum } from "./enums";
 import { ASSET_DICT } from "@/components/AssetIcon";
 
-const WEP_SLUGS: Record<WeaponSlugEnum, WeaponShortMeta> = {
+export const WEP_SLUGS_MAP: Record<WeaponSlugEnum, WeaponShortMeta> = {
   Blade: {
     name: "Hare",
     wClass: "BLD",
@@ -151,6 +146,10 @@ export interface WeaponMeta {
    * weapon's slug with rarity suffix, based on cn wiki
    */
   id: `${WeaponSlugEnum}_${number}`;
+  /**
+   * original slug without rarity suffix
+   */
+  slug: WeaponSlugEnum;
   weaponClass: WeaponClass;
   rarity: number;
   img: string;
@@ -161,7 +160,7 @@ export interface WeaponMeta {
 }
 
 function weaponMetaPropagate(): WeaponMeta[] {
-  const t: WeaponMeta[] = Object.entries(WEP_SLUGS)
+  const t: WeaponMeta[] = Object.entries(WEP_SLUGS_MAP)
     .map(
       ([
         key,
@@ -169,7 +168,8 @@ function weaponMetaPropagate(): WeaponMeta[] {
       ]) =>
         singularRarity.map((rarity) => ({
           name,
-          id: `${WEAPON_SLUG_ENUM.parse(key)}_${rarity}`,
+          id: `${key as WeaponSlugEnum}_${rarity}`,
+          slug: key as WeaponSlugEnum,
           weaponClass: wClass,
           dollSlug,
           img: `https://gf2.mcc.wiki/image/item/Weapon_${key}_${rarity}_256.png`,
