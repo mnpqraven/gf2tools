@@ -182,6 +182,19 @@ function weaponMetaPropagate(): WeaponMeta[] {
 
 export const WEP_META: WeaponMeta[] = weaponMetaPropagate();
 
+export function wepImgSrc(slug: WeaponSlugEnum, rarity: 3 | 4 | 5) {
+  return `https://gf2.mcc.wiki/image/item/Weapon_${slug}_${rarity}_256.png`;
+}
+export function maxWepRarity(slug: WeaponSlugEnum): 3 | 4 | 5 {
+  const rarities = WEP_SLUGS_MAP[slug].rarities ?? ([3, 4, 5] as const);
+  return Math.max(...rarities) as 3 | 4 | 5;
+}
+
+export function minWepRarity(slug: WeaponSlugEnum): 3 | 4 | 5 {
+  const rarities = WEP_SLUGS_MAP[slug].rarities ?? ([3, 4, 5] as const);
+  return Math.min(...rarities) as 3 | 4 | 5;
+}
+
 export function wepClassAssetEnum(
   wepClass: WeaponClassEnum,
 ): keyof typeof ASSET_DICT {

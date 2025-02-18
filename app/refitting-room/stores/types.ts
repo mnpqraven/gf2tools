@@ -21,15 +21,12 @@ export type ArmoryDollShape = {
 };
 
 export type ArmoryWeaponShape = {
-  variants: {
-    /** probably used for adding an extra calc object, won't be used often */
-    active: boolean;
-    rarity: number;
-    /** 1-based, max 60 */
-    level: number;
-    /** 1-based, max 6 */
-    rank: number;
-  }[];
+  /** @default highest rarity on creation */
+  rarity: 3 | 4 | 5;
+  /** 1-based, max 60 */
+  level: number;
+  /** 1-based, max 6 */
+  rank: number;
 };
 
 export type OwnedArmoryDoll = {
