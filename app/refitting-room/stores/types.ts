@@ -1,4 +1,9 @@
-import { CALC_TYPE_ENUM, CalcTypeEnum } from "@/repository/enums";
+import {
+  CALC_TYPE_ENUM,
+  CalcTypeEnum,
+  DollSlugEnum,
+  WeaponSlugEnum,
+} from "@/repository/enums";
 
 export type ArmoryDollShape = {
   /** 1-based, max 60 */
@@ -16,6 +21,8 @@ export type ArmoryDollShape = {
 };
 
 export type ArmoryWeaponShape = {
+  /** @default highest rarity on creation */
+  rarity: 3 | 4 | 5;
   /** 1-based, max 60 */
   level: number;
   /** 1-based, max 6 */
@@ -23,13 +30,14 @@ export type ArmoryWeaponShape = {
 };
 
 export type OwnedArmoryDoll = {
-  slug: string;
+  slug: DollSlugEnum;
   armoryType: typeof CALC_TYPE_ENUM.enum.CHAR;
   owned: true;
   data: ArmoryDollShape;
 };
+
 export type OwnedArmoryWep = {
-  slug: string;
+  slug: WeaponSlugEnum;
   armoryType: typeof CALC_TYPE_ENUM.enum.WEP;
   owned: true;
   data: ArmoryWeaponShape;

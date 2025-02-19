@@ -1,5 +1,5 @@
 import { atom } from "jotai";
-import { ArmoryDollShape, NotOwned, OwnedArmoryDoll } from "../types";
+import { ArmoryDollShape, NotOwned, OwnedArmoryDoll } from "./types";
 import { byLevelCapHelix, byLevelCapKey, DOLL_META } from "@/repository/dolls";
 import { atomFamily } from "jotai/utils";
 import {
@@ -23,6 +23,9 @@ export const dollFilterAtom = atom<ArmoryDollFilter>({
   classes: DOLL_CLASS_ENUM.options,
 });
 
+/**
+ * family atom type
+ */
 type ArmoryMapDoll = Record<DollSlugEnum, OwnedArmoryDoll | NotOwned>;
 
 export const ownMapDollAtom = atom<ArmoryMapDoll>(
@@ -40,7 +43,7 @@ export const ownMapDollAtom = atom<ArmoryMapDoll>(
 );
 
 export const dollAtomLookup = atomFamily(
-  (slug: DollSlugEnum) => focusAtom(ownMapDollAtom, (t) => t.prop(slug)),
+  (slug: DollSlugEnum) => focusAtom(ownMapDollAtom, (o) => o.prop(slug)),
   (a, b) => a === b,
 );
 

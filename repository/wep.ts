@@ -1,13 +1,8 @@
 import { z } from "zod";
-import {
-  DollSlugEnum,
-  WEAPON_SLUG_ENUM,
-  WeaponClassEnum,
-  WeaponSlugEnum,
-} from "./enums";
+import { DollSlugEnum, WeaponClassEnum, WeaponSlugEnum } from "./enums";
 import { ASSET_DICT } from "@/components/AssetIcon";
 
-const WEP_SLUGS: Record<WeaponSlugEnum, WeaponShortMeta> = {
+export const WEP_SLUGS_MAP: Record<WeaponSlugEnum, WeaponShortMeta> = {
   Blade: {
     name: "Hare",
     wClass: "BLD",
@@ -151,6 +146,10 @@ export interface WeaponMeta {
    * weapon's slug with rarity suffix, based on cn wiki
    */
   id: `${WeaponSlugEnum}_${number}`;
+  /**
+   * original slug without rarity suffix
+   */
+  slug: WeaponSlugEnum;
   weaponClass: WeaponClass;
   rarity: number;
   img: string;
@@ -161,7 +160,7 @@ export interface WeaponMeta {
 }
 
 function weaponMetaPropagate(): WeaponMeta[] {
-  const t: WeaponMeta[] = Object.entries(WEP_SLUGS)
+  const t: WeaponMeta[] = Object.entries(WEP_SLUGS_MAP)
     .map(
       ([
         key,
@@ -169,7 +168,8 @@ function weaponMetaPropagate(): WeaponMeta[] {
       ]) =>
         singularRarity.map((rarity) => ({
           name,
-          id: `${WEAPON_SLUG_ENUM.parse(key)}_${rarity}`,
+          id: `${key as WeaponSlugEnum}_${rarity}`,
+          slug: key as WeaponSlugEnum,
           weaponClass: wClass,
           dollSlug,
           img: `https://gf2.mcc.wiki/image/item/Weapon_${key}_${rarity}_256.png`,
@@ -181,6 +181,19 @@ function weaponMetaPropagate(): WeaponMeta[] {
 }
 
 export const WEP_META: WeaponMeta[] = weaponMetaPropagate();
+
+export function wepImgSrc(slug: WeaponSlugEnum, rarity: 3 | 4 | 5) {
+  return `https://gf2.mcc.wiki/image/item/Weapon_${slug}_${rarity}_256.png`;
+}
+export function maxWepRarity(slug: WeaponSlugEnum): 3 | 4 | 5 {
+  const rarities = WEP_SLUGS_MAP[slug].rarities ?? ([3, 4, 5] as const);
+  return Math.max(...rarities) as 3 | 4 | 5;
+}
+
+export function minWepRarity(slug: WeaponSlugEnum): 3 | 4 | 5 {
+  const rarities = WEP_SLUGS_MAP[slug].rarities ?? ([3, 4, 5] as const);
+  return Math.min(...rarities) as 3 | 4 | 5;
+}
 
 export function wepClassAssetEnum(
   wepClass: WeaponClassEnum,
