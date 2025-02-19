@@ -11,7 +11,7 @@ import {
   DollSlugEnum,
 } from "@/repository/enums";
 import { focusAtom } from "jotai-optics";
-import * as O from "optics-ts";
+import { optic_, OpticFor_, set as Oset } from "optics-ts";
 
 export type ArmoryDollFilter = {
   rarity: DollRarityEnum[];
@@ -69,28 +69,29 @@ export const toggleDollOwnershipAtom = atomFamily(
   (a, b) => a === b,
 );
 
+type DollOptic = OpticFor_<ArmoryMapDoll[DollSlugEnum]>;
 const DollAccessors = {
-  level: O.optic_<ArmoryMapDoll[DollSlugEnum]>()
-    .guard((e) => e.owned)
-    .prop("data")
-    .prop("level"),
-  helix: O.optic_<ArmoryMapDoll[DollSlugEnum]>()
-    .guard((e) => e.owned)
-    .prop("data")
-    .prop("helix"),
-  /** `O.set(keyFn)(nextValue)(get(dollFamilyAtom))`
-  * TODO: test
-  * */
-  key: (o: O.OpticFor_<ArmoryMapDoll[DollSlugEnum]> = O.optic_()) => o
-    .guard((e) => e.owned)
-    .prop("data")
-    .prop("key"),
-  // TODO: test
-  vert: (o?: O.OpticFor_<ArmoryMapDoll[DollSlugEnum]>) => (o ?? O.optic_())
-    .guard((e) => e.owned)
-    .prop("data")
-    .prop("vert")
-}
+  level: (o: DollOptic = optic_()) =>
+    o
+      .guard((e) => e.owned)
+      .prop("data")
+      .prop("level"),
+  helix: (o: DollOptic = optic_()) =>
+    o
+      .guard((e) => e.owned)
+      .prop("data")
+      .prop("helix"),
+  key: (o: DollOptic = optic_()) =>
+    o
+      .guard((e) => e.owned)
+      .prop("data")
+      .prop("key"),
+  vert: (o: DollOptic = optic_()) =>
+    o
+      .guard((e) => e.owned)
+      .prop("data")
+      .prop("vert"),
+};
 
 export const vertAtom = atomFamily(
   (slug: DollSlugEnum) => {
@@ -124,7 +125,7 @@ export const dollKeyAtom = atomFamily(
             const nextKeys = [...doll.data.key];
             nextKeys[index] = value;
 
-            const nextDoll = O.set(DollAccessors.key())(nextKeys)(doll);
+            const nextDoll = Oset(DollAccessors.key())(nextKeys)(doll);
             if (nextDoll.owned) set(dollAtomLookup(slug), nextDoll);
           }
         }
@@ -146,7 +147,7 @@ export const dollHelixAtom = (slug: DollSlugEnum) => {
       if (level === undefined) return;
 
       if (toHelix <= byLevelCapHelix(level)) {
-        const nextDoll = O.set(DollAccessors.helix)(toHelix)(doll);
+        const nextDoll = Oset(DollAccessors.helix())(toHelix)(doll);
         set(dollAtomLookup(slug), nextDoll);
       }
     },
@@ -172,7 +173,7 @@ export const dollLevelAtom = atomFamily(
         // if level drops below cap then update key and helix to cap
         const capHelix = byLevelCapHelix(toLevel);
         if (helix > capHelix) {
-          const nextDoll = O.set(DollAccessors.helix)(capHelix)(doll);
+          const nextDoll = Oset(DollAccessors.helix())(capHelix)(doll);
           set(dollAtomLookup(slug), nextDoll);
         }
 
@@ -180,11 +181,11 @@ export const dollLevelAtom = atomFamily(
 
         if (keys !== undefined && keys.some((e, i) => i > capKey && e)) {
           const nextKeys = keys.map((e, i) => (i > capKey ? false : e));
-          const nextDoll = O.set(DollAccessors.key())(nextKeys)(doll);
+          const nextDoll = Oset(DollAccessors.key())(nextKeys)(doll);
           if (nextDoll.owned) set(dollAtomLookup(slug), nextDoll);
         }
 
-        set(dollAtomLookup(slug), O.set(DollAccessors.level)(toLevel)(doll));
+        set(dollAtomLookup(slug), Oset(DollAccessors.level())(toLevel)(doll));
       },
     );
     a.debugLabel = `${slug}_level`;

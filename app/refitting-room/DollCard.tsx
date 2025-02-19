@@ -55,7 +55,7 @@ export function DollCard({ slug }: { slug: DollSlugEnum }) {
         <span>{doll.name}</span>
       </motion.div>
 
-      <motion.div className="grid-cols-2 grid gap-1" layout="position">
+      <motion.div className="grid grid-cols-2 gap-1" layout="position">
         <Toggle
           onPressedChange={onOwnedToggle}
           pressed={settings.owned}

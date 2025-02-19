@@ -58,20 +58,20 @@ export const toggleWepOwnershipAtom = atomFamily(
   (a, b) => a === b,
 );
 
+type WepOptic = OpticFor_<ArmoryMapWep[WeaponSlugEnum]>;
 const WepAccessors = {
-  owned: (o: OpticFor_<ArmoryMapWep[WeaponSlugEnum]> = optic_()) =>
-    o.prop("owned"),
-  level: (o: OpticFor_<ArmoryMapWep[WeaponSlugEnum]> = optic_()) =>
+  owned: (o: WepOptic = optic_()) => o.prop("owned"),
+  level: (o: WepOptic = optic_()) =>
     o
       .guard((e) => e.owned)
       .prop("data")
       .prop("level"),
-  rarity: (o: OpticFor_<ArmoryMapWep[WeaponSlugEnum]> = optic_()) =>
+  rarity: (o: WepOptic = optic_()) =>
     o
       .guard((e) => e.owned)
       .prop("data")
       .prop("rarity"),
-  rank: (o: OpticFor_<ArmoryMapWep[WeaponSlugEnum]> = optic_()) =>
+  rank: (o: WepOptic = optic_()) =>
     o
       .guard((e) => e.owned)
       .prop("data")
