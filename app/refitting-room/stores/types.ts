@@ -31,6 +31,7 @@ export type ArmoryWeaponShape = {
 
 export type OwnedArmoryDoll = {
   slug: DollSlugEnum;
+  expanded: boolean;
   armoryType: typeof CALC_TYPE_ENUM.enum.CHAR;
   owned: true;
   data: ArmoryDollShape;
@@ -38,6 +39,7 @@ export type OwnedArmoryDoll = {
 
 export type OwnedArmoryWep = {
   slug: WeaponSlugEnum;
+  expanded: boolean;
   armoryType: typeof CALC_TYPE_ENUM.enum.WEP;
   owned: true;
   data: ArmoryWeaponShape;
@@ -45,6 +47,7 @@ export type OwnedArmoryWep = {
 
 export type NotOwned = {
   slug: string;
+  expanded: false;
   armoryType: CalcTypeEnum;
   owned: false;
   data: undefined;

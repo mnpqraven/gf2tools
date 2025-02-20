@@ -3,14 +3,14 @@
 import { AssetIcon } from "@/components/AssetIcon";
 import { Toggle } from "@/components/ui/toggle";
 import { WeaponSlugEnum } from "@/repository/enums";
-import { useAtomValue, useSetAtom } from "jotai";
+import { useAtom, useAtomValue, useSetAtom } from "jotai";
 import {
   toggleWepOwnershipAtom,
+  wepExpandedAtom,
   wepOwnedAtom,
   wepRarityAtom,
 } from "./stores/wep";
-import { useState } from "react";
-import { ChevronsUpDown } from "lucide-react";
+import { ChevronDown, ChevronUp, CircleCheck } from "lucide-react";
 import { maxWepRarity, WEP_SLUGS_MAP, wepImgSrc } from "@/repository/wep";
 import Image from "next/image";
 import { WeaponInfoForm } from "./WeaponInfoForm";
@@ -21,15 +21,11 @@ interface Props {
   slug: WeaponSlugEnum;
 }
 export function WeaponCard({ slug }: Props) {
-  const [detailOpen, setDetailOpen] = useState(false);
+  const [detailOpen, setDetailOpen] = useAtom(wepExpandedAtom(slug));
   const owned = useAtomValue(wepOwnedAtom(slug));
   const toggleOwnership = useSetAtom(toggleWepOwnershipAtom(slug));
   const rarity = useAtomValue(wepRarityAtom(slug)) ?? maxWepRarity(slug);
 
-  function onOwnedToggle(to: boolean) {
-    setDetailOpen(to);
-    toggleOwnership();
-  }
   return (
     <motion.div
       className={cn(
@@ -59,10 +55,11 @@ export function WeaponCard({ slug }: Props) {
 
       <motion.div className="grid grid-cols-2 gap-1" layout="position">
         <Toggle
-          onPressedChange={onOwnedToggle}
+          onPressedChange={toggleOwnership}
           pressed={owned}
-          variant="outline"
+          variant={owned ? "success" : "outline"}
         >
+          {owned ? <CircleCheck /> : null}
           Owned
         </Toggle>
         <Toggle
@@ -71,7 +68,7 @@ export function WeaponCard({ slug }: Props) {
           pressed={detailOpen}
           variant="outline"
         >
-          <ChevronsUpDown />
+          {detailOpen ? <ChevronUp /> : <ChevronDown />}
         </Toggle>
       </motion.div>
 

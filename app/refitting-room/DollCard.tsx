@@ -1,30 +1,28 @@
 "use client";
 
 import { DOLL_META } from "@/repository/dolls";
-import { useAtomValue, useSetAtom } from "jotai";
+import { useAtom, useAtomValue, useSetAtom } from "jotai";
 import Image from "next/image";
-import { ChevronsUpDown } from "lucide-react";
-import { useState } from "react";
+import { ChevronDown, ChevronUp, CircleCheck } from "lucide-react";
 import { motion } from "motion/react";
 import { cn } from "@/lib/utils";
 import { DollSlugEnum } from "@/repository/enums";
-import { dollAtomLookup, toggleDollOwnershipAtom } from "./stores/doll";
+import {
+  dollAtomLookup,
+  dollExpandedAtom,
+  toggleDollOwnershipAtom,
+} from "./stores/doll";
 import { DollInfoForm } from "./DollInfoForm";
 import { Toggle } from "@/components/ui/toggle";
 
 export function DollCard({ slug }: { slug: DollSlugEnum }) {
-  const [detailOpen, setDetailOpen] = useState(false);
+  const [detailOpen, setDetailOpen] = useAtom(dollExpandedAtom(slug));
   const dollAtom = dollAtomLookup(slug);
   dollAtom.debugLabel = `${slug}_ownership`;
 
   const settings = useAtomValue(dollAtom);
   const doll = DOLL_META.find((e) => e.id === slug)!; // safe assertion
   const toggleOwnership = useSetAtom(toggleDollOwnershipAtom(slug));
-
-  function onOwnedToggle(to: boolean) {
-    setDetailOpen(to);
-    toggleOwnership();
-  }
 
   return (
     <motion.div
@@ -57,10 +55,11 @@ export function DollCard({ slug }: { slug: DollSlugEnum }) {
 
       <motion.div className="grid grid-cols-2 gap-1" layout="position">
         <Toggle
-          onPressedChange={onOwnedToggle}
+          onPressedChange={toggleOwnership}
           pressed={settings.owned}
-          variant="outline"
+          variant={settings.owned ? "success" : "outline"}
         >
+          {settings.owned ? <CircleCheck /> : null}
           Owned
         </Toggle>
 
@@ -70,7 +69,7 @@ export function DollCard({ slug }: { slug: DollSlugEnum }) {
           pressed={detailOpen}
           variant="outline"
         >
-          <ChevronsUpDown />
+          {detailOpen ? <ChevronUp /> : <ChevronDown />}
         </Toggle>
       </motion.div>
 

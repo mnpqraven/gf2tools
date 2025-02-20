@@ -10,10 +10,13 @@ import {
   vertAtom,
 } from "./stores/doll";
 import { motion } from "motion/react";
-import { byLevelCapKey, DOLL_META } from "@/repository/dolls";
-import { Slider } from "@/components/ui/slider";
+import { byLevelCapHelix, byLevelCapKey, DOLL_META } from "@/repository/dolls";
 import { Checkbox } from "@/components/ui/checkbox";
 import { cn, range } from "@/lib/utils";
+import { Button } from "@/components/ui/button";
+import { ChevronsLeft, ChevronsRight, CircleCheck } from "lucide-react";
+import { AddToPlannerButton } from "./AddToPlannerButton";
+import { inCalcAtom } from "../calc/store";
 
 export function DollInfoForm({ slug }: { slug: DollSlugEnum }) {
   const [level, setLevel] = useAtom(dollLevelAtom(slug));
@@ -22,6 +25,7 @@ export function DollInfoForm({ slug }: { slug: DollSlugEnum }) {
   const [helix, setHelix] = useAtom(useMemo(() => dollHelixAtom(slug), [slug]));
   const htmlId = useId();
   const doll = DOLL_META.find((e) => e.id === slug)!; // safe assertion
+  const inCalc = useAtomValue(inCalcAtom(slug));
 
   const levelRef = useRef<HTMLInputElement>(null);
   const vertRef = useRef<HTMLInputElement>(null);
@@ -32,7 +36,7 @@ export function DollInfoForm({ slug }: { slug: DollSlugEnum }) {
       // better off to not deal with AnimatePresence's hassle here
       // using layout here fucks up the grid shifts
       animate={{ opacity: 1 }}
-      className="relative grid flex-1 grid-cols-2"
+      className="relative flex-1 flex flex-col gap-1"
       initial={{ opacity: 0 }}
       layout="preserve-aspect"
     >
@@ -44,8 +48,12 @@ export function DollInfoForm({ slug }: { slug: DollSlugEnum }) {
           backgroundImage: `url(${doll.img.artHalf})`,
         }}
       />
-      <div className="flex flex-col items-center">
-        <Label htmlFor={`${htmlId}-level`}>Level</Label>
+
+      <Label htmlFor={`${htmlId}-level`}>Level</Label>
+      <div className="flex gap-2 items-center justify-center">
+        <Button className="px-2" onClick={() => setLevel(1)} variant="outline">
+          <ChevronsLeft />
+        </Button>
         <NumberInput
           className="bg-background/80"
           id={`${htmlId}-level`}
@@ -56,19 +64,18 @@ export function DollInfoForm({ slug }: { slug: DollSlugEnum }) {
           ref={levelRef}
           value={level}
         />
-
-        <Slider
-          className="col-span-2 mt-2 data-[orientation=vertical]:h-32"
-          max={60}
-          onValueChange={([num]) => setLevel(num)}
-          orientation="vertical"
-          step={1}
-          value={[level]}
-        />
+        <Button className="px-2" onClick={() => setLevel(60)} variant="outline">
+          <ChevronsRight />
+        </Button>
       </div>
+
       {/* TODO: jotai effect */}
-      <div className="flex flex-col items-center">
-        <Label htmlFor={`${htmlId}-helix`}>Helix</Label>
+
+      <Label htmlFor={`${htmlId}-helix`}>Helix</Label>
+      <div className="flex gap-2 items-center justify-center">
+        <Button className="px-2" onClick={() => setHelix(0)} variant="outline">
+          <ChevronsLeft />
+        </Button>
         <NumberInput
           className="bg-background/80"
           id={`${htmlId}-helix`}
@@ -81,19 +88,22 @@ export function DollInfoForm({ slug }: { slug: DollSlugEnum }) {
           step={1}
           value={helix}
         />
-        <Slider
-          className="col-span-2 mt-2 data-[orientation=vertical]:h-32"
-          max={6}
-          onValueChange={([num]) => setHelix(num)}
-          orientation="vertical"
-          step={1}
-          value={[helix]}
-        />
+        <Button
+          className="px-2"
+          onClick={() => setHelix(byLevelCapHelix(level))}
+          variant="outline"
+        >
+          <ChevronsRight />
+        </Button>
       </div>
-      <div className="col-span-2 flex flex-col items-center">
-        <Label htmlFor={`${htmlId}-vert`}>Fortification</Label>
+
+      <Label htmlFor={`${htmlId}-vert`}>Fortification</Label>
+      <div className="flex gap-2 items-center justify-center">
+        <Button className="px-2" onClick={() => setVert(0)} variant="outline">
+          <ChevronsLeft />
+        </Button>
         <NumberInput
-          className="w-full bg-background/80"
+          className="bg-background/80"
           id={`${htmlId}-vert`}
           max={6}
           min={0}
@@ -102,8 +112,24 @@ export function DollInfoForm({ slug }: { slug: DollSlugEnum }) {
           ref={vertRef}
           value={vert}
         />
+        <Button className="px-2" onClick={() => setVert(6)} variant="outline">
+          <ChevronsRight />
+        </Button>
       </div>
-      <KeyInput slug={slug} />
+
+      <div className="flex flex-col flex-1 gap-1">
+        <Label className="flex justify-center col-span-2">Keys</Label>
+        <KeyInput slug={slug} />
+      </div>
+
+      <AddToPlannerButton
+        className="mt-2"
+        slug={{ type: "CHAR", slug }}
+        variant={inCalc ? "success" : "default"}
+      >
+        {inCalc ? <CircleCheck /> : null}
+        {inCalc ? "In planner" : "Add to planner"}
+      </AddToPlannerButton>
     </motion.div>
   );
 }
@@ -118,22 +144,22 @@ function KeyInput({
 
   return (
     <div
-      className={cn("col-span-2 grid grid-flow-col grid-rows-2", className)}
+      className={cn(
+        "col-span-2 grid grid-flow-col grid-rows-2 gap-y-1",
+        className,
+      )}
       {...props}
     >
       {Array.from(range(0, 5)).map((i) => (
-        <Checkbox
-          checked={keys[i]}
-          disabled={byLevelCapKey(level) < i}
-          key={i}
-          onCheckedChange={(to) => {
-            if (typeof to === "boolean")
-              toggleKey({
-                index: i,
-                value: to,
-              });
-          }}
-        />
+        <div className="w-full flex items-center justify-center" key={i}>
+          <Checkbox
+            checked={keys[i]}
+            disabled={byLevelCapKey(level) < i}
+            onCheckedChange={(to) => {
+              if (typeof to === "boolean") toggleKey({ index: i, value: to });
+            }}
+          />
+        </div>
       ))}
     </div>
   );

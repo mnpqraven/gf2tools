@@ -2,33 +2,47 @@ import Link from "next/link";
 import { ThemeToggle } from "./ThemeToggle";
 import { Button } from "./ui/button";
 import { env } from "@/env";
+import { Fragment } from "react";
+import { Separator } from "./ui/separator";
+import { ClipboardList, Info, LucideIcon, UserPen } from "lucide-react";
 
 type Route = {
   path: string;
   label: string;
+  icon?: LucideIcon;
   enabled?: boolean;
 };
 const routes: Route[] = [
-  { path: "/", label: "Home" },
   {
     path: "/refitting-room",
     label: "Refitting Room",
+    icon: UserPen,
     enabled: env.BUILD_KIND === "DEV",
   },
-  { path: "/calc", label: "Calc" },
-  { path: "/about", label: "About" },
+  { path: "/calc", label: "Planner", icon: ClipboardList },
+  { path: "/about", label: "About", icon: Info },
 ];
 
 export function TopBar() {
   return (
     <div className="sticky top-0 z-50 flex h-10 w-full justify-center border-b bg-background/40 backdrop-blur-md">
       <div className="container flex items-center justify-between">
-        <div className="flex gap-2">
-          {routes.map(({ label, path, enabled = true }) =>
+        <div className="flex gap-2 items-stretch">
+          {routes.map(({ label, path, enabled = true, icon: Icon }, i) =>
             enabled ? (
-              <Link className="hover:underline" href={path} key={path}>
-                {label}
-              </Link>
+              <Fragment key={path}>
+                <Link
+                  className="hover:underline inline-flex items-center gap-2"
+                  href={path}
+                  key={path}
+                >
+                  {Icon ? <Icon className="h-4 w-4" /> : null}
+                  {label}
+                </Link>
+                {i + 1 < routes.length ? (
+                  <Separator orientation="vertical" />
+                ) : null}
+              </Fragment>
             ) : null,
           )}
         </div>

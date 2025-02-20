@@ -8,6 +8,7 @@ import { WeaponSlugEnum } from "@/repository/enums";
 import { useAtom } from "jotai";
 import { weaponRarityVariants } from "@/lib/utils";
 import { motion } from "motion/react";
+import { AddToPlannerButton } from "./AddToPlannerButton";
 
 interface Props {
   slug: WeaponSlugEnum;
@@ -20,7 +21,7 @@ export function WeaponInfoForm({ slug }: Props) {
   return (
     <motion.div
       animate={{ opacity: 1 }}
-      className="flex flex-col"
+      className="flex flex-col gap-2"
       initial={{ opacity: 0 }}
       layout="preserve-aspect"
     >
@@ -40,26 +41,37 @@ export function WeaponInfoForm({ slug }: Props) {
           <ChevronsRight />
         </Button>
       </div>
-      Rank
+
       <div className="grid grid-cols-2 gap-1">
-        <NumberInput
-          className="h-auto w-auto"
-          max={6}
-          min={1}
-          onValueChange={setRank}
-          value={rank}
-        />
-        <NumberInput
-          className={weaponRarityVariants({
-            className: "h-auto w-auto",
-            text: rarity as 3 | 4 | 5,
-          })}
-          max={maxWepRarity(slug)}
-          min={minWepRarity(slug)}
-          onValueChange={(e) => setRarity(e as 3 | 4 | 5)}
-          value={rarity}
-        />
+        <div className="flex flex-col gap-2">
+          <Label htmlFor={`${slug}_rank`}>Rank</Label>
+          <NumberInput
+            className="h-auto w-auto"
+            id={`${slug}_rank`}
+            max={6}
+            min={1}
+            onValueChange={setRank}
+            value={rank}
+          />
+        </div>
+        <div className="flex flex-col gap-2">
+          <Label htmlFor={`${slug}_rarity`}>Rarity</Label>
+          <NumberInput
+            className={weaponRarityVariants({
+              className: "h-auto w-auto",
+              text: rarity as 3 | 4 | 5,
+            })}
+            id={`${slug}_rarity`}
+            max={maxWepRarity(slug)}
+            min={minWepRarity(slug)}
+            onValueChange={(e) => setRarity(e as 3 | 4 | 5)}
+            value={rarity}
+          />
+        </div>
       </div>
+      <AddToPlannerButton className="mt-2" slug={{ type: "WEP", slug }}>
+        Add to planner
+      </AddToPlannerButton>
     </motion.div>
   );
 }

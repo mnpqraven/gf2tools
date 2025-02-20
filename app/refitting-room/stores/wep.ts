@@ -6,7 +6,7 @@ import {
 } from "@/repository/enums";
 import { atom } from "jotai";
 import { ArmoryWeaponShape, NotOwned, OwnedArmoryWep } from "./types";
-import { atomFamily } from "jotai/utils";
+import { atomFamily, atomWithStorage } from "jotai/utils";
 import { focusAtom } from "jotai-optics";
 import { WEP_SLUGS_MAP } from "@/repository/wep";
 
@@ -15,12 +15,14 @@ import { WEP_SLUGS_MAP } from "@/repository/wep";
  */
 type ArmoryMapWep = Record<WeaponSlugEnum, OwnedArmoryWep | NotOwned>;
 
-export const ownMapWepAtom = atom(
+export const ownMapWepAtom = atomWithStorage<ArmoryMapWep>(
+  "ArmoryMapWep",
   Object.fromEntries(
     WEAPON_SLUG_ENUM.options.map((slug) => [
       slug satisfies WeaponSlugEnum,
       {
         owned: false,
+        expanded: false,
         armoryType: "WEP",
         slug,
         data: undefined,
@@ -51,8 +53,8 @@ export const toggleWepOwnershipAtom = atomFamily(
         armoryType: CALC_TYPE_ENUM.enum.WEP,
         slug,
         ...(prev.owned
-          ? { owned: false, data: undefined }
-          : { owned: true, data: defaultWepOwnership(slug) }),
+          ? { owned: false, expanded: false, data: undefined }
+          : { owned: true, expanded: true, data: defaultWepOwnership(slug) }),
       });
     }),
   (a, b) => a === b,
@@ -77,6 +79,12 @@ const WepAccessors = {
       .prop("data")
       .prop("rank"),
 };
+
+export const wepExpandedAtom = atomFamily(
+  (slug: WeaponSlugEnum) =>
+    focusAtom(wepAtomLookup(slug), (o) => o.prop("expanded")),
+  (a, b) => a === b,
+);
 
 export const wepOwnedAtom = atomFamily(
   (slug: WeaponSlugEnum) => focusAtom(wepAtomLookup(slug), WepAccessors.owned),

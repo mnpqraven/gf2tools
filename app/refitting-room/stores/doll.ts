@@ -1,7 +1,7 @@
 import { atom } from "jotai";
 import { ArmoryDollShape, NotOwned, OwnedArmoryDoll } from "./types";
 import { byLevelCapHelix, byLevelCapKey, DOLL_META } from "@/repository/dolls";
-import { atomFamily } from "jotai/utils";
+import { atomFamily, atomWithStorage } from "jotai/utils";
 import {
   CALC_TYPE_ENUM,
   DOLL_CLASS_ENUM,
@@ -28,12 +28,14 @@ export const dollFilterAtom = atom<ArmoryDollFilter>({
  */
 type ArmoryMapDoll = Record<DollSlugEnum, OwnedArmoryDoll | NotOwned>;
 
-export const ownMapDollAtom = atom<ArmoryMapDoll>(
+export const ownMapDollAtom = atomWithStorage<ArmoryMapDoll>(
+  "ArmoryMapDoll",
   Object.fromEntries(
     DOLL_META.map((doll) => [
       doll.id satisfies DollSlugEnum,
       {
         owned: false,
+        expanded: false,
         armoryType: "CHAR",
         slug: doll.id,
         data: undefined,
@@ -62,8 +64,8 @@ export const toggleDollOwnershipAtom = atomFamily(
         armoryType: CALC_TYPE_ENUM.enum.CHAR,
         slug,
         ...(prev.owned
-          ? { owned: false, data: undefined }
-          : { owned: true, data: defaultDollOwnership }),
+          ? { owned: false, expanded: false, data: undefined }
+          : { owned: true, expanded: true, data: defaultDollOwnership }),
       });
     }),
   (a, b) => a === b,
@@ -191,5 +193,11 @@ export const dollLevelAtom = atomFamily(
     a.debugLabel = `${slug}_level`;
     return a;
   },
+  (a, b) => a === b,
+);
+
+export const dollExpandedAtom = atomFamily(
+  (slug: DollSlugEnum) =>
+    focusAtom(dollAtomLookup(slug), (o) => o.prop("expanded")),
   (a, b) => a === b,
 );

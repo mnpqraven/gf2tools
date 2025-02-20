@@ -4,6 +4,7 @@ import "./globals.css";
 import { AppProvider } from "@/components/AppProvider";
 import { TopBar } from "@/components/TopBar";
 import { cn } from "@/lib/utils";
+import { Toaster } from "@/components/ui/sonner";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -35,6 +36,7 @@ export default function RootLayout({
           <main className="flex flex-col items-center py-8">
             <div className="container flex-1">{children}</div>
           </main>
+          <Toaster />
         </AppProvider>
       </body>
     </html>
