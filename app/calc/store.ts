@@ -22,10 +22,6 @@ export type CalcObject = {
   to: number;
 };
 
-export type CalcAtomProps = {
-  atom: PrimitiveAtom<CalcObject>;
-};
-
 export const calcListAtom = atomWithStorage<CalcObject[]>("calcList", []);
 export const calcListSplitAtom = splitAtom(calcListAtom, (e) => e._id);
 export const calcListSplitSetAtom = atom(

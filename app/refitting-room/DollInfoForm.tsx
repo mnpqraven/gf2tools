@@ -12,7 +12,7 @@ import {
 import { motion } from "motion/react";
 import { byLevelCapHelix, byLevelCapKey, DOLL_META } from "@/repository/dolls";
 import { Checkbox } from "@/components/ui/checkbox";
-import { cn, range } from "@/lib/utils";
+import { cn, range, rarityVariants } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { ChevronsLeft, ChevronsRight, CircleCheck } from "lucide-react";
 import { AddToPlannerButton } from "./AddToPlannerButton";
@@ -55,7 +55,10 @@ export function DollInfoForm({ slug }: { slug: DollSlugEnum }) {
           <ChevronsLeft />
         </Button>
         <NumberInput
-          className="bg-background/80"
+          className={rarityVariants({
+            className: "bg-background/80",
+            text: level === 60 ? 5 : undefined,
+          })}
           id={`${htmlId}-level`}
           max={60}
           min={1}
@@ -103,7 +106,10 @@ export function DollInfoForm({ slug }: { slug: DollSlugEnum }) {
           <ChevronsLeft />
         </Button>
         <NumberInput
-          className="bg-background/80"
+          className={rarityVariants({
+            className: "bg-background/80",
+            text: vert === 6 ? 5 : undefined,
+          })}
           id={`${htmlId}-vert`}
           max={6}
           min={0}
@@ -124,6 +130,7 @@ export function DollInfoForm({ slug }: { slug: DollSlugEnum }) {
 
       <AddToPlannerButton
         className="mt-2"
+        currentLevel={level}
         slug={{ type: "CHAR", slug }}
         variant={inCalc ? "success" : "default"}
       >

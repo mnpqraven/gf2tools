@@ -1,14 +1,15 @@
-import { ChevronsLeft, ChevronsRight } from "lucide-react";
+import { ChevronsLeft, ChevronsRight, CircleCheck } from "lucide-react";
 import { maxWepRarity, minWepRarity } from "@/repository/wep";
 import { NumberInput } from "@/components/shared/NumberInput";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { wepLevelAtom, wepRankAtom, wepRarityAtom } from "./stores/wep";
 import { WeaponSlugEnum } from "@/repository/enums";
-import { useAtom } from "jotai";
-import { weaponRarityVariants } from "@/lib/utils";
+import { useAtom, useAtomValue } from "jotai";
+import { cn, rarityVariants } from "@/lib/utils";
 import { motion } from "motion/react";
 import { AddToPlannerButton } from "./AddToPlannerButton";
+import { inCalcAtom } from "../calc/store";
 
 interface Props {
   slug: WeaponSlugEnum;
@@ -17,6 +18,7 @@ export function WeaponInfoForm({ slug }: Props) {
   const [rank, setRank] = useAtom(wepRankAtom(slug));
   const [level = 1, setLevel] = useAtom(wepLevelAtom(slug));
   const [rarity = maxWepRarity(slug), setRarity] = useAtom(wepRarityAtom(slug));
+  const inCalc = useAtomValue(inCalcAtom(slug));
 
   return (
     <motion.div
@@ -46,7 +48,12 @@ export function WeaponInfoForm({ slug }: Props) {
         <div className="flex flex-col gap-2">
           <Label htmlFor={`${slug}_rank`}>Rank</Label>
           <NumberInput
-            className="h-auto w-auto"
+            className={cn(
+              "h-auto w-auto",
+              rank === 6
+                ? "text-rarity-orange focus:text-rarity-orange font-semibold"
+                : "",
+            )}
             id={`${slug}_rank`}
             max={6}
             min={1}
@@ -57,7 +64,7 @@ export function WeaponInfoForm({ slug }: Props) {
         <div className="flex flex-col gap-2">
           <Label htmlFor={`${slug}_rarity`}>Rarity</Label>
           <NumberInput
-            className={weaponRarityVariants({
+            className={rarityVariants({
               className: "h-auto w-auto",
               text: rarity as 3 | 4 | 5,
             })}
@@ -69,8 +76,14 @@ export function WeaponInfoForm({ slug }: Props) {
           />
         </div>
       </div>
-      <AddToPlannerButton className="mt-2" slug={{ type: "WEP", slug }}>
-        Add to planner
+      <AddToPlannerButton
+        className="mt-2"
+        currentLevel={level}
+        slug={{ type: "WEP", slug }}
+        variant={inCalc ? "success" : "default"}
+      >
+        {inCalc ? <CircleCheck /> : null}
+        {inCalc ? "In planner" : "Add to planner"}
       </AddToPlannerButton>
     </motion.div>
   );

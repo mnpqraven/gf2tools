@@ -2,13 +2,12 @@ import { Button } from "@/components/ui/button";
 import { ComponentPropsWithRef } from "react";
 import { useRemoveCalcObject } from "../../_hooks/useRemoveCalcObject";
 import { Trash } from "lucide-react";
-import { CalcAtomProps } from "../../store";
+import { useCalcBox } from "./CalcBoxProvider";
 
-interface Props
-  extends Omit<ComponentPropsWithRef<typeof Button>, "onClick">,
-    CalcAtomProps {}
-
-export function RemoveButton({ atom, ...props }: Props) {
+export function RemoveButton({
+  ...props
+}: Omit<ComponentPropsWithRef<typeof Button>, "onClick">) {
+  const { atom } = useCalcBox();
   const { remove } = useRemoveCalcObject();
   return (
     <Button

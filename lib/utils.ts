@@ -28,12 +28,12 @@ type RequiredDragHandle = {
 export type DragHandle = Partial<RequiredDragHandle>;
 
 // TODO: merge with variant from WepGredSelect.tsx
-export const weaponRarityVariants = cva("", {
+export const rarityVariants = cva("", {
   variants: {
     text: {
       3: "text-rarity-blue",
       4: "text-rarity-purple",
-      5: "text-rarity-orange",
+      5: "text-rarity-orange font-semibold focus:text-rarity-orange",
     },
     border: {
       3: "border-rarity-blue",

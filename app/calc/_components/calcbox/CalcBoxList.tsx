@@ -6,6 +6,7 @@ import { closestCorners } from "@dnd-kit/core";
 import { Sortable, SortableItem } from "@/components/ui/sortable";
 import { CalcBox } from "./CalcBox";
 import { useMemo } from "react";
+import { CalcBoxProvider } from "./CalcBoxProvider";
 
 export function CalcBoxList() {
   const _atoms = useAtomValue(calcListSplitAtom);
@@ -25,12 +26,11 @@ export function CalcBoxList() {
     >
       <div className="flex flex-wrap gap-2">
         {keyedAtoms.map(({ atom, id }) => (
-          <SortableItem asChild key={id} value={id}>
-            <CalcBox
-              atom={atom}
-              // className="max-w-40"
-            />
-          </SortableItem>
+          <CalcBoxProvider atom={atom} key={id}>
+            <SortableItem asChild value={id}>
+              <CalcBox />
+            </SortableItem>
+          </CalcBoxProvider>
         ))}
       </div>
     </Sortable>

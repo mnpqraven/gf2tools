@@ -1,5 +1,4 @@
-import { useAtom, useAtomValue, useSetAtom } from "jotai";
-import { CalcAtomProps } from "../../store";
+import { useAtomValue, useSetAtom } from "jotai";
 import { useMemo, useState } from "react";
 import { focusAtom } from "jotai-optics";
 import { Button } from "@/components/ui/button";
@@ -16,13 +15,14 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { SquareUserRound } from "lucide-react";
+import { useCalcBox } from "./CalcBoxProvider";
 
-type Props = CalcAtomProps;
-
-export function NameInput({ atom }: Props) {
+export function NameInput() {
+  const { atom } = useCalcBox();
   const [open, setOpen] = useState(false);
 
-  const [name, setName] = useAtom(
+  const setName = useSetAtom(
     useMemo(() => focusAtom(atom, (t) => t.prop("name")), [atom]),
   );
   const setId = useSetAtom(
@@ -55,9 +55,7 @@ export function NameInput({ atom }: Props) {
     }, 150);
   }
 
-  const label = name.length
-    ? name
-    : `Select ${calcType === "WEP" ? "Weapon" : "Doll"} `;
+  const label = `Select ${calcType === "WEP" ? "Weapon" : "Doll"} `;
 
   // TODO: move this dialog to own wrapper, this component should only be
   // label button
@@ -74,7 +72,13 @@ export function NameInput({ atom }: Props) {
       open={open}
     >
       <DialogTrigger asChild>
-        <Button variant="outline">{label}</Button>
+        <Button
+          className="text-primary inline-flex items-center gap-1"
+          variant="outline"
+        >
+          <SquareUserRound />
+          {label}
+        </Button>
       </DialogTrigger>
       <DialogContent className="max-w-4xl">
         <DialogHeader>

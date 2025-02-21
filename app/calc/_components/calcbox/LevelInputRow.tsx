@@ -1,18 +1,18 @@
 "use client";
 
 import { ComponentPropsWithRef, useId, useMemo, useRef } from "react";
-import { CalcAtomProps } from "../../store";
 import { cn } from "@/lib/utils";
 import { useAtom } from "jotai";
 import { focusAtom } from "jotai-optics";
 import { NumberInput } from "@/components/shared/NumberInput";
 import { Label } from "@/components/ui/label";
+import { useCalcBox } from "./CalcBoxProvider";
 
 export function LevelInputRow({
-  atom,
   className,
   ...props
-}: CalcAtomProps & ComponentPropsWithRef<"div">) {
+}: ComponentPropsWithRef<"div">) {
+  const { atom } = useCalcBox();
   const [from, _setFrom] = useAtom(
     useMemo(() => focusAtom(atom, (optic) => optic.prop("from")), [atom]),
   );
@@ -38,7 +38,7 @@ export function LevelInputRow({
   return (
     <div {...props} className={cn("flex grow-0 gap-2", className)}>
       <div className="flex-1 gap-1 [&>input]:w-full">
-        <Label htmlFor={fromId}>From</Label>
+        <Label htmlFor={fromId}>From Lv</Label>
         <NumberInput
           id={fromId}
           max={60}
@@ -50,7 +50,7 @@ export function LevelInputRow({
         />
       </div>
       <div className="flex-1 gap-1 [&>input]:w-full">
-        <Label htmlFor={toId}>To</Label>
+        <Label htmlFor={toId}>To Lv</Label>
         <NumberInput
           id={toId}
           max={60}
