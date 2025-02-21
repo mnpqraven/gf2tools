@@ -15,9 +15,15 @@ type SlugKind =
   | { type: "CHAR"; slug: DollSlugEnum }
   | { type: "WEP"; slug: WeaponSlugEnum };
 interface Props extends Omit<ButtonProps, "onClick"> {
+  currentLevel: number;
   slug: SlugKind;
 }
-export function AddToPlannerButton({ slug, children, ...props }: Props) {
+export function AddToPlannerButton({
+  currentLevel,
+  slug,
+  children,
+  ...props
+}: Props) {
   const [open, setOpen] = useState(false);
   const calcList = useAtomValue(calcListAtom);
   const createCalcObject = useSetAtom(newCalcObjectAtom);
@@ -38,8 +44,13 @@ export function AddToPlannerButton({ slug, children, ...props }: Props) {
   function onCreate(slug: SlugKind) {
     switch (slug.type) {
       case "CHAR": {
-        createCalcObject({ calcType: "CHAR", id: slug.slug });
-        toast.success("created", {
+        createCalcObject({
+          calcType: "CHAR",
+          id: slug.slug,
+          from: currentLevel,
+          to: 60,
+        });
+        toast.success(`Created planner entry for ${slug.slug}`, {
           action: {
             label: "View",
             onClick: () => router.push("/calc"),
@@ -49,7 +60,7 @@ export function AddToPlannerButton({ slug, children, ...props }: Props) {
       }
       case "WEP": {
         createCalcObject({ calcType: "WEP", id: slug.slug });
-        toast.success("created", {
+        toast.success(`Created planner entry for ${slug.slug}`, {
           action: {
             label: "View",
             onClick: () => router.push("/calc"),
@@ -58,6 +69,7 @@ export function AddToPlannerButton({ slug, children, ...props }: Props) {
         break;
       }
     }
+    setOpen(false);
   }
 
   return (
