@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { ThemeToggle } from "./ThemeToggle";
 import { Button } from "./ui/button";
-import { env } from "@/env";
 import { Fragment } from "react";
 import { Separator } from "./ui/separator";
 import { ClipboardList, Info, LucideIcon, UserPen } from "lucide-react";
@@ -13,12 +12,7 @@ type Route = {
   enabled?: boolean;
 };
 const routes: Route[] = [
-  {
-    path: "/refitting-room",
-    label: "Refitting Room",
-    icon: UserPen,
-    enabled: env.BUILD_KIND === "DEV",
-  },
+  { path: "/refitting-room", label: "Refitting Room", icon: UserPen },
   { path: "/calc", label: "Planner", icon: ClipboardList },
   { path: "/about", label: "About", icon: Info },
 ];
