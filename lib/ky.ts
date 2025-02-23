@@ -3,7 +3,7 @@ import _ky, { Input, KyInstance, Options } from "ky";
 import { TRPCError } from "@trpc/server";
 import { getStatusKeyFromCode } from "@trpc/server/unstable-core-do-not-import";
 
-export const baseUrl = env.BACKEND_API_URL;
+export const baseUrl = env.BACKEND_API_URL + "/api";
 
 const options: Options = {
   prefixUrl: baseUrl,
@@ -13,9 +13,10 @@ const options: Options = {
   hooks: {
     afterResponse: [
       (_request, _options, response) => {
-        console.error("[API] Error", response.status);
-        if (response.status > 400)
+        if (response.status > 400) {
+          console.error("[API] Error", response.status);
           throw new TRPCError({ code: getStatusKeyFromCode(response.status) });
+        }
       },
     ],
   },

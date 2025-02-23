@@ -1,13 +1,14 @@
 "use client";
 
-import { useTRPC } from "@/lib/trpc";
-import { useQuery } from "@tanstack/react-query";
+import { PullForm } from "./PullForm";
+import { PullGraph } from "./PullGraph";
 
 export default function Page() {
-  const trpc = useTRPC();
-  const { data } = useQuery(trpc.pullEstimate.queryOptions());
+  return (
+    <div className="flex flex-col gap-2">
+      <PullForm />
 
-  console.log(data);
-
-  return <div>data</div>;
+      <PullGraph />
+    </div>
+  );
 }

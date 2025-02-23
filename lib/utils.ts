@@ -42,3 +42,17 @@ export const rarityVariants = cva("", {
     },
   },
 });
+
+export function transformArrayPair<T, K extends keyof T>(
+  list: T[],
+  keyToName: K,
+  valueToName: keyof T,
+  nameFormat?: (key: T[K]) => string,
+): Record<string, T> {
+  return Object.fromEntries(
+    list.map((pair) => [
+      nameFormat !== undefined ? nameFormat(pair[keyToName]) : pair[keyToName],
+      pair[valueToName],
+    ]),
+  );
+}
