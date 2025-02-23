@@ -26,6 +26,7 @@ const eslintConfig = [
           caughtErrorsIgnorePattern: "^_",
         },
       ],
+      "object-shorthand": "warn",
     },
   },
 ];

@@ -6,16 +6,14 @@ import { Provider } from "jotai";
 import { ReactNode } from "react";
 import { DevTools } from "jotai-devtools";
 import { ThemeProvider } from "next-themes";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
-
-const client = new QueryClient();
+import { TRPCProvider } from "@/lib/trpc";
 
 export function AppProvider({ children }: Readonly<{ children: ReactNode }>) {
   return (
     <ThemeProvider attribute="class">
-      <QueryClientProvider client={client}>
+      <TRPCProvider>
         <NuqsAdapter>
           <Provider>
             {children}
@@ -23,7 +21,7 @@ export function AppProvider({ children }: Readonly<{ children: ReactNode }>) {
             <ReactQueryDevtools initialIsOpen={false} />
           </Provider>
         </NuqsAdapter>
-      </QueryClientProvider>
+      </TRPCProvider>
     </ThemeProvider>
   );
 }

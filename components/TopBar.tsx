@@ -3,7 +3,14 @@ import { ThemeToggle } from "./ThemeToggle";
 import { Button } from "./ui/button";
 import { Fragment } from "react";
 import { Separator } from "./ui/separator";
-import { ClipboardList, Info, LucideIcon, UserPen } from "lucide-react";
+import {
+  ChartArea,
+  ClipboardList,
+  Info,
+  LucideIcon,
+  UserPen,
+} from "lucide-react";
+import { env } from "@/env";
 
 type Route = {
   path: string;
@@ -14,6 +21,12 @@ type Route = {
 const routes: Route[] = [
   { path: "/refitting-room", label: "Refitting Room", icon: UserPen },
   { path: "/calc", label: "Planner", icon: ClipboardList },
+  {
+    path: "/pull-estimate",
+    label: "Gacha Estimate",
+    icon: ChartArea,
+    enabled: env.BUILD_KIND === "DEV",
+  },
   { path: "/about", label: "About", icon: Info },
 ];
 

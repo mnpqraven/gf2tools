@@ -8,6 +8,7 @@ const _zBool = z
 
 export const env = createEnv({
   server: {
+    BACKEND_API_URL: z.string().url(),
     BUILD_KIND: z.enum(["DEV", "PROD"]).default("DEV"),
   },
   client: {},
