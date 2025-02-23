@@ -60,11 +60,10 @@ export function PullGraph() {
 
   if (!data) return null;
 
-  const chartData = data.data.map((list, i) => ({
+  const chartData = data.data.slice(1).map((list, i) => ({
     index: i,
     ...transformArrayPair(list, "eidolon", "rate", (e) => `E${e}`),
   }));
-  console.log(chartData);
 
   return (
     <Card>
@@ -85,6 +84,7 @@ export function PullGraph() {
             <XAxis
               axisLine={false}
               dataKey="index"
+              domain={[0, chartData.length]}
               tickCount={10}
               tickLine={false}
               tickMargin={8}
@@ -104,7 +104,7 @@ export function PullGraph() {
                   indicator="dot"
                   labelFormatter={(_value, payload) => {
                     const pullNum = payload.at(0)?.payload.index;
-                    return `Pull ${pullNum}`;
+                    return `Pull ${pullNum + 1}`;
                   }}
                   valueFormatter={(e) => (Number(e) * 100).toFixed(1) + " %"}
                 />

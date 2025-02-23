@@ -7,10 +7,7 @@ import {
   FormItem,
   FormLabel,
 } from "@/components/ui/form";
-import {
-  bannerTypeEnum,
-  pullEstimateSchema,
-} from "@/lib/schemas/pull-estimate";
+import { pullEstimateSchema } from "@/lib/schemas/pull-estimate";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useSetAtom } from "jotai";
 import { useForm } from "react-hook-form";
@@ -27,6 +24,7 @@ import {
 } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
+import { bannerDict, BannerType, bannerTypes } from "@/lib/schemas/banner";
 
 export function PullForm() {
   const form = useForm({
@@ -44,7 +42,7 @@ export function PullForm() {
       <form className="flex gap-2" onSubmit={form.handleSubmit(onSubmit)}>
         <FormField
           control={form.control}
-          name="pity"
+          name="pityCurrentCount"
           render={({ field }) => (
             <FormItem>
               <FormLabel>Pity</FormLabel>
@@ -110,17 +108,22 @@ export function PullForm() {
         <FormField
           control={form.control}
           name="banner"
-          render={({ field }) => (
+          render={() => (
             <FormItem>
               <FormLabel>Dupe</FormLabel>
-              <Select onValueChange={field.onChange} value={field.value}>
+              <Select
+                defaultValue="SSRDoll"
+                onValueChange={(key: BannerType) => {
+                  form.setValue("banner", bannerDict[key]);
+                }}
+              >
                 <FormControl>
                   <SelectTrigger>
                     <SelectValue />
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  {bannerTypeEnum.options.map((banner) => (
+                  {bannerTypes.options.map((banner) => (
                     <SelectItem key={banner} value={banner}>
                       {banner}
                     </SelectItem>

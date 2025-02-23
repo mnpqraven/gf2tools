@@ -2,6 +2,7 @@ import { ky } from "@/lib/ky";
 import { publicProcedure, router } from "../trpc";
 import { z } from "zod";
 import { pullEstimateSchema } from "@/lib/schemas/pull-estimate";
+import { Banner } from "@/lib/schemas/banner";
 
 export type PullEstimateResponse = {
   data: {
@@ -9,6 +10,7 @@ export type PullEstimateResponse = {
     rate: number;
   }[][];
   roll_budget: number;
+  banner: Banner;
 };
 
 export const appRouter = router({

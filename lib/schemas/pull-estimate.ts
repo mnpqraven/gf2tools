@@ -1,18 +1,18 @@
 import { z } from "zod";
+import { bannerDict, bannerSchema } from "./banner";
 
-export const bannerTypeEnum = z.enum(["SSR", "SR", "LC"]);
 export const pullEstimateSchema = z
   .object({
-    banner: bannerTypeEnum,
     currentEidolon: z.number(),
     nextGuaranteed: z.boolean(),
-    pity: z.number(),
+    pityCurrentCount: z.number(),
     pulls: z.number(),
+    banner: bannerSchema,
   })
   .default({
-    banner: "SR",
     currentEidolon: 0,
     nextGuaranteed: true,
-    pity: 1,
+    pityCurrentCount: 1,
     pulls: 180,
+    banner: bannerDict.SSRDoll,
   });
