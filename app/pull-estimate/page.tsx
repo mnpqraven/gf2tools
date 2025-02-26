@@ -1,10 +1,14 @@
-"use client";
-
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { PullForm } from "./PullForm";
 import { PullGraph } from "./PullGraph";
+import { Metadata } from "next";
 
-export default function Page() {
+export const metadata: Metadata = {
+  title: "Gacha Estimation",
+  description: "Gacha Estimation",
+};
+
+export default async function Page() {
   return (
     <div className="flex flex-col gap-2">
       <PullForm />
