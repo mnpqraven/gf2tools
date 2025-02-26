@@ -22,9 +22,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
 import { bannerDict, BannerType, bannerTypes } from "@/lib/schemas/banner";
+import { Switch } from "@/components/ui/switch";
 
 export function PullForm() {
   const form = useForm({
@@ -91,12 +91,10 @@ export function PullForm() {
           name="currentEidolon"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>
-                Current Fortification (choose -1 for unowned)
-              </FormLabel>
+              <FormLabel>Fortification</FormLabel>
               <FormControl>
                 <NumberInput
-                  className="h-10 w-10"
+                  className="h-10 w-full"
                   min={-1}
                   onValueChange={field.onChange}
                   value={field.value}
@@ -140,7 +138,7 @@ export function PullForm() {
             <FormItem>
               <FormLabel>Guaranteed</FormLabel>
               <FormControl>
-                <Checkbox
+                <Switch
                   checked={field.value}
                   className="block"
                   onCheckedChange={field.onChange}
