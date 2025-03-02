@@ -9,6 +9,7 @@ import {
   Info,
   LucideIcon,
   UserPen,
+  Users,
 } from "lucide-react";
 import { env } from "@/env";
 
@@ -25,6 +26,11 @@ const routes: Route[] = [
     path: "/pull-estimate",
     label: "Gacha Estimate",
     icon: ChartArea,
+  },
+  {
+    path: "/teams",
+    label: "Team Presets",
+    icon: Users,
     enabled: env.BUILD_KIND === "DEV",
   },
   { path: "/about", label: "About", icon: Info },
