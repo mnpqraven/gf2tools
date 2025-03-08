@@ -1,3 +1,5 @@
+"use client";
+
 import { useAtomValue } from "jotai";
 import { pullEstimateFormAtom } from "./store";
 import { useTRPC } from "@/lib/trpc";
