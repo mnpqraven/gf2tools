@@ -10,7 +10,6 @@ import {
   LucideIcon,
   UserPen,
 } from "lucide-react";
-import { env } from "@/env";
 
 type Route = {
   path: string;
@@ -25,7 +24,6 @@ const routes: Route[] = [
     path: "/pull-estimate",
     label: "Gacha Estimate",
     icon: ChartArea,
-    enabled: env.BUILD_KIND === "DEV",
   },
   { path: "/about", label: "About", icon: Info },
 ];
