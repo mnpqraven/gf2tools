@@ -37,6 +37,7 @@ export const DOLL_SLUG_ENUM = z.enum([
   "PeriSSR",
   "QiuhuaSSR",
   "YooHeeSSR",
+  "NikketaSSR",
 ]);
 
 export const WEAPON_SLUG_ENUM = z.enum([

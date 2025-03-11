@@ -44,6 +44,7 @@ export const DOLL_SLUGS_MAP: Record<DollSlugEnum, DollShortMeta> = {
   PeriSSR: { name: "Peri", dClass: "bulwark" },
   QiuhuaSSR: { name: "Qiuhua", dClass: "vanguard" },
   YooHeeSSR: { name: "YooHee", dClass: "support" },
+  NikketaSSR: { name: "Nikketa", dClass: "sentinel" },
 };
 
 export const DOLL_EXP_TABLE = [
