@@ -34,7 +34,7 @@ export default function RootLayout({
         <AppProvider>
           <TopBar />
           <main className="flex flex-col items-center py-8">
-            <div className="container flex-1">{children}</div>
+            <div className="container flex-1 px-2">{children}</div>
           </main>
           <Toaster />
         </AppProvider>

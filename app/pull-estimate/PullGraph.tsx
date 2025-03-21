@@ -24,31 +24,31 @@ import { transformArrayPair } from "@/lib/utils";
 
 const chartConfig = {
   E0: {
-    label: "E0",
+    label: "V0",
     color: "hsl(var(--muted-foreground))",
   },
   E1: {
-    label: "E1",
+    label: "V1",
     color: "hsl(var(--chart-1))",
   },
   E2: {
-    label: "E2",
+    label: "V2",
     color: "hsl(var(--chart-2))",
   },
   E3: {
-    label: "E3",
+    label: "V3",
     color: "hsl(var(--chart-3))",
   },
   E4: {
-    label: "E4",
+    label: "V4",
     color: "hsl(var(--chart-4))",
   },
   E5: {
-    label: "E5",
+    label: "V5",
     color: "hsl(var(--chart-5))",
   },
   E6: {
-    label: "E6",
+    label: "V6",
     color: "#60a5fa",
   },
 } satisfies ChartConfig;

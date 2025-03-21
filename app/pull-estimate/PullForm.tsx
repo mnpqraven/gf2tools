@@ -32,6 +32,7 @@ export function PullForm() {
     defaultValues: pullEstimateSchema.parse(undefined),
   });
   const setForm = useSetAtom(pullEstimateFormAtom);
+  const vert = form.watch("currentEidolon");
 
   function onSubmit(values: TypeOf<typeof pullEstimateSchema>) {
     setForm(values);
@@ -39,12 +40,15 @@ export function PullForm() {
 
   return (
     <Form {...form}>
-      <form className="flex gap-2" onSubmit={form.handleSubmit(onSubmit)}>
+      <form
+        className="grid grid-cols-3 gap-2 md:flex"
+        onSubmit={form.handleSubmit(onSubmit)}
+      >
         <FormField
           control={form.control}
           name="pityCurrentCount"
           render={({ field }) => (
-            <FormItem>
+            <FormItem className="col-span-3">
               <FormLabel>Pity</FormLabel>
               <FormControl>
                 <Input
@@ -67,7 +71,7 @@ export function PullForm() {
           control={form.control}
           name="pulls"
           render={({ field }) => (
-            <FormItem>
+            <FormItem className="col-span-3">
               <FormLabel>Pulls</FormLabel>
               <FormControl>
                 <Input
@@ -88,27 +92,10 @@ export function PullForm() {
         />
         <FormField
           control={form.control}
-          name="currentEidolon"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Fortification</FormLabel>
-              <FormControl>
-                <NumberInput
-                  className="h-10 w-full"
-                  min={-1}
-                  onValueChange={field.onChange}
-                  value={field.value}
-                />
-              </FormControl>
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
           name="banner"
           render={() => (
-            <FormItem>
-              <FormLabel>Dupe</FormLabel>
+            <FormItem className="col-span-3">
+              <FormLabel>Banner</FormLabel>
               <Select
                 defaultValue="SSRDoll"
                 onValueChange={(key: BannerType) => {
@@ -147,7 +134,44 @@ export function PullForm() {
             </FormItem>
           )}
         />
-        <Button className="place-self-end">Calculate</Button>
+        <FormField
+          control={form.control}
+          name="currentEidolon"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Owned</FormLabel>
+              <FormControl>
+                <Switch
+                  checked={field.value > -1}
+                  className="block"
+                  onCheckedChange={(to) => field.onChange(to ? 0 : -1)}
+                />
+              </FormControl>
+            </FormItem>
+          )}
+        />
+        {vert > -1 ? (
+          <FormField
+            control={form.control}
+            name="currentEidolon"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Fortification</FormLabel>
+                <FormControl>
+                  <NumberInput
+                    className="h-10 w-full"
+                    min={0}
+                    onValueChange={field.onChange}
+                    value={field.value}
+                  />
+                </FormControl>
+              </FormItem>
+            )}
+          />
+        ) : null}
+        <Button className="col-span-3 place-self-center md:place-self-end">
+          Calculate
+        </Button>
       </form>
     </Form>
   );

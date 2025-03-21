@@ -88,13 +88,17 @@ export function NumberInput({
       } else if (min !== undefined && newValue < min) onValueChange(1);
       else onValueChange(newValue);
     }
+    // TODO: better negative handling
+    if (e.key === "-" && min !== undefined && min < 0) {
+      onValueChange(-1);
+    }
   };
 
   return (
     <Input
       className={cn(
         "h-12 w-12 text-center font-mono text-base tabular-nums caret-transparent focus:bg-accent focus:text-accent-foreground [&::-webkit-inner-spin-button]:appearance-none",
-        className
+        className,
       )}
       id={id}
       inputMode="decimal"

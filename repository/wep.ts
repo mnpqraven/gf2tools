@@ -109,6 +109,7 @@ export const WEP_SLUGS_MAP: Record<WeaponSlugEnum, WeaponShortMeta> = {
   MP5: { name: "MP5", wClass: "SMG", dollSlug: "PeriSSR" },
   HAWK12: { name: "HAWK12", wClass: "SG", dollSlug: "QiuhuaSSR" },
   K2: { name: "K2", wClass: "AR", dollSlug: "YooHeeSSR" },
+  VSK94: { name: "VSK94", wClass: "RF", dollSlug: "NikketaSSR" },
 };
 
 export const WEP_EXP_TABLE = [
