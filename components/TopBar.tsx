@@ -30,14 +30,14 @@ const routes: Route[] = [
 
 export function TopBar() {
   return (
-    <div className="sticky top-0 z-50 flex h-10 w-full justify-center border-b bg-background/40 backdrop-blur-md">
+    <div className="min-h-10 sticky top-0 z-50 flex w-full justify-center border-b bg-background/40 px-2 backdrop-blur-md">
       <div className="container flex items-center justify-between">
-        <div className="flex gap-2 items-stretch">
+        <div className="flex flex-wrap items-stretch gap-2">
           {routes.map(({ label, path, enabled = true, icon: Icon }, i) =>
             enabled ? (
               <Fragment key={path}>
                 <Link
-                  className="hover:underline inline-flex items-center gap-2"
+                  className="inline-flex min-w-fit items-center gap-2 whitespace-nowrap hover:underline"
                   href={path}
                   key={path}
                 >
