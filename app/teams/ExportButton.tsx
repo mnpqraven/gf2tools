@@ -31,9 +31,12 @@ export function ExportButton({ className, mode, ...props }: Props) {
   }, []);
 
   function onExportClick() {
-    toast("Exporting image... ");
     exportImage(cardRef?.current, { mode })
-      .then(() => toast("Image exported"))
+      .then(() =>
+        toast(
+          mode === "DOWNLOAD" ? "Image exported" : "Image copied to clipboard",
+        ),
+      )
       .catch(() => toast("No character selected, please select a character"));
   }
   function label() {
