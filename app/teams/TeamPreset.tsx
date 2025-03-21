@@ -28,6 +28,8 @@ import { DollSlugEnum } from "@/repository/enums";
 import { cva } from "class-variance-authority";
 import { DollGridSelect } from "../calc/_components/dollSelector/DollGridSelect";
 import { ownMapDollAtom } from "../refitting-room/stores/doll";
+import Image from "next/image";
+import { DOLL_META } from "@/repository/dolls";
 
 export function TeamPreset() {
   const { atom } = useTeamPreset();
@@ -79,7 +81,7 @@ function DollSelectDrawerSheet({
     variants: {
       chosen: {
         true: null,
-        false: "justify-center items-center",
+        false: "items-center justify-center",
       },
     },
   });
@@ -92,15 +94,22 @@ function DollSelectDrawerSheet({
       return;
     }
     // do shit
+    /**
+      * TODO: allow unowned
     const someOwnedDoll = dollMap[id];
     if (!someOwnedDoll.owned) {
       // early return
       setOpen(false);
       return;
     }
+      */
 
     const scope = teamPresetDollOptic(slotIndex);
-    setValue((prev) => O.set(scope)(id)(prev));
+    setValue((prev) => {
+      const next = O.set(scope)(id)(prev);
+      console.log("next", next);
+      return next;
+    });
 
     setOpen(false);
   }
@@ -117,7 +126,19 @@ function DollSelectDrawerSheet({
             })}
             variant="outline"
           >
-            {currentDollSlug ?? <Plus />}
+            {currentDollSlug ? (
+              <Image
+                alt={currentDollSlug}
+                height={64}
+                src={
+                  DOLL_META.find((e) => e.id === currentDollSlug)?.img.head ??
+                  ""
+                }
+                width={64}
+              />
+            ) : (
+              <Plus />
+            )}
           </Button>
         </DialogTrigger>
         <DialogContent className="md:max-w-4xl">

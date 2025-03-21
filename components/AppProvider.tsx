@@ -9,19 +9,22 @@ import { ThemeProvider } from "next-themes";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
 import { TRPCProvider } from "@/lib/trpc";
+import { TooltipProvider } from "./ui/tooltip";
 
 export function AppProvider({ children }: Readonly<{ children: ReactNode }>) {
   return (
     <ThemeProvider attribute="class">
-      <TRPCProvider>
-        <NuqsAdapter>
-          <Provider>
-            {children}
-            <DevTools isInitialOpen={false} theme="dark" />
-            <ReactQueryDevtools initialIsOpen={false} />
-          </Provider>
-        </NuqsAdapter>
-      </TRPCProvider>
+      <TooltipProvider>
+        <TRPCProvider>
+          <NuqsAdapter>
+            <Provider>
+              {children}
+              <DevTools isInitialOpen={false} theme="dark" />
+              <ReactQueryDevtools initialIsOpen={false} />
+            </Provider>
+          </NuqsAdapter>
+        </TRPCProvider>
+      </TooltipProvider>
     </ThemeProvider>
   );
 }
