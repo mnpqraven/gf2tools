@@ -1,3 +1,5 @@
+"use client";
+
 import { useEffect, useRef } from "react";
 import { cardRefAtom } from "./store";
 import { useSetAtom } from "jotai";

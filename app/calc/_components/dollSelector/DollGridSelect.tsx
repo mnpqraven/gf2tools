@@ -8,13 +8,26 @@ import { dollFilterAtom } from "./dollSelectorStore";
 import { focusAtom } from "jotai-optics";
 import { useFilteredDolls } from "./useFilteredDolls";
 import { DollFilter } from "./DollFilter";
-import { DOLL_CLASS_ENUM, DollClassEnum } from "@/repository/enums";
+import {
+  DOLL_CLASS_ENUM,
+  DollClassEnum,
+  DollSlugEnum,
+} from "@/repository/enums";
 import { AssetIcon } from "@/components/AssetIcon";
 
 interface Props extends ComponentPropsWithRef<"div"> {
   onDollSelect: (t: { name: string; id?: string }, custom?: boolean) => void;
+  /**
+   * whether a doll entry is disabled during selection
+   */
+  shouldDisable?: (slug: DollSlugEnum) => boolean;
 }
-export function DollGridSelect({ onDollSelect, className, ...props }: Props) {
+export function DollGridSelect({
+  onDollSelect,
+  shouldDisable,
+  className,
+  ...props
+}: Props) {
   const search = useAtomValue(
     useMemo(() => focusAtom(dollFilterAtom, (t) => t.prop("search")), []),
   );
@@ -39,6 +52,7 @@ export function DollGridSelect({ onDollSelect, className, ...props }: Props) {
           dolls={filteredDolls}
           key={dollClass}
           onDollSelect={onDollSelect}
+          shouldDisable={shouldDisable}
         />
       ))}
 
@@ -60,11 +74,13 @@ function DisplayClassContainer({
   dollClass,
   onDollSelect,
   className,
+  shouldDisable,
   ...props
 }: ComponentPropsWithRef<"div"> & {
   dolls: DollMeta[];
   dollClass: DollClassEnum;
   onDollSelect: (t: { name: string; id?: string }) => void;
+  shouldDisable?: (slug: DollSlugEnum) => boolean;
 }) {
   const filteredDolls = dolls.filter((doll) => doll.dollClass === dollClass);
   if (!filteredDolls.length) return null;
@@ -82,6 +98,7 @@ function DisplayClassContainer({
         {filteredDolls.map(({ name, img, rarity, id }) => (
           <Button
             className="flex h-auto items-center justify-between gap-1"
+            disabled={shouldDisable?.(id)}
             key={`${id}-${rarity}`}
             onClick={() => onDollSelect({ name, id })}
             variant="ghost"

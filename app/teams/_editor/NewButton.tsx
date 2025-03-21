@@ -2,7 +2,7 @@
 
 import { Button, ButtonProps } from "@/components/ui/button";
 import { useSetAtom } from "jotai";
-import { teamListSplittedAtom } from "./store";
+import { defaultTeamPreset, teamListSplittedAtom } from "../store";
 
 export function NewButton({
   children,
@@ -13,7 +13,7 @@ export function NewButton({
   function onNew() {
     dispatch({
       type: "insert",
-      value: { name: "", slots: [undefined, undefined, undefined, undefined] },
+      value: defaultTeamPreset,
     });
   }
 

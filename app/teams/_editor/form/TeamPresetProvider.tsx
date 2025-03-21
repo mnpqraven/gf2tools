@@ -1,6 +1,6 @@
 import { PrimitiveAtom } from "jotai";
 import { createContext, ReactNode, use } from "react";
-import { TeamPreset } from "./types";
+import type { TeamPreset } from "../../types";
 
 interface ContextReturn {
   atom: PrimitiveAtom<TeamPreset>;

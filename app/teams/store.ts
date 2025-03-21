@@ -6,6 +6,12 @@ import { RefObject } from "react";
 
 export const teamListAtom = atomWithStorage<TeamPreset[]>("teamListAtom", []);
 
+export const defaultTeamPreset: TeamPreset = {
+  name: "",
+  teamSize: 4,
+  slots: [],
+};
+
 export const teamListSplittedAtom = splitAtom(teamListAtom);
 
 export const teamPresetDollOptic = (index: number) =>
