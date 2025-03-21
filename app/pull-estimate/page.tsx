@@ -17,11 +17,10 @@ export default async function Page() {
           <CardTitle>Note</CardTitle>
         </CardHeader>
         <CardContent>
-          For Fortification, select{" "}
-          <code className="bg-muted rounded-sm px-1">-1</code> if you do not yet
-          own the doll/weapon <br />
+          Select/Deselect <code className="rounded-sm bg-muted px-1">-1</code>{" "}
+          if you do not yet own the doll/weapon <br />
           Select the{" "}
-          <code className="bg-muted rounded-sm px-1">Guaranteed</code> option if
+          <code className="rounded-sm bg-muted px-1">Guaranteed</code> option if
           you already lost a pity and the next elite is guaranteed to be what
           you want
         </CardContent>
