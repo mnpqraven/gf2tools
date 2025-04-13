@@ -1,3 +1,5 @@
+import { DollGridSelect } from "@/app/calc/_components/dollSelector/DollGridSelect";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -14,15 +16,13 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
-import { ComponentPropsWithRef, useState } from "react";
 import { useIsDesktop } from "@/lib/hooks/useIsDesktop";
-import { DollSlugEnum } from "@/repository/enums";
-import { cva } from "class-variance-authority";
-import Image from "next/image";
 import { DOLL_META } from "@/repository/dolls";
-import { DollGridSelect } from "@/app/calc/_components/dollSelector/DollGridSelect";
-import { Button } from "@/components/ui/button";
+import type { DollSlugEnum } from "@/repository/enums";
+import { cva } from "class-variance-authority";
 import { Plus } from "lucide-react";
+import Image from "next/image";
+import { type ComponentPropsWithRef, useState } from "react";
 
 // TODO: generic component
 export function DollSelectDrawerSheet({

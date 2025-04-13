@@ -1,15 +1,15 @@
-import { ChevronsLeft, ChevronsRight, CircleCheck } from "lucide-react";
-import { maxWepRarity, minWepRarity } from "@/repository/wep";
 import { NumberInput } from "@/components/shared/NumberInput";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import { wepLevelAtom, wepRankAtom, wepRarityAtom } from "./stores/wep";
-import { WeaponSlugEnum } from "@/repository/enums";
-import { useAtom, useAtomValue } from "jotai";
 import { cn, rarityVariants } from "@/lib/utils";
+import type { WeaponSlugEnum } from "@/repository/enums";
+import { maxWepRarity, minWepRarity } from "@/repository/wep";
+import { useAtom, useAtomValue } from "jotai";
+import { ChevronsLeft, ChevronsRight, CircleCheck } from "lucide-react";
 import { motion } from "motion/react";
-import { AddToPlannerButton } from "./AddToPlannerButton";
 import { inCalcAtom } from "../calc/store";
+import { AddToPlannerButton } from "./AddToPlannerButton";
+import { wepLevelAtom, wepRankAtom, wepRarityAtom } from "./stores/wep";
 
 interface Props {
   slug: WeaponSlugEnum;
@@ -51,7 +51,7 @@ export function WeaponInfoForm({ slug }: Props) {
             className={cn(
               "h-auto w-auto",
               rank === 6
-                ? "text-rarity-orange focus:text-rarity-orange font-semibold"
+                ? "font-semibold text-rarity-orange focus:text-rarity-orange"
                 : "",
             )}
             id={`${slug}_rank`}

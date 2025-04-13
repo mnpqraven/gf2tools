@@ -1,17 +1,17 @@
-import Link from "next/link";
-import { ThemeToggle } from "./ThemeToggle";
-import { Button } from "./ui/button";
-import { Fragment } from "react";
-import { Separator } from "./ui/separator";
+import { env } from "@/env";
 import {
   ChartArea,
   ClipboardList,
   Info,
-  LucideIcon,
+  type LucideIcon,
   UserPen,
   Users,
 } from "lucide-react";
-import { env } from "@/env";
+import Link from "next/link";
+import { Fragment } from "react";
+import { ThemeToggle } from "./ThemeToggle";
+import { Button } from "./ui/button";
+import { Separator } from "./ui/separator";
 
 type Route = {
   path: string;
@@ -38,7 +38,7 @@ const routes: Route[] = [
 
 export function TopBar() {
   return (
-    <div className="min-h-10 sticky top-0 z-50 flex w-full justify-center border-b bg-background/40 px-2 backdrop-blur-md">
+    <div className="sticky top-0 z-50 flex min-h-10 w-full justify-center border-b bg-background/40 px-2 backdrop-blur-md">
       <div className="container flex items-center justify-between">
         <div className="flex flex-wrap items-stretch gap-2">
           {routes.map(({ label, path, enabled = true, icon: Icon }, i) =>
@@ -63,7 +63,11 @@ export function TopBar() {
         <div className="flex gap-1">
           <ThemeToggle className="py-1" />
           <Button className="py-1" size="sm" variant="ghost">
-            <a href="https://github.com/mnpqraven/gf2tools" target="_blank">
+            <a
+              href="https://github.com/mnpqraven/gf2tools"
+              target="_blank"
+              rel="noreferrer"
+            >
               <GithubIcon />
             </a>
           </Button>

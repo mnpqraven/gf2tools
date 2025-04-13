@@ -1,9 +1,9 @@
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { defaultTeamPreset } from "../../store";
-import { ComponentPropsWithRef, useId } from "react";
-import { useTeamPreset } from "./TeamPresetProvider";
-import { useSetAtom } from "jotai";
 import { Label } from "@/components/ui/label";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { useSetAtom } from "jotai";
+import { type ComponentPropsWithRef, useId } from "react";
+import { defaultTeamPreset } from "../../store";
+import { useTeamPreset } from "./TeamPresetProvider";
 
 export function TeamSizeRadio(props: ComponentPropsWithRef<typeof RadioGroup>) {
   const radioId = useId();

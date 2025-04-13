@@ -1,6 +1,6 @@
+import type { ASSET_DICT } from "@/components/AssetIcon";
 import { z } from "zod";
-import { DollSlugEnum, WeaponClassEnum, WeaponSlugEnum } from "./enums";
-import { ASSET_DICT } from "@/components/AssetIcon";
+import type { DollSlugEnum, WeaponClassEnum, WeaponSlugEnum } from "./enums";
 
 export const WEP_SLUGS_MAP: Record<WeaponSlugEnum, WeaponShortMeta> = {
   Blade: {
@@ -161,23 +161,18 @@ export interface WeaponMeta {
 }
 
 function weaponMetaPropagate(): WeaponMeta[] {
-  const t: WeaponMeta[] = Object.entries(WEP_SLUGS_MAP)
-    .map(
-      ([
-        key,
-        { name, dollSlug, rarities: singularRarity = [3, 4, 5], wClass },
-      ]) =>
-        singularRarity.map((rarity) => ({
-          name,
-          id: `${key as WeaponSlugEnum}_${rarity}`,
-          slug: key as WeaponSlugEnum,
-          weaponClass: wClass,
-          dollSlug,
-          img: `https://gf2.mcc.wiki/image/item/Weapon_${key}_${rarity}_256.png`,
-          rarity,
-        })) satisfies WeaponMeta[],
-    )
-    .flat();
+  const t: WeaponMeta[] = Object.entries(WEP_SLUGS_MAP).flatMap(
+    ([key, { name, dollSlug, rarities: singularRarity = [3, 4, 5], wClass }]) =>
+      singularRarity.map((rarity) => ({
+        name,
+        id: `${key as WeaponSlugEnum}_${rarity}`,
+        slug: key as WeaponSlugEnum,
+        weaponClass: wClass,
+        dollSlug,
+        img: `https://gf2.mcc.wiki/image/item/Weapon_${key}_${rarity}_256.png`,
+        rarity,
+      })) satisfies WeaponMeta[],
+  );
   return t;
 }
 

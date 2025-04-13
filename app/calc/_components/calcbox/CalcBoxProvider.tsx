@@ -1,6 +1,6 @@
-import { PrimitiveAtom } from "jotai";
-import { createContext, ReactNode, use } from "react";
-import { CalcObject } from "../../store";
+import type { PrimitiveAtom } from "jotai";
+import { type ReactNode, createContext, use } from "react";
+import type { CalcObject } from "../../store";
 
 const CalcBoxContext = createContext<
   { atom: PrimitiveAtom<CalcObject> } | undefined

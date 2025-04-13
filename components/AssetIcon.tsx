@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { ComponentPropsWithRef } from "react";
+import type { ComponentPropsWithRef } from "react";
 
 export const ASSET_DICT = {
   CHAR_REPORT: "/items/char_report.png",

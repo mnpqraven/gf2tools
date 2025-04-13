@@ -1,19 +1,19 @@
 "use client";
 
+import { Toggle } from "@/components/ui/toggle";
+import { cn } from "@/lib/utils";
 import { DOLL_META } from "@/repository/dolls";
+import type { DollSlugEnum } from "@/repository/enums";
 import { useAtom, useAtomValue, useSetAtom } from "jotai";
-import Image from "next/image";
 import { ChevronDown, ChevronUp, CircleCheck } from "lucide-react";
 import { motion } from "motion/react";
-import { cn } from "@/lib/utils";
-import { DollSlugEnum } from "@/repository/enums";
+import Image from "next/image";
+import { DollInfoForm } from "./DollInfoForm";
 import {
   dollAtomLookup,
   dollExpandedAtom,
   toggleDollOwnershipAtom,
 } from "./stores/doll";
-import { DollInfoForm } from "./DollInfoForm";
-import { Toggle } from "@/components/ui/toggle";
 
 export function DollCard({ slug }: { slug: DollSlugEnum }) {
   const [detailOpen, setDetailOpen] = useAtom(dollExpandedAtom(slug));
@@ -21,8 +21,10 @@ export function DollCard({ slug }: { slug: DollSlugEnum }) {
   dollAtom.debugLabel = `${slug}_ownership`;
 
   const settings = useAtomValue(dollAtom);
-  const doll = DOLL_META.find((e) => e.id === slug)!; // safe assertion
+  const doll = DOLL_META.find((e) => e.id === slug); // safe assertion
   const toggleOwnership = useSetAtom(toggleDollOwnershipAtom(slug));
+
+  if (!doll) return null;
 
   return (
     <motion.div

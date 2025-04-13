@@ -1,9 +1,9 @@
-import { Metadata } from "next";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import type { Metadata } from "next";
 import { ExportButton } from "./ExportButton";
+import { PresetCard } from "./_card/PresetCard";
 import { NewButton } from "./_editor/NewButton";
 import { TeamList } from "./_editor/TeamList";
-import { PresetCard } from "./_card/PresetCard";
 
 export const metadata: Metadata = {
   title: "Team Presets",

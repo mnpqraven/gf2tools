@@ -1,18 +1,18 @@
 "use client";
 
-import { toBlob, toPng } from "html-to-image";
-import { Button, ButtonProps } from "@/components/ui/button";
+import { Button, type ButtonProps } from "@/components/ui/button";
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { cn } from "@/lib/utils";
+import { toBlob, toPng } from "html-to-image";
 import { useAtomValue } from "jotai";
 import { Clipboard, Download } from "lucide-react";
-import { cardRefAtom } from "./store";
-import { cn } from "@/lib/utils";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
+import { cardRefAtom } from "./store";
 
 interface Props extends Omit<ButtonProps, "onClick" | "children"> {
   mode: "DOWNLOAD" | "CLIPBOARD";

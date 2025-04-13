@@ -1,9 +1,9 @@
 import { env } from "@/env";
-import _ky, { Input, KyInstance, Options } from "ky";
 import { TRPCError } from "@trpc/server";
 import { getStatusKeyFromCode } from "@trpc/server/unstable-core-do-not-import";
+import _ky, { type Input, type KyInstance, type Options } from "ky";
 
-export const baseUrl = env.BACKEND_API_URL + "/api";
+export const baseUrl = `${env.BACKEND_API_URL}/api`;
 
 const options: Options = {
   prefixUrl: baseUrl,

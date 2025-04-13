@@ -1,6 +1,6 @@
-import { DraggableAttributes } from "@dnd-kit/core";
+import type { DraggableAttributes } from "@dnd-kit/core";
 import { cva } from "class-variance-authority";
-import { clsx, type ClassValue } from "clsx";
+import { type ClassValue, clsx } from "clsx";
 import { twMerge } from "tailwind-merge";
 
 export function cn(...inputs: ClassValue[]) {
@@ -10,6 +10,7 @@ export function cn(...inputs: ClassValue[]) {
 export function* range(start: number, end: number, step = 1) {
   while (start <= end) {
     yield start;
+    // biome-ignore lint/style/noParameterAssign: safe
     start += step;
   }
 }
@@ -33,7 +34,7 @@ export const rarityVariants = cva("", {
     text: {
       3: "text-rarity-blue",
       4: "text-rarity-purple",
-      5: "text-rarity-orange font-semibold focus:text-rarity-orange",
+      5: "font-semibold text-rarity-orange focus:text-rarity-orange",
     },
     border: {
       3: "border-rarity-blue",

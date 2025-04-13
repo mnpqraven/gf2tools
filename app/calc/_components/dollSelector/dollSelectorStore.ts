@@ -1,8 +1,8 @@
 import {
-  DollClassEnum,
   DOLL_CLASS_ENUM,
-  DollRarityEnum,
   DOLL_RARITY_ENUM,
+  type DollClassEnum,
+  type DollRarityEnum,
 } from "@/repository/enums";
 import { atom } from "jotai";
 import { focusAtom } from "jotai-optics";

@@ -1,11 +1,11 @@
 "use client";
 
-import { ComponentPropsWithRef, useId, useMemo, useRef } from "react";
+import { NumberInput } from "@/components/shared/NumberInput";
+import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
 import { useAtom } from "jotai";
 import { focusAtom } from "jotai-optics";
-import { NumberInput } from "@/components/shared/NumberInput";
-import { Label } from "@/components/ui/label";
+import { type ComponentPropsWithRef, useId, useMemo, useRef } from "react";
 import { useCalcBox } from "./CalcBoxProvider";
 
 export function LevelInputRow({

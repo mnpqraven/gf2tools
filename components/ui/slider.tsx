@@ -1,8 +1,8 @@
 "use client";
 
-import * as SliderPrimitive from "@radix-ui/react-slider";
 import { cn } from "@/lib/utils";
-import { ComponentPropsWithRef } from "react";
+import * as SliderPrimitive from "@radix-ui/react-slider";
+import type { ComponentPropsWithRef } from "react";
 
 const Slider = ({
   className,

@@ -1,4 +1,4 @@
-import { DollSlugEnum } from "@/repository/enums";
+import type { DollSlugEnum } from "@/repository/enums";
 
 export type TeamPreset = {
   name: string;

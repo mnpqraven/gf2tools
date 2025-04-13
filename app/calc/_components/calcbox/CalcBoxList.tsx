@@ -1,11 +1,11 @@
 "use client";
 
-import { useAtomValue, useSetAtom } from "jotai";
-import { calcListSplitAtom, calcListSplitSetAtom } from "../../store";
-import { closestCorners } from "@dnd-kit/core";
 import { Sortable, SortableItem } from "@/components/ui/sortable";
-import { CalcBox } from "./CalcBox";
+import { closestCorners } from "@dnd-kit/core";
+import { useAtomValue, useSetAtom } from "jotai";
 import { useMemo } from "react";
+import { calcListSplitAtom, calcListSplitSetAtom } from "../../store";
+import { CalcBox } from "./CalcBox";
 import { CalcBoxProvider } from "./CalcBoxProvider";
 
 export function CalcBoxList() {

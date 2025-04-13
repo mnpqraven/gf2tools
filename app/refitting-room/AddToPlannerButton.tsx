@@ -1,15 +1,15 @@
-import { Button, ButtonProps } from "@/components/ui/button";
-import { DollSlugEnum, WeaponSlugEnum } from "@/repository/enums";
-import { useAtomValue, useSetAtom } from "jotai";
-import { calcListAtom, newCalcObjectAtom } from "../calc/store";
-import { toast } from "sonner";
-import { useRouter } from "next/navigation";
+import { Button, type ButtonProps } from "@/components/ui/button";
 import {
   Popover,
   PopoverAnchor,
   PopoverContent,
 } from "@/components/ui/popover";
+import type { DollSlugEnum, WeaponSlugEnum } from "@/repository/enums";
+import { useAtomValue, useSetAtom } from "jotai";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { toast } from "sonner";
+import { calcListAtom, newCalcObjectAtom } from "../calc/store";
 
 type SlugKind =
   | { type: "CHAR"; slug: DollSlugEnum }
@@ -91,10 +91,10 @@ export function AddToPlannerButton({
           {children}
         </Button>
       </PopoverAnchor>
-      <PopoverContent className="flex flex-col gap-2 w-fit">
+      <PopoverContent className="flex w-fit flex-col gap-2">
         Already in planner. <br />
         Add anyway?
-        <div className="flex gap-2 justify-center">
+        <div className="flex justify-center gap-2">
           <Button
             onClick={() => {
               setOpen(false);

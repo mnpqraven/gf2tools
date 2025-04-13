@@ -1,10 +1,5 @@
 "use client";
 
-import { useAtomValue } from "jotai";
-import { pullEstimateFormAtom } from "./store";
-import { useTRPC } from "@/lib/trpc";
-import { keepPreviousData, useQuery } from "@tanstack/react-query";
-import { CartesianGrid, Line, LineChart, XAxis, YAxis } from "recharts";
 import {
   Card,
   CardContent,
@@ -13,14 +8,19 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import {
-  ChartConfig,
+  type ChartConfig,
   ChartContainer,
   ChartLegend,
   ChartLegendContent,
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
+import { useTRPC } from "@/lib/trpc";
 import { transformArrayPair } from "@/lib/utils";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
+import { useAtomValue } from "jotai";
+import { CartesianGrid, Line, LineChart, XAxis, YAxis } from "recharts";
+import { pullEstimateFormAtom } from "./store";
 
 const chartConfig = {
   E0: {
@@ -108,7 +108,7 @@ export function PullGraph() {
                     const pullNum = payload.at(0)?.payload.index;
                     return `Pull ${pullNum + 1}`;
                   }}
-                  valueFormatter={(e) => (Number(e) * 100).toFixed(1) + " %"}
+                  valueFormatter={(e) => `${(Number(e) * 100).toFixed(1)} %`}
                 />
               }
               cursor={false}

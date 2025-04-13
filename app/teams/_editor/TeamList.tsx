@@ -2,8 +2,8 @@
 
 import { useAtomValue } from "jotai";
 import { teamListSplittedAtom } from "../store";
-import { TeamPresetProvider } from "./form/TeamPresetProvider";
 import { TeamPresetForm } from "./form/TeamPresetForm";
+import { TeamPresetProvider } from "./form/TeamPresetProvider";
 
 export function TeamList() {
   const atoms = useAtomValue(teamListSplittedAtom);

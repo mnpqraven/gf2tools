@@ -1,18 +1,18 @@
+import { AssetIcon } from "@/components/AssetIcon";
+import { Input } from "@/components/ui/input";
+import { Separator } from "@/components/ui/separator";
+import { Toggle } from "@/components/ui/toggle";
+import { cn } from "@/lib/utils";
+import { weaponClassEnum, wepClassAssetEnum } from "@/repository/wep";
+import { cva } from "class-variance-authority";
 import { useAtom } from "jotai";
+import { focusAtom } from "jotai-optics";
+import { type ComponentPropsWithRef, useMemo } from "react";
 import {
   filterWeaponClassAtom,
   filterWeaponRarityAtom,
   weaponFilterAtom,
 } from "./wepSelectorStore";
-import { weaponClassEnum, wepClassAssetEnum } from "@/repository/wep";
-import { Toggle } from "@/components/ui/toggle";
-import { Separator } from "@/components/ui/separator";
-import { focusAtom } from "jotai-optics";
-import { ComponentPropsWithRef, useMemo } from "react";
-import { Input } from "@/components/ui/input";
-import { cn } from "@/lib/utils";
-import { AssetIcon } from "@/components/AssetIcon";
-import { cva } from "class-variance-authority";
 
 /**
  * TODO: pretty print

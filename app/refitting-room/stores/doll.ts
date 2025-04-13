@@ -1,17 +1,17 @@
-import { atom } from "jotai";
-import { ArmoryDollShape, NotOwned, OwnedArmoryDoll } from "./types";
-import { byLevelCapHelix, byLevelCapKey, DOLL_META } from "@/repository/dolls";
-import { atomFamily, atomWithStorage } from "jotai/utils";
+import { DOLL_META, byLevelCapHelix, byLevelCapKey } from "@/repository/dolls";
 import {
   CALC_TYPE_ENUM,
   DOLL_CLASS_ENUM,
   DOLL_RARITY_ENUM,
-  DollClassEnum,
-  DollRarityEnum,
-  DollSlugEnum,
+  type DollClassEnum,
+  type DollRarityEnum,
+  type DollSlugEnum,
 } from "@/repository/enums";
+import { atom } from "jotai";
 import { focusAtom } from "jotai-optics";
-import { optic_, OpticFor_, set as Oset } from "optics-ts";
+import { atomFamily, atomWithStorage } from "jotai/utils";
+import { type OpticFor_, set as Oset, optic_ } from "optics-ts";
+import type { ArmoryDollShape, NotOwned, OwnedArmoryDoll } from "./types";
 
 export type ArmoryDollFilter = {
   rarity: DollRarityEnum[];
@@ -181,7 +181,7 @@ export const dollLevelAtom = atomFamily(
 
         const capKey = byLevelCapKey(toLevel);
 
-        if (keys !== undefined && keys.some((e, i) => i > capKey && e)) {
+        if (keys?.some((e, i) => i > capKey && e)) {
           const nextKeys = keys.map((e, i) => (i > capKey ? false : e));
           const nextDoll = Oset(DollAccessors.key())(nextKeys)(doll);
           if (nextDoll.owned) set(dollAtomLookup(slug), nextDoll);

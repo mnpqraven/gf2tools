@@ -1,7 +1,3 @@
-import { atom, PrimitiveAtom } from "jotai";
-import { v4 } from "uuid";
-import { atomFamily, atomWithStorage, splitAtom } from "jotai/utils";
-import { CALC_TYPE_ENUM } from "@/repository/enums";
 import {
   calcCharExp,
   calcCharUncap,
@@ -9,7 +5,11 @@ import {
   sumColumn2DArray,
 } from "@/lib/calc";
 import { add } from "@/lib/utils";
-import { z } from "zod";
+import type { CALC_TYPE_ENUM } from "@/repository/enums";
+import { type PrimitiveAtom, atom } from "jotai";
+import { atomFamily, atomWithStorage, splitAtom } from "jotai/utils";
+import { v4 } from "uuid";
+import type { z } from "zod";
 
 export type CalcObject = {
   /** internal id used to handle sorting */

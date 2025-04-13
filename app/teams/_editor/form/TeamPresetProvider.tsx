@@ -1,5 +1,5 @@
-import { PrimitiveAtom } from "jotai";
-import { createContext, ReactNode, use } from "react";
+import type { PrimitiveAtom } from "jotai";
+import { type ReactNode, createContext, use } from "react";
 import type { TeamPreset } from "../../types";
 
 interface ContextReturn {

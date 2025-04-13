@@ -1,10 +1,10 @@
-import { ASSET_DICT } from "@/components/AssetIcon";
+import type { ASSET_DICT } from "@/components/AssetIcon";
 import {
   DOLL_RARITY_ENUM,
   DOLL_SLUG_ENUM,
-  DollClassEnum,
-  DollRarityEnum,
-  DollSlugEnum,
+  type DollClassEnum,
+  type DollRarityEnum,
+  type DollSlugEnum,
 } from "./enums";
 
 export const DOLL_SLUGS_MAP: Record<DollSlugEnum, DollShortMeta> = {

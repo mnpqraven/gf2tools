@@ -2,13 +2,13 @@
 
 import "jotai-devtools/styles.css";
 
+import { TRPCProvider } from "@/lib/trpc";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { Provider } from "jotai";
-import { ReactNode } from "react";
 import { DevTools } from "jotai-devtools";
 import { ThemeProvider } from "next-themes";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
-import { TRPCProvider } from "@/lib/trpc";
+import type { ReactNode } from "react";
 import { TooltipProvider } from "./ui/tooltip";
 
 export function AppProvider({ children }: Readonly<{ children: ReactNode }>) {

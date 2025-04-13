@@ -1,4 +1,4 @@
-import {
+import type {
   CALC_TYPE_ENUM,
   CalcTypeEnum,
   DollSlugEnum,

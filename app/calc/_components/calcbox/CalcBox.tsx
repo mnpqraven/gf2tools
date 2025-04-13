@@ -1,17 +1,17 @@
 "use client";
 
-import { useAtom, useSetAtom } from "jotai";
-import { ComponentPropsWithRef, useMemo } from "react";
-import { focusAtom } from "jotai-optics";
 import { Card, CardContent } from "@/components/ui/card";
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { RemoveButton } from "./RemoveButton";
-import { NameInput } from "./NameInput";
 import { SortableDragHandle } from "@/components/ui/sortable";
-import { LevelInputRow } from "./LevelInputRow";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { cn } from "@/lib/utils";
-import { DragHandle } from "./DragHandle";
+import { useAtom, useSetAtom } from "jotai";
+import { focusAtom } from "jotai-optics";
+import { type ComponentPropsWithRef, useMemo } from "react";
 import { useCalcBox } from "./CalcBoxProvider";
+import { DragHandle } from "./DragHandle";
+import { LevelInputRow } from "./LevelInputRow";
+import { NameInput } from "./NameInput";
+import { RemoveButton } from "./RemoveButton";
 
 export function CalcBox({ className, ...props }: ComponentPropsWithRef<"div">) {
   return (

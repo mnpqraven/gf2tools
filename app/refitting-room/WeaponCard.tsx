@@ -2,20 +2,20 @@
 
 import { AssetIcon } from "@/components/AssetIcon";
 import { Toggle } from "@/components/ui/toggle";
-import { WeaponSlugEnum } from "@/repository/enums";
+import { cn, rarityVariants } from "@/lib/utils";
+import type { WeaponSlugEnum } from "@/repository/enums";
+import { WEP_SLUGS_MAP, maxWepRarity, wepImgSrc } from "@/repository/wep";
 import { useAtom, useAtomValue, useSetAtom } from "jotai";
+import { ChevronDown, ChevronUp, CircleCheck } from "lucide-react";
+import { motion } from "motion/react";
+import Image from "next/image";
+import { WeaponInfoForm } from "./WeaponInfoForm";
 import {
   toggleWepOwnershipAtom,
   wepExpandedAtom,
   wepOwnedAtom,
   wepRarityAtom,
 } from "./stores/wep";
-import { ChevronDown, ChevronUp, CircleCheck } from "lucide-react";
-import { maxWepRarity, WEP_SLUGS_MAP, wepImgSrc } from "@/repository/wep";
-import Image from "next/image";
-import { WeaponInfoForm } from "./WeaponInfoForm";
-import { cn, rarityVariants } from "@/lib/utils";
-import { motion } from "motion/react";
 
 interface Props {
   slug: WeaponSlugEnum;
