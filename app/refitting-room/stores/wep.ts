@@ -1,14 +1,14 @@
-import { optic_, OpticFor_ } from "optics-ts";
 import {
   CALC_TYPE_ENUM,
   WEAPON_SLUG_ENUM,
-  WeaponSlugEnum,
+  type WeaponSlugEnum,
 } from "@/repository/enums";
-import { atom } from "jotai";
-import { ArmoryWeaponShape, NotOwned, OwnedArmoryWep } from "./types";
-import { atomFamily, atomWithStorage } from "jotai/utils";
-import { focusAtom } from "jotai-optics";
 import { WEP_SLUGS_MAP } from "@/repository/wep";
+import { atom } from "jotai";
+import { focusAtom } from "jotai-optics";
+import { atomFamily, atomWithStorage } from "jotai/utils";
+import { type OpticFor_, optic_ } from "optics-ts";
+import type { ArmoryWeaponShape, NotOwned, OwnedArmoryWep } from "./types";
 
 /**
  * family atom type

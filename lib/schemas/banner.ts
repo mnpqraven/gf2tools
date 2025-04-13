@@ -16,7 +16,7 @@ export const bannerSchema = z.object({
 });
 
 export const bannerTypes = z.enum(["SSRDoll", "Weapon"]);
-export type BannerType = z.TypeOf<typeof bannerTypes>
+export type BannerType = z.TypeOf<typeof bannerTypes>;
 export const bannerDict: Record<BannerType, Banner> = {
   SSRDoll: {
     banner: 0.5,

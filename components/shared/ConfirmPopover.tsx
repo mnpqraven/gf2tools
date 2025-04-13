@@ -1,8 +1,8 @@
 import {
-  forwardRef,
-  useState,
   type ComponentPropsWithoutRef,
   type ReactNode,
+  forwardRef,
+  useState,
 } from "react";
 import { Button } from "../ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
@@ -67,7 +67,7 @@ const InnerPopover = forwardRef<HTMLButtonElement, Prop>(function InnerPopover(
         {children}
       </PopoverTrigger>
       <PopoverContent className="space-y-2">
-        <div className="text-lg font-semibold">
+        <div className="font-semibold text-lg">
           {text?.header ?? "Confirm deletion"}
         </div>
         <div>
@@ -79,8 +79,7 @@ const InnerPopover = forwardRef<HTMLButtonElement, Prop>(function InnerPopover(
             onClick={() => {
               setOpen(false);
             }}
-            variant={variants?.no ?? "default"}
-          >
+            variant={variants?.no ?? "default"}>
             {noLabel}
           </Button>
           <Button
@@ -90,8 +89,7 @@ const InnerPopover = forwardRef<HTMLButtonElement, Prop>(function InnerPopover(
               }
               setOpen(false);
             }}
-            variant={variants?.yes ?? "destructive"}
-          >
+            variant={variants?.yes ?? "destructive"}>
             {yesLabel}
           </Button>
         </div>

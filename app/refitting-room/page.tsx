@@ -1,11 +1,11 @@
-import { Metadata } from "next";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { LayoutGroup } from "motion/react";
-import { DollCard } from "./DollCard";
 import { DOLL_SLUG_ENUM, WEAPON_SLUG_ENUM } from "@/repository/enums";
-import { WeaponCard } from "./WeaponCard";
-import { z } from "zod";
+import { LayoutGroup } from "motion/react";
+import type { Metadata } from "next";
 import Link from "next/link";
+import { z } from "zod";
+import { DollCard } from "./DollCard";
+import { WeaponCard } from "./WeaponCard";
 
 export const metadata: Metadata = {
   title: "Refitting Room",

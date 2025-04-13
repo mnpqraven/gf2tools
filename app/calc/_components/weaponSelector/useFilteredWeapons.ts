@@ -1,15 +1,15 @@
-import { useMemo } from "react";
+import { DOLL_SLUGS_MAP } from "@/repository/dolls";
+import { WEP_META, type WeaponMeta } from "@/repository/wep";
 import {
+  type UseQueryOptions,
   keepPreviousData,
   useQuery,
-  UseQueryOptions,
 } from "@tanstack/react-query";
-import { IFuseOptions } from "fuse.js";
-import { WeaponMeta, WEP_META } from "@/repository/wep";
+import type { IFuseOptions } from "fuse.js";
 import { useAtomValue } from "jotai";
 import { focusAtom } from "jotai-optics";
+import { useMemo } from "react";
 import { weaponFilterAtom } from "./wepSelectorStore";
-import { DOLL_SLUGS_MAP } from "@/repository/dolls";
 
 export function useFilteredWeapons(
   queryOpt?: Partial<UseQueryOptions<WeaponMeta[]>>,

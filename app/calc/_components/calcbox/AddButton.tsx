@@ -1,9 +1,9 @@
 "use client";
 
-import { Button, ButtonProps } from "@/components/ui/button";
+import { Button, type ButtonProps } from "@/components/ui/button";
 import { useSetAtom } from "jotai";
-import { newCalcObjectAtom } from "../../store";
 import { Plus } from "lucide-react";
+import { newCalcObjectAtom } from "../../store";
 
 export function AddCalcObjectButton({
   ...props

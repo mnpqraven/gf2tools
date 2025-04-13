@@ -1,18 +1,18 @@
+import { AssetIcon } from "@/components/AssetIcon";
+import { Input } from "@/components/ui/input";
+import { Separator } from "@/components/ui/separator";
+import { Toggle } from "@/components/ui/toggle";
+import { cn } from "@/lib/utils";
+import { dollClassAssetEnum } from "@/repository/dolls";
+import { DOLL_CLASS_ENUM, DOLL_RARITY_ENUM } from "@/repository/enums";
 import { useAtom } from "jotai";
+import { focusAtom } from "jotai-optics";
+import { type ComponentPropsWithRef, useMemo } from "react";
 import {
   dollFilterAtom,
   filterDollClassAtom,
   filterDollRarityAtom,
 } from "./dollSelectorStore";
-import { focusAtom } from "jotai-optics";
-import { ComponentPropsWithRef, useMemo } from "react";
-import { Input } from "@/components/ui/input";
-import { Toggle } from "@/components/ui/toggle";
-import { Separator } from "@/components/ui/separator";
-import { cn } from "@/lib/utils";
-import { DOLL_CLASS_ENUM, DOLL_RARITY_ENUM } from "@/repository/enums";
-import { AssetIcon } from "@/components/AssetIcon";
-import { dollClassAssetEnum } from "@/repository/dolls";
 
 /**
  * TODO: pretty print
@@ -44,8 +44,7 @@ export function DollFilter({
             onPressedChange={() => {
               toggleDollClass(dollClass);
             }}
-            pressed={dollClasses.includes(dollClass)}
-          >
+            pressed={dollClasses.includes(dollClass)}>
             <AssetIcon
               asset={dollClassAssetEnum(dollClass)}
               className="h-6 w-6 rounded-full bg-primary dark:bg-transparent"
@@ -66,8 +65,7 @@ export function DollFilter({
             onPressedChange={() => {
               toggleDollRarity(dollRarity);
             }}
-            pressed={dollRarities.includes(dollRarity)}
-          >
+            pressed={dollRarities.includes(dollRarity)}>
             {dollRarity.toLowerCase()}
           </Toggle>
         ))}

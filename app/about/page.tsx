@@ -17,8 +17,7 @@ export default function Page() {
           Checkout the{" "}
           <Link
             href="https://github.com/mnpqraven/gf2tools/issues"
-            target="_blank"
-          >
+            target="_blank">
             github page
           </Link>{" "}
           to see up-to-date roapmap and bugs

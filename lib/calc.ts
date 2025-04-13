@@ -1,7 +1,7 @@
 import {
   DOLL_EXP_TABLE,
   DOLL_UNCAP_TABLE,
-  StockBarConf,
+  type StockBarConf,
 } from "@/repository/dolls";
 import { WEP_EXP_TABLE } from "../repository/wep";
 import { add } from "./utils";
@@ -52,6 +52,7 @@ export function calcCharUncap({ from, to }: FromTo) {
 
 export function sumColumn2DArray(array: number[][], defaultLength?: number) {
   const newArray: number[] = [];
+  // biome-ignore lint/complexity/noForEach: safe
   array.forEach((sub) => {
     sub.forEach((num, index) => {
       if (newArray[index] !== undefined) {

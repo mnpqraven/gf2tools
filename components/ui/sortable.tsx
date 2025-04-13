@@ -3,7 +3,6 @@
  */
 "use client";
 
-import * as React from "react";
 import type {
   DndContextProps,
   DraggableSyntheticListeners,
@@ -11,13 +10,13 @@ import type {
   UniqueIdentifier,
 } from "@dnd-kit/core";
 import {
-  closestCenter,
-  defaultDropAnimationSideEffects,
   DndContext,
   DragOverlay,
   KeyboardSensor,
   MouseSensor,
   TouchSensor,
+  closestCenter,
+  defaultDropAnimationSideEffects,
   useSensor,
   useSensors,
 } from "@dnd-kit/core";
@@ -27,19 +26,20 @@ import {
   restrictToVerticalAxis,
 } from "@dnd-kit/modifiers";
 import {
+  SortableContext,
+  type SortableContextProps,
   arrayMove,
   horizontalListSortingStrategy,
-  SortableContext,
   useSortable,
   verticalListSortingStrategy,
-  type SortableContextProps,
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { Slot, type SlotProps } from "@radix-ui/react-slot";
+import * as React from "react";
 
+import { Button, type ButtonProps } from "@/components/ui/button";
 import { composeRefs } from "@/lib/refs";
 import { cn } from "@/lib/utils";
-import { Button, type ButtonProps } from "@/components/ui/button";
 
 const orientationConfig = {
   vertical: {
@@ -174,8 +174,7 @@ function Sortable<TData extends { id: UniqueIdentifier }>({
       }}
       onDragStart={({ active }) => setActiveId(active.id)}
       sensors={sensors}
-      {...props}
-    >
+      {...props}>
       <SortableContext items={value} strategy={strategy ?? config.strategy}>
         {children}
       </SortableContext>
@@ -212,8 +211,7 @@ const SortableOverlay = React.forwardRef<HTMLDivElement, SortableOverlayProps>(
           asChild
           className="cursor-grabbing"
           ref={ref}
-          value={activeId}
-        >
+          value={activeId}>
           {children}
         </SortableItem>
       ) : null}

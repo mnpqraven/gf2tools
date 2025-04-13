@@ -1,15 +1,15 @@
-import * as O from "optics-ts";
-import { Input } from "@/components/ui/input";
-import { useTeamPreset } from "./TeamPresetProvider";
-import { useAtom, useSetAtom } from "jotai";
-import { range } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { Trash2 } from "lucide-react";
-import { teamListSplittedAtom, teamPresetDollOptic } from "../../store";
-import { TeamSizeRadio } from "./TeamSizeRadio";
-import { DollSelectDrawerSheet } from "./DollSelectDrawerSheet";
-import { useId } from "react";
+import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { range } from "@/lib/utils";
+import { useAtom, useSetAtom } from "jotai";
+import { Trash2 } from "lucide-react";
+import * as O from "optics-ts";
+import { useId } from "react";
+import { teamListSplittedAtom, teamPresetDollOptic } from "../../store";
+import { DollSelectDrawerSheet } from "./DollSelectDrawerSheet";
+import { useTeamPreset } from "./TeamPresetProvider";
+import { TeamSizeRadio } from "./TeamSizeRadio";
 
 export function TeamPresetForm() {
   const inputId = useId();
@@ -39,8 +39,7 @@ export function TeamPresetForm() {
         <Button
           onClick={() => listDispatch({ type: "remove", atom })}
           size="icon"
-          variant="destructive"
-        >
+          variant="destructive">
           <Trash2 />
         </Button>
       </div>

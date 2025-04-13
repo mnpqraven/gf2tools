@@ -1,15 +1,15 @@
-import { ChevronsLeft, ChevronsRight, CircleCheck } from "lucide-react";
-import { maxWepRarity, minWepRarity } from "@/repository/wep";
 import { NumberInput } from "@/components/shared/NumberInput";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import { wepLevelAtom, wepRankAtom, wepRarityAtom } from "./stores/wep";
-import { WeaponSlugEnum } from "@/repository/enums";
-import { useAtom, useAtomValue } from "jotai";
 import { cn, rarityVariants } from "@/lib/utils";
+import type { WeaponSlugEnum } from "@/repository/enums";
+import { maxWepRarity, minWepRarity } from "@/repository/wep";
+import { useAtom, useAtomValue } from "jotai";
+import { ChevronsLeft, ChevronsRight, CircleCheck } from "lucide-react";
 import { motion } from "motion/react";
-import { AddToPlannerButton } from "./AddToPlannerButton";
 import { inCalcAtom } from "../calc/store";
+import { AddToPlannerButton } from "./AddToPlannerButton";
+import { wepLevelAtom, wepRankAtom, wepRarityAtom } from "./stores/wep";
 
 interface Props {
   slug: WeaponSlugEnum;
@@ -25,8 +25,7 @@ export function WeaponInfoForm({ slug }: Props) {
       animate={{ opacity: 1 }}
       className="flex flex-col gap-2"
       initial={{ opacity: 0 }}
-      layout="preserve-aspect"
-    >
+      layout="preserve-aspect">
       <Label htmlFor={`${slug}_level`}>Level</Label>
       <div className="flex items-center justify-center gap-2">
         <Button className="px-2" onClick={() => setLevel(1)} variant="outline">
@@ -51,7 +50,7 @@ export function WeaponInfoForm({ slug }: Props) {
             className={cn(
               "h-auto w-auto",
               rank === 6
-                ? "text-rarity-orange focus:text-rarity-orange font-semibold"
+                ? "font-semibold text-rarity-orange focus:text-rarity-orange"
                 : "",
             )}
             id={`${slug}_rank`}
@@ -80,8 +79,7 @@ export function WeaponInfoForm({ slug }: Props) {
         className="mt-2"
         currentLevel={level}
         slug={{ type: "WEP", slug }}
-        variant={inCalc ? "success" : "default"}
-      >
+        variant={inCalc ? "success" : "default"}>
         {inCalc ? <CircleCheck /> : null}
         {inCalc ? "In planner" : "Add to planner"}
       </AddToPlannerButton>

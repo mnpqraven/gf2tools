@@ -1,12 +1,4 @@
-import { useAtomValue, useSetAtom } from "jotai";
-import { useMemo, useState } from "react";
-import { focusAtom } from "jotai-optics";
 import { Button } from "@/components/ui/button";
-import { DollGridSelect } from "../dollSelector/DollGridSelect";
-import { WepGridSelect } from "../weaponSelector/WepGridSelect";
-import { useResetAtom } from "jotai/utils";
-import { weaponFilterAtom } from "../weaponSelector/wepSelectorStore";
-import { dollFilterAtom } from "../dollSelector/dollSelectorStore";
 import {
   Dialog,
   DialogContent,
@@ -15,7 +7,15 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { useAtomValue, useSetAtom } from "jotai";
+import { focusAtom } from "jotai-optics";
+import { useResetAtom } from "jotai/utils";
 import { SquareUserRound } from "lucide-react";
+import { useMemo, useState } from "react";
+import { DollGridSelect } from "../dollSelector/DollGridSelect";
+import { dollFilterAtom } from "../dollSelector/dollSelectorStore";
+import { WepGridSelect } from "../weaponSelector/WepGridSelect";
+import { weaponFilterAtom } from "../weaponSelector/wepSelectorStore";
 import { useCalcBox } from "./CalcBoxProvider";
 
 export function NameInput() {
@@ -69,13 +69,11 @@ export function NameInput() {
           clearFilter();
         }
       }}
-      open={open}
-    >
+      open={open}>
       <DialogTrigger asChild>
         <Button
-          className="text-primary inline-flex items-center gap-1"
-          variant="outline"
-        >
+          className="inline-flex items-center gap-1 text-primary"
+          variant="outline">
           <SquareUserRound />
           {label}
         </Button>

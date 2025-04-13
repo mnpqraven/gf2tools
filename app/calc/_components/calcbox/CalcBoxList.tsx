@@ -1,11 +1,11 @@
 "use client";
 
-import { useAtomValue, useSetAtom } from "jotai";
-import { calcListSplitAtom, calcListSplitSetAtom } from "../../store";
-import { closestCorners } from "@dnd-kit/core";
 import { Sortable, SortableItem } from "@/components/ui/sortable";
-import { CalcBox } from "./CalcBox";
+import { closestCorners } from "@dnd-kit/core";
+import { useAtomValue, useSetAtom } from "jotai";
 import { useMemo } from "react";
+import { calcListSplitAtom, calcListSplitSetAtom } from "../../store";
+import { CalcBox } from "./CalcBox";
 import { CalcBoxProvider } from "./CalcBoxProvider";
 
 export function CalcBoxList() {
@@ -22,8 +22,7 @@ export function CalcBoxList() {
       onValueChange={setAtoms}
       orientation="mixed"
       overlay={<div className="size-full rounded-md bg-primary/10" />}
-      value={keyedAtoms}
-    >
+      value={keyedAtoms}>
       <div className="flex flex-wrap gap-2">
         {keyedAtoms.map(({ atom, id }) => (
           <CalcBoxProvider atom={atom} key={id}>

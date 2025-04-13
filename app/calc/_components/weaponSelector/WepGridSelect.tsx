@@ -1,24 +1,24 @@
-import { ComponentPropsWithRef, useMemo } from "react";
-import { cn } from "@/lib/utils";
+import { AssetIcon } from "@/components/AssetIcon";
 import { Button } from "@/components/ui/button";
-import Image from "next/image";
+import { cn } from "@/lib/utils";
+import { DOLL_SLUGS_MAP } from "@/repository/dolls";
+import type { DollSlugEnum } from "@/repository/enums";
 import {
-  WeaponClass,
-  weaponClassEnum,
-  WeaponMeta,
   WEP_META,
+  type WeaponClass,
+  type WeaponMeta,
+  weaponClassEnum,
   wepClassAssetEnum,
 } from "@/repository/wep";
+import { cva } from "class-variance-authority";
 import { useAtomValue } from "jotai";
 import { focusAtom } from "jotai-optics";
-import { weaponFilterAtom } from "./wepSelectorStore";
-import { useFilteredWeapons } from "./useFilteredWeapons";
-import { WeaponFilter } from "./WeaponFilter";
-import { cva } from "class-variance-authority";
-import { DOLL_SLUGS_MAP } from "@/repository/dolls";
 import { Braces, CircleUserRound } from "lucide-react";
-import { DollSlugEnum } from "@/repository/enums";
-import { AssetIcon } from "@/components/AssetIcon";
+import Image from "next/image";
+import { type ComponentPropsWithRef, useMemo } from "react";
+import { WeaponFilter } from "./WeaponFilter";
+import { useFilteredWeapons } from "./useFilteredWeapons";
+import { weaponFilterAtom } from "./wepSelectorStore";
 
 interface Props extends ComponentPropsWithRef<"div"> {
   onWeaponSelect: (t: { name: string; id?: string }, custom?: boolean) => void;
@@ -38,8 +38,7 @@ export function WepGridSelect({ onWeaponSelect, className, ...props }: Props) {
       className={cn(
         "relative flex max-h-[80vh] flex-col gap-3 overflow-y-scroll",
         className,
-      )}
-    >
+      )}>
       <WeaponFilter className="sticky top-0" />
 
       {weaponClassEnum.options.map((weaponClass) => (
@@ -55,8 +54,7 @@ export function WepGridSelect({ onWeaponSelect, className, ...props }: Props) {
         <Button
           className="flex h-auto flex-col items-center justify-center gap-1 rounded-md border"
           onClick={() => onWeaponSelect({ name: search }, true)}
-          variant="ghost"
-        >
+          variant="ghost">
           {`Add Custom: "${search}"`}
         </Button>
       ) : null}
@@ -82,7 +80,7 @@ function DisplayClassContainer({
   if (!filteredWeapons.length) return null;
   return (
     <div className={cn("flex flex-col gap-2", className)} {...props}>
-      <div className="flex items-center gap-2 text-xl font-semibold">
+      <div className="flex items-center gap-2 font-semibold text-xl">
         <AssetIcon
           asset={wepClassAssetEnum(weaponClass)}
           className="h-6 w-6 rounded-full bg-primary dark:bg-transparent"
@@ -97,8 +95,7 @@ function DisplayClassContainer({
               className="flex h-auto flex-1 flex-col items-stretch justify-start p-2"
               key={`${id}-${rarity}`}
               onClick={() => onWeaponSelect({ name, id })}
-              variant="ghost"
-            >
+              variant="ghost">
               <div className="flex flex-1 items-center gap-1">
                 {/* TODO: placeholderimg */}
                 {img ? (

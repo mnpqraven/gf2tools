@@ -1,5 +1,7 @@
 "use client";
 
+import { NumberInput } from "@/components/shared/NumberInput";
+import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -7,14 +9,7 @@ import {
   FormItem,
   FormLabel,
 } from "@/components/ui/form";
-import { pullEstimateSchema } from "@/lib/schemas/pull-estimate";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useSetAtom } from "jotai";
-import { useForm } from "react-hook-form";
-import { TypeOf, z } from "zod";
-import { pullEstimateFormAtom } from "./store";
 import { Input } from "@/components/ui/input";
-import { NumberInput } from "@/components/shared/NumberInput";
 import {
   Select,
   SelectContent,
@@ -22,9 +17,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Button } from "@/components/ui/button";
-import { bannerDict, BannerType, bannerTypes } from "@/lib/schemas/banner";
 import { Switch } from "@/components/ui/switch";
+import { type BannerType, bannerDict, bannerTypes } from "@/lib/schemas/banner";
+import { pullEstimateSchema } from "@/lib/schemas/pull-estimate";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useSetAtom } from "jotai";
+import { useForm } from "react-hook-form";
+import { type TypeOf, z } from "zod";
+import { pullEstimateFormAtom } from "./store";
 
 export function PullForm() {
   const form = useForm({
@@ -42,8 +42,7 @@ export function PullForm() {
     <Form {...form}>
       <form
         className="grid grid-cols-3 gap-2 md:flex"
-        onSubmit={form.handleSubmit(onSubmit)}
-      >
+        onSubmit={form.handleSubmit(onSubmit)}>
         <FormField
           control={form.control}
           name="pityCurrentCount"
@@ -100,8 +99,7 @@ export function PullForm() {
                 defaultValue="SSRDoll"
                 onValueChange={(key: BannerType) => {
                   form.setValue("banner", bannerDict[key]);
-                }}
-              >
+                }}>
                 <FormControl>
                   <SelectTrigger>
                     <SelectValue />

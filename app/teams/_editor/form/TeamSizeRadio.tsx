@@ -1,9 +1,9 @@
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { defaultTeamPreset } from "../../store";
-import { ComponentPropsWithRef, useId } from "react";
-import { useTeamPreset } from "./TeamPresetProvider";
-import { useSetAtom } from "jotai";
 import { Label } from "@/components/ui/label";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
+import { useSetAtom } from "jotai";
+import { type ComponentPropsWithRef, useId } from "react";
+import { defaultTeamPreset } from "../../store";
+import { useTeamPreset } from "./TeamPresetProvider";
 
 export function TeamSizeRadio(props: ComponentPropsWithRef<typeof RadioGroup>) {
   const radioId = useId();
@@ -18,8 +18,7 @@ export function TeamSizeRadio(props: ComponentPropsWithRef<typeof RadioGroup>) {
     <RadioGroup
       defaultValue={defaultTeamPreset.teamSize.toString()}
       onValueChange={onSizeChange}
-      {...props}
-    >
+      {...props}>
       <Label>Team size</Label>
       <div className="flex gap-2">
         <div>
@@ -31,8 +30,7 @@ export function TeamSizeRadio(props: ComponentPropsWithRef<typeof RadioGroup>) {
           />
           <Label
             className="flex h-10 items-center justify-between rounded-md border-2 border-muted bg-transparent px-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
-            htmlFor={`${radioId}-option-one`}
-          >
+            htmlFor={`${radioId}-option-one`}>
             4
           </Label>
         </div>
@@ -45,8 +43,7 @@ export function TeamSizeRadio(props: ComponentPropsWithRef<typeof RadioGroup>) {
           />
           <Label
             className="flex h-10 items-center justify-between rounded-md border-2 border-muted bg-transparent px-4 hover:bg-accent hover:text-accent-foreground peer-data-[state=checked]:border-primary [&:has([data-state=checked])]:border-primary"
-            htmlFor={`${radioId}-option-two`}
-          >
+            htmlFor={`${radioId}-option-two`}>
             5
           </Label>
         </div>

@@ -1,9 +1,9 @@
 "use client";
 
+import { AssetIcon, type AssetKey } from "@/components/AssetIcon";
 import { useAtomValue } from "jotai";
-import { CalcSummary, calcSummaryAtom } from "../../store";
-import { AssetIcon, AssetKey } from "@/components/AssetIcon";
-import { ReactNode } from "react";
+import type { ReactNode } from "react";
+import { type CalcSummary, calcSummaryAtom } from "../../store";
 
 const rows: {
   asset: AssetKey;

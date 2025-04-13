@@ -1,4 +1,4 @@
-import { WeaponClass, weaponClassEnum } from "@/repository/wep";
+import { type WeaponClass, weaponClassEnum } from "@/repository/wep";
 import { atom } from "jotai";
 import { focusAtom } from "jotai-optics";
 import { atomWithReset } from "jotai/utils";

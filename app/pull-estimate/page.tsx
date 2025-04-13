@@ -1,7 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import type { Metadata } from "next";
 import { PullForm } from "./PullForm";
 import { PullGraph } from "./PullGraph";
-import { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "Gacha Estimation",

@@ -3,7 +3,7 @@
  */
 import { Input } from "@/components/ui/input";
 import { cn } from "@/lib/utils";
-import { ComponentPropsWithRef, useEffect, useState } from "react";
+import { type ComponentPropsWithRef, useEffect, useState } from "react";
 
 export interface NumberInputProps extends ComponentPropsWithRef<"input"> {
   value: number | undefined;

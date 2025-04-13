@@ -3,8 +3,8 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { AppProvider } from "@/components/AppProvider";
 import { TopBar } from "@/components/TopBar";
-import { cn } from "@/lib/utils";
 import { Toaster } from "@/components/ui/sonner";
+import { cn } from "@/lib/utils";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -29,8 +29,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={cn("antialiased", geistSans.variable, geistMono.variable)}
-      >
+        className={cn("antialiased", geistSans.variable, geistMono.variable)}>
         <AppProvider>
           <TopBar />
           <main className="flex flex-col items-center py-8">

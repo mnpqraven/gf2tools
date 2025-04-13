@@ -1,9 +1,9 @@
-import { useMemo } from "react";
-import { focusAtom } from "jotai-optics";
-import { DOLL_META, DollMeta } from "@/repository/dolls";
+import { DOLL_META, type DollMeta } from "@/repository/dolls";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
-import { IFuseOptions } from "fuse.js";
+import type { IFuseOptions } from "fuse.js";
 import { useAtomValue } from "jotai";
+import { focusAtom } from "jotai-optics";
+import { useMemo } from "react";
 import { dollFilterAtom } from "./dollSelectorStore";
 
 // TODO: migrate to TRPC

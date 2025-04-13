@@ -1,8 +1,8 @@
 import { atom } from "jotai";
-import { TeamPreset } from "./types";
 import { atomWithStorage, splitAtom } from "jotai/utils";
 import * as O from "optics-ts";
-import { RefObject } from "react";
+import type { RefObject } from "react";
+import type { TeamPreset } from "./types";
 
 export const teamListAtom = atomWithStorage<TeamPreset[]>("teamListAtom", []);
 

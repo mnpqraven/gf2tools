@@ -1,17 +1,17 @@
 "use client";
 
-import { useAtom, useSetAtom } from "jotai";
-import { ComponentPropsWithRef, useMemo } from "react";
-import { focusAtom } from "jotai-optics";
 import { Card, CardContent } from "@/components/ui/card";
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { RemoveButton } from "./RemoveButton";
-import { NameInput } from "./NameInput";
 import { SortableDragHandle } from "@/components/ui/sortable";
-import { LevelInputRow } from "./LevelInputRow";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { cn } from "@/lib/utils";
-import { DragHandle } from "./DragHandle";
+import { useAtom, useSetAtom } from "jotai";
+import { focusAtom } from "jotai-optics";
+import { type ComponentPropsWithRef, useMemo } from "react";
 import { useCalcBox } from "./CalcBoxProvider";
+import { DragHandle } from "./DragHandle";
+import { LevelInputRow } from "./LevelInputRow";
+import { NameInput } from "./NameInput";
+import { RemoveButton } from "./RemoveButton";
 
 export function CalcBox({ className, ...props }: ComponentPropsWithRef<"div">) {
   return (
@@ -29,8 +29,7 @@ export function CalcBox({ className, ...props }: ComponentPropsWithRef<"div">) {
         <SortableDragHandle
           asChild
           className="flex min-h-16 flex-1 cursor-move select-none items-center justify-between gap-1"
-          variant="outline"
-        >
+          variant="outline">
           <DragHandle />
         </SortableDragHandle>
       </CardContent>
@@ -59,8 +58,7 @@ function CalcTypeSelector() {
         setName("");
         setId(undefined);
       }}
-      value={calcType}
-    >
+      value={calcType}>
       <TabsList>
         <TabsTrigger value="CHAR">Character</TabsTrigger>
         <TabsTrigger value="WEP">Weapon</TabsTrigger>

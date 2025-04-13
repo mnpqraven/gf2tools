@@ -1,5 +1,5 @@
 import { arrayMove } from "@dnd-kit/sortable";
-import { PrimitiveAtom, useSetAtom } from "jotai";
+import { type PrimitiveAtom, useSetAtom } from "jotai";
 
 export function useMoveAtom<T>(arrayAtom: PrimitiveAtom<T[]>) {
   // do NOT use useAtom or useAtomValue, avoid re-render

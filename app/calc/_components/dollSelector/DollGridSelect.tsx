@@ -1,19 +1,23 @@
-import { ComponentPropsWithRef, useMemo } from "react";
-import { cn } from "@/lib/utils";
-import { DOLL_META, dollClassAssetEnum, DollMeta } from "@/repository/dolls";
+import { AssetIcon } from "@/components/AssetIcon";
 import { Button } from "@/components/ui/button";
-import Image from "next/image";
-import { useAtomValue } from "jotai";
-import { dollFilterAtom } from "./dollSelectorStore";
-import { focusAtom } from "jotai-optics";
-import { useFilteredDolls } from "./useFilteredDolls";
-import { DollFilter } from "./DollFilter";
+import { cn } from "@/lib/utils";
+import {
+  DOLL_META,
+  type DollMeta,
+  dollClassAssetEnum,
+} from "@/repository/dolls";
 import {
   DOLL_CLASS_ENUM,
-  DollClassEnum,
-  DollSlugEnum,
+  type DollClassEnum,
+  type DollSlugEnum,
 } from "@/repository/enums";
-import { AssetIcon } from "@/components/AssetIcon";
+import { useAtomValue } from "jotai";
+import { focusAtom } from "jotai-optics";
+import Image from "next/image";
+import { type ComponentPropsWithRef, useMemo } from "react";
+import { DollFilter } from "./DollFilter";
+import { dollFilterAtom } from "./dollSelectorStore";
+import { useFilteredDolls } from "./useFilteredDolls";
 
 interface Props extends ComponentPropsWithRef<"div"> {
   onDollSelect: (t: { name: string; id?: string }, custom?: boolean) => void;
@@ -42,8 +46,7 @@ export function DollGridSelect({
       className={cn(
         "relative flex max-h-[80vh] flex-col gap-3 overflow-y-scroll",
         className,
-      )}
-    >
+      )}>
       <DollFilter className="sticky top-0" />
 
       {DOLL_CLASS_ENUM.options.map((dollClass) => (
@@ -60,8 +63,7 @@ export function DollGridSelect({
         <Button
           className="flex h-auto flex-col items-center justify-center gap-1 rounded-md border"
           onClick={() => onDollSelect({ name: search }, true)}
-          variant="outline"
-        >
+          variant="outline">
           {`Add Custom: "${search}"`}
         </Button>
       ) : null}
@@ -86,7 +88,7 @@ function DisplayClassContainer({
   if (!filteredDolls.length) return null;
   return (
     <div className={cn("flex flex-col gap-2", className)} {...props}>
-      <div className="flex items-center gap-2 text-xl font-semibold capitalize">
+      <div className="flex items-center gap-2 font-semibold text-xl capitalize">
         <AssetIcon
           asset={dollClassAssetEnum(dollClass)}
           className="h-6 w-6 rounded-full bg-primary dark:bg-transparent"
@@ -101,8 +103,7 @@ function DisplayClassContainer({
             disabled={shouldDisable?.(id)}
             key={`${id}-${rarity}`}
             onClick={() => onDollSelect({ name, id })}
-            variant="ghost"
-          >
+            variant="ghost">
             {
               // TODO: placeholderimg
               img.head ? (

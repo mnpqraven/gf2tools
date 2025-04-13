@@ -1,12 +1,12 @@
-import { DOLL_META, DollMeta } from "@/repository/dolls";
-import Image from "next/image";
-import { Button, ButtonProps } from "@/components/ui/button";
-import { WeaponMeta, WEP_META } from "@/repository/wep";
-import { cva } from "class-variance-authority";
-import { GripVertical } from "lucide-react";
+import { Button, type ButtonProps } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { DOLL_META, type DollMeta } from "@/repository/dolls";
+import { WEP_META, type WeaponMeta } from "@/repository/wep";
+import { cva } from "class-variance-authority";
 import { useAtomValue } from "jotai";
 import { focusAtom } from "jotai-optics";
+import { GripVertical } from "lucide-react";
+import Image from "next/image";
 import { useMemo } from "react";
 import { useCalcBox } from "./CalcBoxProvider";
 
