@@ -53,7 +53,8 @@ export function WeaponFilter({
             onPressedChange={() => {
               toggleWeaponClass(weaponClass);
             }}
-            pressed={weaponClasses.includes(weaponClass)}>
+            pressed={weaponClasses.includes(weaponClass)}
+          >
             <AssetIcon
               asset={wepClassAssetEnum(weaponClass)}
               className="h-6 w-6 rounded-full bg-primary dark:bg-transparent"
@@ -70,7 +71,8 @@ export function WeaponFilter({
             onPressedChange={() => {
               toggleWeaponRarity(weaponRarity);
             }}
-            pressed={weaponRarities.includes(weaponRarity)}>
+            pressed={weaponRarities.includes(weaponRarity)}
+          >
             {weaponRarity} *
           </Toggle>
         ))}

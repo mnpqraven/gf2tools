@@ -174,7 +174,8 @@ function Sortable<TData extends { id: UniqueIdentifier }>({
       }}
       onDragStart={({ active }) => setActiveId(active.id)}
       sensors={sensors}
-      {...props}>
+      {...props}
+    >
       <SortableContext items={value} strategy={strategy ?? config.strategy}>
         {children}
       </SortableContext>
@@ -211,7 +212,8 @@ const SortableOverlay = React.forwardRef<HTMLDivElement, SortableOverlayProps>(
           asChild
           className="cursor-grabbing"
           ref={ref}
-          value={activeId}>
+          value={activeId}
+        >
           {children}
         </SortableItem>
       ) : null}

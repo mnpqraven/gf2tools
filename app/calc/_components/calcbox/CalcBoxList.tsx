@@ -22,7 +22,8 @@ export function CalcBoxList() {
       onValueChange={setAtoms}
       orientation="mixed"
       overlay={<div className="size-full rounded-md bg-primary/10" />}
-      value={keyedAtoms}>
+      value={keyedAtoms}
+    >
       <div className="flex flex-wrap gap-2">
         {keyedAtoms.map(({ atom, id }) => (
           <CalcBoxProvider atom={atom} key={id}>

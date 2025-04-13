@@ -60,7 +60,8 @@ export function ExportButton({ className, mode, ...props }: Props) {
           onClick={() => {
             onExportClick();
           }}
-          variant="outline">
+          variant="outline"
+        >
           {mode === "DOWNLOAD" ? <Download /> : <Clipboard />}
         </Button>
       </TooltipTrigger>

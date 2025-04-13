@@ -86,7 +86,8 @@ export function AddToPlannerButton({
                 onClickWep(slug.slug);
                 break;
             }
-          }}>
+          }}
+        >
           {children}
         </Button>
       </PopoverAnchor>
@@ -98,13 +99,15 @@ export function AddToPlannerButton({
             onClick={() => {
               setOpen(false);
             }}
-            variant="destructive">
+            variant="destructive"
+          >
             Cancel
           </Button>
           <Button
             onClick={() => {
               onCreate(slug);
-            }}>
+            }}
+          >
             Confirm
           </Button>
         </div>

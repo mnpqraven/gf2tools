@@ -29,7 +29,8 @@ export function CalcBox({ className, ...props }: ComponentPropsWithRef<"div">) {
         <SortableDragHandle
           asChild
           className="flex min-h-16 flex-1 cursor-move select-none items-center justify-between gap-1"
-          variant="outline">
+          variant="outline"
+        >
           <DragHandle />
         </SortableDragHandle>
       </CardContent>
@@ -58,7 +59,8 @@ function CalcTypeSelector() {
         setName("");
         setId(undefined);
       }}
-      value={calcType}>
+      value={calcType}
+    >
       <TabsList>
         <TabsTrigger value="CHAR">Character</TabsTrigger>
         <TabsTrigger value="WEP">Weapon</TabsTrigger>

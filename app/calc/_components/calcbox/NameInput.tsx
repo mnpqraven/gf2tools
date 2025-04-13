@@ -69,11 +69,13 @@ export function NameInput() {
           clearFilter();
         }
       }}
-      open={open}>
+      open={open}
+    >
       <DialogTrigger asChild>
         <Button
           className="inline-flex items-center gap-1 text-primary"
-          variant="outline">
+          variant="outline"
+        >
           <SquareUserRound />
           {label}
         </Button>

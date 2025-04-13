@@ -41,7 +41,8 @@ export function DollInfoForm({ slug }: { slug: DollSlugEnum }) {
       animate={{ opacity: 1 }}
       className="relative flex flex-1 flex-col gap-1"
       initial={{ opacity: 0 }}
-      layout="preserve-aspect">
+      layout="preserve-aspect"
+    >
       <div
         className="-z-10 absolute top-0 h-full w-full opacity-20 shadow-[inset_0_0_16px_16px_hsl(var(--background))]"
         style={{
@@ -96,7 +97,8 @@ export function DollInfoForm({ slug }: { slug: DollSlugEnum }) {
         <Button
           className="px-2"
           onClick={() => setHelix(byLevelCapHelix(level))}
-          variant="outline">
+          variant="outline"
+        >
           <ChevronsRight />
         </Button>
       </div>
@@ -133,7 +135,8 @@ export function DollInfoForm({ slug }: { slug: DollSlugEnum }) {
         className="mt-2"
         currentLevel={level}
         slug={{ type: "CHAR", slug }}
-        variant={inCalc ? "success" : "default"}>
+        variant={inCalc ? "success" : "default"}
+      >
         {inCalc ? <CircleCheck /> : null}
         {inCalc ? "In planner" : "Add to planner"}
       </AddToPlannerButton>
@@ -155,7 +158,8 @@ function KeyInput({
         "col-span-2 grid grid-flow-col grid-rows-2 gap-y-1",
         className,
       )}
-      {...props}>
+      {...props}
+    >
       {Array.from(range(0, 5)).map((i) => (
         <div className="flex w-full items-center justify-center" key={i}>
           <Checkbox

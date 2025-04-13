@@ -25,7 +25,8 @@ export function WeaponInfoForm({ slug }: Props) {
       animate={{ opacity: 1 }}
       className="flex flex-col gap-2"
       initial={{ opacity: 0 }}
-      layout="preserve-aspect">
+      layout="preserve-aspect"
+    >
       <Label htmlFor={`${slug}_level`}>Level</Label>
       <div className="flex items-center justify-center gap-2">
         <Button className="px-2" onClick={() => setLevel(1)} variant="outline">
@@ -79,7 +80,8 @@ export function WeaponInfoForm({ slug }: Props) {
         className="mt-2"
         currentLevel={level}
         slug={{ type: "WEP", slug }}
-        variant={inCalc ? "success" : "default"}>
+        variant={inCalc ? "success" : "default"}
+      >
         {inCalc ? <CircleCheck /> : null}
         {inCalc ? "In planner" : "Add to planner"}
       </AddToPlannerButton>

@@ -19,8 +19,7 @@
       "jsxQuoteStyle": "double",
       "quoteProperties": "asNeeded",
       "trailingCommas": "all",
-      "arrowParentheses": "always",
-      "bracketSameLine": true
+      "arrowParentheses": "always"
     }
   },
   "linter": {

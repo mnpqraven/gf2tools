@@ -29,7 +29,8 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={cn("antialiased", geistSans.variable, geistMono.variable)}>
+        className={cn("antialiased", geistSans.variable, geistMono.variable)}
+      >
         <AppProvider>
           <TopBar />
           <main className="flex flex-col items-center py-8">

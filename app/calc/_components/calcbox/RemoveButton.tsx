@@ -15,7 +15,8 @@ export function RemoveButton({
       onClick={() => {
         remove(atom);
       }}
-      variant="destructive">
+      variant="destructive"
+    >
       <Trash />
     </Button>
   );

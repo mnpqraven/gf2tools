@@ -44,7 +44,8 @@ export function DollFilter({
             onPressedChange={() => {
               toggleDollClass(dollClass);
             }}
-            pressed={dollClasses.includes(dollClass)}>
+            pressed={dollClasses.includes(dollClass)}
+          >
             <AssetIcon
               asset={dollClassAssetEnum(dollClass)}
               className="h-6 w-6 rounded-full bg-primary dark:bg-transparent"
@@ -65,7 +66,8 @@ export function DollFilter({
             onPressedChange={() => {
               toggleDollRarity(dollRarity);
             }}
-            pressed={dollRarities.includes(dollRarity)}>
+            pressed={dollRarities.includes(dollRarity)}
+          >
             {dollRarity.toLowerCase()}
           </Toggle>
         ))}

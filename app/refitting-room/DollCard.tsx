@@ -34,7 +34,8 @@ export function DollCard({ slug }: { slug: DollSlugEnum }) {
         detailOpen ? "row-span-2" : "",
       )}
       key={doll.id}
-      style={{ borderRadius: 6 }}>
+      style={{ borderRadius: 6 }}
+    >
       <motion.div className="flex items-center gap-1" layout="position">
         <Image
           alt={doll.name}
@@ -58,7 +59,8 @@ export function DollCard({ slug }: { slug: DollSlugEnum }) {
         <Toggle
           onPressedChange={toggleOwnership}
           pressed={settings.owned}
-          variant={settings.owned ? "success" : "outline"}>
+          variant={settings.owned ? "success" : "outline"}
+        >
           {settings.owned ? <CircleCheck /> : null}
           Owned
         </Toggle>
@@ -67,7 +69,8 @@ export function DollCard({ slug }: { slug: DollSlugEnum }) {
           disabled={!settings.owned}
           onPressedChange={setDetailOpen}
           pressed={detailOpen}
-          variant="outline">
+          variant="outline"
+        >
           {detailOpen ? <ChevronUp /> : <ChevronDown />}
         </Toggle>
       </motion.div>

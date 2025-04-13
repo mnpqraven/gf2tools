@@ -39,7 +39,8 @@ export function TeamPresetForm() {
         <Button
           onClick={() => listDispatch({ type: "remove", atom })}
           size="icon"
-          variant="destructive">
+          variant="destructive"
+        >
           <Trash2 />
         </Button>
       </div>

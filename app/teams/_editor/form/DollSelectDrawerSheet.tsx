@@ -58,7 +58,8 @@ export function DollSelectDrawerSheet({
               chosen: doll !== undefined,
               className,
             })}
-            variant="outline">
+            variant="outline"
+          >
             {doll ? (
               <Image
                 alt={doll}

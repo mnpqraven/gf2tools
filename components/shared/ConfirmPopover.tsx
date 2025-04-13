@@ -79,7 +79,8 @@ const InnerPopover = forwardRef<HTMLButtonElement, Prop>(function InnerPopover(
             onClick={() => {
               setOpen(false);
             }}
-            variant={variants?.no ?? "default"}>
+            variant={variants?.no ?? "default"}
+          >
             {noLabel}
           </Button>
           <Button
@@ -89,7 +90,8 @@ const InnerPopover = forwardRef<HTMLButtonElement, Prop>(function InnerPopover(
               }
               setOpen(false);
             }}
-            variant={variants?.yes ?? "destructive"}>
+            variant={variants?.yes ?? "destructive"}
+          >
             {yesLabel}
           </Button>
         </div>

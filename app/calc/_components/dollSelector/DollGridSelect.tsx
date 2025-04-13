@@ -46,7 +46,8 @@ export function DollGridSelect({
       className={cn(
         "relative flex max-h-[80vh] flex-col gap-3 overflow-y-scroll",
         className,
-      )}>
+      )}
+    >
       <DollFilter className="sticky top-0" />
 
       {DOLL_CLASS_ENUM.options.map((dollClass) => (
@@ -63,7 +64,8 @@ export function DollGridSelect({
         <Button
           className="flex h-auto flex-col items-center justify-center gap-1 rounded-md border"
           onClick={() => onDollSelect({ name: search }, true)}
-          variant="outline">
+          variant="outline"
+        >
           {`Add Custom: "${search}"`}
         </Button>
       ) : null}
@@ -103,7 +105,8 @@ function DisplayClassContainer({
             disabled={shouldDisable?.(id)}
             key={`${id}-${rarity}`}
             onClick={() => onDollSelect({ name, id })}
-            variant="ghost">
+            variant="ghost"
+          >
             {
               // TODO: placeholderimg
               img.head ? (

@@ -38,7 +38,8 @@ export function WepGridSelect({ onWeaponSelect, className, ...props }: Props) {
       className={cn(
         "relative flex max-h-[80vh] flex-col gap-3 overflow-y-scroll",
         className,
-      )}>
+      )}
+    >
       <WeaponFilter className="sticky top-0" />
 
       {weaponClassEnum.options.map((weaponClass) => (
@@ -54,7 +55,8 @@ export function WepGridSelect({ onWeaponSelect, className, ...props }: Props) {
         <Button
           className="flex h-auto flex-col items-center justify-center gap-1 rounded-md border"
           onClick={() => onWeaponSelect({ name: search }, true)}
-          variant="ghost">
+          variant="ghost"
+        >
           {`Add Custom: "${search}"`}
         </Button>
       ) : null}
@@ -95,7 +97,8 @@ function DisplayClassContainer({
               className="flex h-auto flex-1 flex-col items-stretch justify-start p-2"
               key={`${id}-${rarity}`}
               onClick={() => onWeaponSelect({ name, id })}
-              variant="ghost">
+              variant="ghost"
+            >
               <div className="flex flex-1 items-center gap-1">
                 {/* TODO: placeholderimg */}
                 {img ? (

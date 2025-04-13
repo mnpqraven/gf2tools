@@ -33,7 +33,8 @@ export function WeaponCard({ slug }: Props) {
         detailOpen ? "row-span-2" : "",
       )}
       key={slug}
-      style={{ borderRadius: 6 }}>
+      style={{ borderRadius: 6 }}
+    >
       <motion.div className="flex items-center gap-1" layout="position">
         <Image
           alt="wep"
@@ -56,7 +57,8 @@ export function WeaponCard({ slug }: Props) {
         <Toggle
           onPressedChange={toggleOwnership}
           pressed={owned}
-          variant={owned ? "success" : "outline"}>
+          variant={owned ? "success" : "outline"}
+        >
           {owned ? <CircleCheck /> : null}
           Owned
         </Toggle>
@@ -64,7 +66,8 @@ export function WeaponCard({ slug }: Props) {
           disabled={!owned}
           onPressedChange={setDetailOpen}
           pressed={detailOpen}
-          variant="outline">
+          variant="outline"
+        >
           {detailOpen ? <ChevronUp /> : <ChevronDown />}
         </Toggle>
       </motion.div>

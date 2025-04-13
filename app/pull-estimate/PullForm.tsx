@@ -42,7 +42,8 @@ export function PullForm() {
     <Form {...form}>
       <form
         className="grid grid-cols-3 gap-2 md:flex"
-        onSubmit={form.handleSubmit(onSubmit)}>
+        onSubmit={form.handleSubmit(onSubmit)}
+      >
         <FormField
           control={form.control}
           name="pityCurrentCount"
@@ -99,7 +100,8 @@ export function PullForm() {
                 defaultValue="SSRDoll"
                 onValueChange={(key: BannerType) => {
                   form.setValue("banner", bannerDict[key]);
-                }}>
+                }}
+              >
                 <FormControl>
                   <SelectTrigger>
                     <SelectValue />
